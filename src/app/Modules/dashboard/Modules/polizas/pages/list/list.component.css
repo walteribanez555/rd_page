@@ -1,0 +1,150 @@
+.input-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  width: 100%;
+}
+
+.input-field input {
+  width: calc(100% - 400px);
+  outline: none;
+  font-size: 20px;
+  padding: 10px 60px;
+  border-radius: 10px;
+  border: 1px solid gainsboro;
+  color: var(--text-color);
+  /* font-weight: bold; */
+}
+
+.input-field i {
+  /* color: var(--main-color); */
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  scale: 1.25;
+}
+
+.table-list {
+  width: 100%;
+  /* height: 100%; */
+  border: 1px solid gainsboro;
+  overflow-y: auto;
+  height: calc(100vh - 25vh - 100px);
+  position: relative;
+  /* padding: 0px 20px; */
+  z-index: 2;
+  overflow-x: hidden;
+  border-radius: 5px;
+}
+
+.pago-link {
+  padding: 10px 20px;
+  border: 1px solid var(--main-color);
+  color: var(--main-color);
+  border-radius: 10px;
+  transition: 0.3s all ease-in-out;
+}
+
+.pago-link:hover {
+  color: white;
+  transition: 0.3s all ease-in-out;
+  background-color: var(--main-color);
+}
+
+.table-list::-webkit-scrollbar {
+  width: 1em;
+  height: 1em;
+}
+
+.table-list::-webkit-scrollbar-track {
+  background: #efedf7;
+  border-radius: 100vw;
+  margin-block: 0.1em;
+}
+
+.table-list::-webkit-scrollbar-thumb {
+  background: gainsboro;
+  border-radius: 10px;
+}
+
+.table-list::-webkit-scrollbar-thumb:hover {
+  background: grey;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0px;
+}
+
+table th {
+  text-align: start;
+  padding-left: 10px;
+  position: sticky;
+  top: 0;
+  /* color: white; */
+  background-color: white;
+}
+
+tr {
+  height: 80px;
+  border-radius: 10px;
+}
+
+td {
+  padding-left: 10px;
+}
+
+td span.status {
+  border: 1px solid gainsboro;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+td span.status.active {
+  border: 1px solid green;
+  color: green;
+  font-weight: 200;
+}
+
+td span.status.process {
+  border: 1px solid red;
+  color: red;
+  font-weight: 200;
+}
+
+td span.status.cotizacion {
+  border: 1px solid gray;
+  color: gray;
+  font-weight: 200;
+}
+
+td span.status.standby {
+  border: 1px solid orange;
+  color: orange;
+  font-weight: 200;
+}
+
+td span.status.vigente {
+  border: 1px solid blue;
+  color: blue;
+  font-weight: 200;
+}
+
+a:hover,
+tr:hover {
+  background-color: gainsboro;
+  cursor: pointer;
+}
+
+table a {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+  text-decoration: none;
+  color: var(--text-color);
+  height: 80px;
+  vertical-align: middle;
+}

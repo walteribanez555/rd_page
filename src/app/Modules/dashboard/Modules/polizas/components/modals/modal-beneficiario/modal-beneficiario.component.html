@@ -1,0 +1,113 @@
+
+<div class="modal" >
+  <div class="modal-header">
+    <img src="assets/images/isologo-blanco.png" >
+    <span>{{title}}</span>
+    <span class="modal-close" (click)="close()">x</span>
+  </div>
+  <div class="modal-content">
+    <div class="info">
+      <span class="title">Detalles del Beneficiario</span>
+      <hr>
+
+      <div class="field">
+        <span class="title">
+          Nro Identificacion
+        </span>
+        <span>
+          8912915
+        </span>
+      </div>
+
+      <div class="field">
+        <span class="title">
+          Primer Nombre
+        </span>
+        <span>
+          Walter
+        </span>
+      </div>
+      <div class="field">
+        <span class="title">
+          Segundo Nombre
+        </span>
+        <span>
+          Ronny
+        </span>
+      </div>
+      <div class="field">
+        <span class="title">
+          Primer Apellido
+        </span>
+        <span>
+          Ibañez
+        </span>
+      </div>
+      <div class="field">
+        <span class="title">
+          Segundo Apellido
+        </span>
+        <span>
+          Saucedo
+        </span>
+      </div>
+
+      <div class="field">
+        <span class="title">
+          Fecha de Nacimiento
+        </span>
+        <span>
+          27/01/2002
+        </span>
+      </div>
+
+      <div class="field">
+        <span class="title">
+          Edad
+        </span>
+        <span>
+          25
+        </span>
+      </div>
+      <div class="field">
+        <span class="title">
+          Email
+        </span>
+        <span>
+          walteribanez555@gmail.com
+        </span>
+      </div>
+      <div class="field">
+        <span class="title">
+          Nro Telefono
+        </span>
+        <span>
+          78140498
+        </span>
+      </div>
+      <div class="field">
+        <span class="title">
+          Origen
+        </span>
+        <span>
+          Bolivia
+        </span>
+      </div>
+
+    </div>
+    <div class="actions">
+      <span class="title">Acciones</span>
+      <hr>
+
+      <button  (click)="downloadAllCanvas()" >Descargar Poliza</button>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+
+  </div>
+</div>
+
+<div class="modal-backdrop" (click)="close()" ></div>
+
+<poliza-pdf  (isLoaded)="getCanva($event)" ></poliza-pdf>

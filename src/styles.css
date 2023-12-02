@@ -1,1 +1,208 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Lato";
+  src: url("../src/assets/fonts/Lato/Lato-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../src/assets/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
+}
+
+:root {
+  --body-bg: #fafafb;
+  --box-bg: #ffffff;
+  --main-color: #df080f;
+  --text-color: #455560;
+  --text-second-color: #72849ab3;
+  --border-color: #e9e9e9;
+  --menu-item-active-bg: rgba(62, 121, 247, 0.1);
+  --red: #db504a;
+  --blue: #3c91e6;
+  --light-blue: #cfe8ff;
+  --GREY: #eee;
+  --box-border-radius: 15px;
+  --sidebar-size: 300px;
+  --sidebar-logo-img-size: 45px;
+  --sidebar-logo-size: 45px;
+  --main-header-height: 80px;
+  --shadow: 0 1px 4px -1px rgb(0 0 0 / 15%);
+  --darkmode-toggle-size: 20px;
+}
+
+.dark {
+  --body-bg: #1a191f;
+  --box-bg: #1a191f;
+  --border-color: #222028;
+  --text-color: #b9b9b9;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--body-bg);
+  color: var(--text-color);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.z-index-25 {
+  z-index: 25;
+}
+
+.iti {
+  margin-top: 10px;
+  width: 100%;
+}
+
+input#phone {
+  display: flex;
+  width: 100%;
+  height: 30px;
+  color: var(--main-color);
+  font-size: medium;
+  margin-top: 10px;
+  border: 1px solid var(--main-color);
+  border-radius: 5px;
+}
+
+.cotizar_btn {
+  display: flex;
+
+  flex-direction: row;
+  fill: #fff;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(to right, #1d0f9f, #df085a);
+  height: 40px;
+
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 5px 20px 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+
+  margin-top: 10px;
+  width: fit-content;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  input#phone {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    color: var(--main-color);
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: 600;
+    border: 1px solid var(--main-color);
+    border-radius: 5px;
+  }
+}
+
+.selected-dial-code,
+p.number,
+h3.number,
+h4.number,
+span.number {
+  font-family: "Lato";
+}
+
+.otp-input {
+  border: solid var(--main-color) !important;
+  color: var(--main-color);
+}
+
+loading-div {
+  width: 100%;
+}
+
+poliza-pdf {
+  position: absolute;
+  left: -300%;
+  top: 0;
+}
+
+qrcode canvas {
+  width: 100;
+  height: 100;
+}
+
+@keyframes fadeIn {
+  0% {
+    position: relative;
+    top: 50px;
+    opacity: 0;
+  }
+
+  100% {
+    position: relative;
+    top: 0px;
+    opacity: 1;
+  }
+}
+
+.page {
+  padding: 10px 40px;
+  width: 100%;
+  height: 100%;
+  animation: fadeIn 0.6s forwards;
+}
+
+.page .top {
+  width: 100%;
+  height: 10vh;
+  padding: 20px 20px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top h1 {
+  /* padding: 10px 20px; */
+  /* border: 3px solid var(--main-color); */
+  /* border-radius: 10px; */
+  color: var(--main-color);
+}
+
+.page .content {
+  border: 1px solid gainsboro;
+  border-radius: 20px;
+  padding: 20px 40px;
+  box-shadow: 0 10px 25px rgba(220, 24, 24, 0.1);
+  height: calc(100vh - 10vh - 100px);
+  overflow: hidden;
+}
+
+.top .profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+  background-color: var(--main-color);
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+.profile span {
+  padding-left: 20px;
+  /* font-weight: bold; */
+}

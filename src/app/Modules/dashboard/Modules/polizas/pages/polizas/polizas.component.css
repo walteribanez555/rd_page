@@ -1,0 +1,73 @@
+.router-back {
+  cursor: pointer;
+  padding: 10px ;
+  border: 1px solid gainsboro;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(220, 24, 24, 0.1);
+  transition: 0.3s all ease-in-out;
+  position: relative;
+
+}
+
+.router-back:hover{
+  color: white;
+  background: var(--main-color);
+  box-shadow: 0 10px 25px rgba(220, 24, 24, 0.3);
+  transition: 0.3s all ease-in-out;
+  left: -10px;
+
+}
+
+
+.content .top{
+  color: var(--main-color);
+}
+
+.content .top .title{
+  font-size: 30px;
+  color: var(--text-color);
+}
+
+.content .list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  /* height: 100%; */
+  overflow-y: auto;
+  height: calc(100vh - 25vh - 100px);
+  position: relative;
+  /* padding: 0px 20px; */
+  z-index: 2;
+  overflow-x: hidden;
+  border-radius: 5px;
+}
+
+
+card-poliza{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.list::-webkit-scrollbar {
+  width: 1em;
+  height: 1em;
+}
+
+.list::-webkit-scrollbar-track {
+  background: #efedf7;
+  border-radius: 100vw;
+  margin-block: 0.1em;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: gainsboro;
+  border-radius: 10px;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+  background: grey;
+  border-radius: 10px;
+}

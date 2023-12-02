@@ -1,0 +1,82 @@
+.card{
+  width: 70%;
+  /* padding: 20px 10px; */
+  /* border: 1px solid gainsboro; */
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  cursor:  pointer;
+}
+
+.action{
+  margin-left: 10px;
+  width: 20%;
+  height: 50%;
+  /* border: 1px solid gainsboro; */
+  border-radius: 5px;
+  padding: 10px 20px;
+  border:  1px solid var(--main-color);
+  background: #f04b46;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.action:hover{
+  background: var(--main-color);
+}
+
+.action span{
+  padding-left: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.action:hover span{
+  padding-left: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.left{
+  background-color: #f04b46;
+  padding: 20px 10px;
+  color: white;
+  border-radius: 5px 0px 0px 5px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+  border: 2px solid var(--main-color);
+  text-align: center;
+}
+
+.right{
+  padding: 10px 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid gainsboro;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.card:hover .left{
+  background-color: var(--main-color);
+}
+
+.card:hover .right{
+  background-color: gainsboro;
+}
+
+
+.field{
+  display: flex;
+  flex-direction: column;
+}
+
+.field .title{
+  font-weight: bold;
+}
