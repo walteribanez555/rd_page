@@ -6,17 +6,16 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CatalogosService implements CRUDService<Catalogo> {
-
   private http = inject(HttpClient);
 
-  private apiUrl = environment.apiUrl+'/catalogos';
+  private apiUrl = environment.apiUrl + '/catalogos';
 
-  constructor() { }
+  constructor() {}
   getAll(): Observable<Catalogo[]> {
-    return this.http.get<Catalogo[]>(this.apiUrl+"?id=beneficios");
+    return this.http.get<Catalogo[]>(this.apiUrl + '?id=beneficios');
   }
   getOne(id: string | number): Observable<Catalogo[]> {
     throw new Error('Method not implemented.');
@@ -30,5 +29,4 @@ export class CatalogosService implements CRUDService<Catalogo> {
   delete(id: string | number): Observable<any> {
     throw new Error('Method not implemented.');
   }
-
 }

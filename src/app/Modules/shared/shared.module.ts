@@ -6,8 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomCalendarComponent } from './Components/custom-calendar/custom-calendar.component';
 import { TagComponent } from './Components/tag/tag.component';
 import { NotificationComponent } from './Components/notification/notification.component';
-import { MessageNotificationComponent } from './Components/notification/messageNotification/messageNotification.component';
-
+import { NotificationService } from './Components/notification/notification.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,6 @@ import { MessageNotificationComponent } from './Components/notification/messageN
     CustomCalendarComponent,
     TagComponent,
     NotificationComponent,
-    MessageNotificationComponent,
   ],
   imports: [
     CommonModule,
@@ -25,17 +23,13 @@ import { MessageNotificationComponent } from './Components/notification/messageN
     DatePipe,
     SlicePipe,
   ],
-  providers: [
-
-  ],
-  exports : [
+  providers: [NotificationService],
+  exports: [
     NavbarComponent,
     SelectCustomComponent,
     CustomCalendarComponent,
     TagComponent,
     NotificationComponent,
-    MessageNotificationComponent,
-  ]
-
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

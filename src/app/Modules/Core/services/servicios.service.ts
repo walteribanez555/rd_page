@@ -5,14 +5,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Servicio } from '../models/Servicio.model';
 import { CRUDService } from '../interfaces/CRUD_service.interface';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ServiciosService  implements CRUDService<Servicio> {
-
+export class ServiciosService implements CRUDService<Servicio> {
   private apiUrl = environment.apiUrl + '/servicios';
   private http = inject(HttpClient);
 
-  constructor() { }
+  constructor() {}
   getAll(): Observable<Servicio[]> {
     return this.http.get<Servicio[]>(this.apiUrl);
   }
@@ -28,6 +27,4 @@ export class ServiciosService  implements CRUDService<Servicio> {
   delete(id: string | number): Observable<any> {
     throw new Error('Method not implemented.');
   }
-
-
 }

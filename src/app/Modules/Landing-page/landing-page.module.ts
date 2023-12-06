@@ -22,24 +22,22 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from '../Core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [
-
     LayoutPageComponent,
-     HomeComponent,
-     MultiStepComponent,
-     DestinyComponent,
-     DatesToTravelComponent,
-     AgesTravelerComponent,
-     LocationComponent,
-     PaymentComponent,
-     DatosPolizasComponent,
-     PlanesComponent,
-     PlanComponent,
-     ModalPlanDetailsComponent,
-     ListCoberturaComponent,
-     CoberturaComponent,
+    HomeComponent,
+    MultiStepComponent,
+    DestinyComponent,
+    DatesToTravelComponent,
+    AgesTravelerComponent,
+    LocationComponent,
+    PaymentComponent,
+    DatosPolizasComponent,
+    PlanesComponent,
+    PlanComponent,
+    ModalPlanDetailsComponent,
+    ListCoberturaComponent,
+    CoberturaComponent,
   ],
   imports: [
     CommonModule,
@@ -51,12 +49,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers : [
-    ModalService,
-
-  ],
-  exports : [
-
-  ]
+  providers: [ModalService],
+  exports: [],
 })
-export class LandingPageModule { }
+export class LandingPageModule {}

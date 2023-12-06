@@ -6,20 +6,18 @@ import { HomeComponent } from './Pages/home/home.component';
 const routes: Routes = [
   {
     path: '',
-    component : LayoutPageComponent,
-    children : [
+    component: LayoutPageComponent,
+    children: [
       {
-        path : 'home',
-        component : HomeComponent,
-      }
-
-    ]
-
-  }
+        path: 'home',
+        component: HomeComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LandingPageRoutingModule { }
+export class LandingPageRoutingModule {}

@@ -23,6 +23,6 @@ export function MapToServicioUi(
   return {
     catalogos: catalogosFiltered,
     ...servPlan.servicio,
-    isSelected : false,
+    isSelected: false,
   };
 }

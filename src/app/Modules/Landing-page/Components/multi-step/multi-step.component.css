@@ -342,9 +342,13 @@ payment{
     left: 20px;
     top: 30px;
     width: 2px;
-    height: 40px;
+    height: 60px;
     background-color: gainsboro;
     animation: 0.3s ease-in-out;
+  }
+
+  .progress ul.progress-steps span.active{
+    color: var(--main-color);
   }
 
 
@@ -358,6 +362,11 @@ payment{
     color: var(--main-color);
   }
 
+
+  .response{
+    font-size: 15px;
+    font-weight: bold;
+  }
 
 @media (min-width:1024px) {
 
@@ -379,8 +388,9 @@ payment{
 
   @keyframes moveToLeft {
     0%{
-      width: 80vw;
+      width: 100vw;
     }
+
     100%{
       width: 70vw;
     }
@@ -388,7 +398,7 @@ payment{
 
   @keyframes moveToRight {
     0%{
-      width: 65vw;
+      width: 70vw;
     }
     30%{
       width: 50vw;

@@ -5,18 +5,8 @@ import { SiniestrosRoutingModule } from './siniestros-routing.module';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { RouterModule } from '@angular/router';
 
-
-
 @NgModule({
-  declarations: [
-    LayoutPageComponent,
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    SiniestrosRoutingModule,
-    RouterModule,
-
-  ]
+  declarations: [LayoutPageComponent],
+  imports: [CommonModule, SharedModule, SiniestrosRoutingModule, RouterModule],
 })
-export class SiniestrosModule { }
+export class SiniestrosModule {}

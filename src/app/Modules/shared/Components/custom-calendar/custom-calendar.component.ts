@@ -1,42 +1,36 @@
-import {  Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
 @Component({
   selector: 'custom-calendar',
-  templateUrl : './custom-calendar.component.html',
+  templateUrl: './custom-calendar.component.html',
   styleUrls: ['./custom-calendar.component.css'],
-
 })
 export class CustomCalendarComponent implements OnInit {
   week: any = [
-    "Lunes",
-    "Martes",
-    "Miercoles",
-    "Jueves",
-    "Viernes",
-    "Sabado",
-    "Domingo"
+    'Lunes',
+    'Martes',
+    'Miercoles',
+    'Jueves',
+    'Viernes',
+    'Sabado',
+    'Domingo',
   ];
-
 
   monthSelect: any[] = [];
   dateSelect: any;
   dateValue: any;
 
+  @Output() onSelectDate = new EventEmitter<string>();
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit(): void {
+    const actualDate = new Date();
 
-    const actualDate  = new Date();
-
-
-
-    this.getDaysFromDate(actualDate.getMonth() + 1, actualDate.getFullYear())
+    this.getDaysFromDate(actualDate.getMonth() + 1, actualDate.getFullYear());
   }
 
-  getDaysFromDate(month : any, year : any) {
+  getDaysFromDate(month: any, year: any) {
     const startDate = moment.utc(`${year}/${month}/01`);
     const endDate = startDate.clone().endOf('month');
 
@@ -51,42 +45,44 @@ export class CustomCalendarComponent implements OnInit {
       arrayDays.push({
         name: dayObject.format('dddd'),
         value: dayObject.date(),
-        indexWeek: dayObject.isoWeekday()
+        indexWeek: dayObject.isoWeekday(),
       });
     }
 
     this.monthSelect = arrayDays;
   }
 
-  changeMonth(flag : any) {
+  changeMonth(flag: any) {
     if (flag < 0) {
-      const prevDate = this.dateSelect.clone().subtract(1, "month");
-      this.getDaysFromDate(prevDate.format("MM"), prevDate.format("YYYY"));
+      const prevDate = this.dateSelect.clone().subtract(1, 'month');
+      this.getDaysFromDate(prevDate.format('MM'), prevDate.format('YYYY'));
     } else {
-      const nextDate = this.dateSelect.clone().add(1, "month");
-      this.getDaysFromDate(nextDate.format("MM"), nextDate.format("YYYY"));
+      const nextDate = this.dateSelect.clone().add(1, 'month');
+      this.getDaysFromDate(nextDate.format('MM'), nextDate.format('YYYY'));
     }
   }
 
-  clickDay(day : any, pos : any) {
-    const monthYear = this.dateSelect.format('YYYY-MM')
-    const parse = `${monthYear}-${day.value}`
-    const objectDate = moment(parse)
+  clickDay(day: any, pos: any) {
+    const monthYear = this.dateSelect.format('YYYY-MM');
+    const parse = `${monthYear}-${day.value}`;
+    const objectDate = moment(parse);
     this.dateValue = objectDate;
-    console.log(this.dateValue);
+    this.onSelectDate.emit(objectDate.format().split('T')[0]);
   }
-
 
   isTheDate(day: any) {
     const monthYear = this.dateSelect.format('YYYY-MM');
     const parse = `${monthYear}-${day.value}`;
     const objectDate = moment(parse);
 
-    if (this.dateValue && objectDate && this.dateValue.isSame(objectDate, 'day')) {
+    if (
+      this.dateValue &&
+      objectDate &&
+      this.dateValue.isSame(objectDate, 'day')
+    ) {
       return true;
     } else {
       return false;
     }
   }
-
 }

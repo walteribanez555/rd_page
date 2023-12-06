@@ -8,6 +8,8 @@ import { locationTravel } from '../datesToTravel/locationTravel';
   <div class="card" [class.selected]="location.isSelected"  (click)="changeLocation()">
     <i class="fa-solid fa-globe" [class.selected]="location.isSelected"></i>
     <span [class.selected]="location.isSelected" >{{location.location}}</span>
+    <span class="icon" (click)="changeLocation()" >x</span>
+
   </div>`,
   styleUrls: ['./location.component.css'],
 })
@@ -23,7 +25,6 @@ export class LocationComponent {
 
 
   changeLocation() {
-    !this.location.isSelected
     this.selectionChanged.emit(this.position);
   }
 

@@ -6,22 +6,20 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlanesService implements CRUDService<Plan> {
-
   private http = inject(HttpClient);
-  private apiUrl = environment.apiUrl+'/planes';
+  private apiUrl = environment.apiUrl + '/planes';
 
-  constructor() { }
+  constructor() {}
   getAll(): Observable<Plan[]> {
     return this.http.get<Plan[]>(this.apiUrl);
   }
 
-
   //Get with the id_service
   getOne(id: string | number): Observable<Plan[]> {
-    return this.http.get<Plan[]>(this.apiUrl+`?id=${id}`)
+    return this.http.get<Plan[]>(this.apiUrl + `?id=${id}`);
   }
   create(item: Plan): Observable<Plan> {
     throw new Error('Method not implemented.');
@@ -32,5 +30,4 @@ export class PlanesService implements CRUDService<Plan> {
   delete(id: string | number): Observable<any> {
     throw new Error('Method not implemented.');
   }
-
 }

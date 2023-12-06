@@ -1,6 +1,6 @@
 .container {
   width: 250px;
-  height: 400px;
+  height: 460px;
   border: 1px solid gainsboro;
   box-shadow: 0 0 10px #e4e4e4;
   border-radius: 10px;
@@ -8,9 +8,8 @@
   display: flex;
   flex-direction: column;
   /* transition: all 0.3s ease-in-out; */
-  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding-bottom: 10px;
 }
 
@@ -20,7 +19,7 @@
 }
 
 .container:hover {
-  scale: 1.05;
+  /* scale: 1.05; */
   transition: all 0.3s ease-in-out;
 }
 
@@ -101,6 +100,7 @@ tag {
   border: 3px solid gainsboro;
   width: fit-content;
   transition: all 0.3S ease-in-out;
+  margin-top: 10px;
 }
 .field .see-more:hover{
   transition: all 0.3S ease-in-out;
@@ -108,6 +108,12 @@ tag {
   border: none;
   color: white;
 
+}
+
+.field .see-more.active{
+  border: 1px solid var(--main-color);
+  background-color: var(--main-color);
+  color: white;
 }
 
 

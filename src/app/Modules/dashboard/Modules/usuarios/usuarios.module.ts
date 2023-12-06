@@ -5,18 +5,8 @@ import { RouterModule } from '@angular/router';
 import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 
-
-
 @NgModule({
-  declarations: [
-    LayoutPageComponent,
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    UsuariosRoutingModule,
-
-  ]
+  declarations: [LayoutPageComponent],
+  imports: [CommonModule, SharedModule, RouterModule, UsuariosRoutingModule],
 })
-export class UsuariosModule { }
+export class UsuariosModule {}

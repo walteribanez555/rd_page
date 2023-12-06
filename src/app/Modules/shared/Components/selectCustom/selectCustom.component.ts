@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'select-custom',
@@ -12,34 +19,38 @@ export class SelectCustomComponent implements OnInit {
     this.filteredCountries = this.countries;
   }
 
-  isToggle : boolean  = false;
-  searchInput : string = "Select Country";
+  isToggle: boolean = false;
+  searchInput: string = 'Select Country';
 
-  searchText : string = "";
-
+  searchText: string = '';
 
   updateToggle() {
     this.isToggle = !this.isToggle;
   }
 
-  filteredCountries : string[] = [
+  filteredCountries: string[] = [];
 
-  ];
-
-
-  updateActualName( selectedName : string) {
+  updateActualName(selectedName: string) {
     this.searchInput = selectedName;
     this.isToggle = false;
+    this.onselectDestiny.emit(selectedName);
   }
-
 
   filterBySearch() {
-    this.filteredCountries = this.countries.filter( country =>  country.toLowerCase().startsWith(this.searchText.toLowerCase()));
+    this.filteredCountries = this.countries.filter((country) =>
+      country.toLowerCase().startsWith(this.searchText.toLowerCase())
+    );
   }
 
-
+  @Output() onselectDestiny = new EventEmitter<string>();
 
   countries: string[] = [
+    'America del sur',
+    'America del norte',
+    'Centro America',
+    'Europa',
+    'Asia',
+    'Oceania',
     'Afganistán',
     'Albania',
     'Alemania',
@@ -233,15 +244,13 @@ export class SelectCustomComponent implements OnInit {
     'Yemen',
     'Yibuti',
     'Zambia',
-    'Zimbabue'
+    'Zimbabue',
   ];
 
-
-
-//   updateName(selectedLi) {
-//     searchInp.value = "";
-//     addCountry(selectedLi.innerText);
-//     wrapper.classList.remove("active");
-//     selectBtn.firstElementChild.innerText = selectedLi.innerText;
-// }
+  //   updateName(selectedLi) {
+  //     searchInp.value = "";
+  //     addCountry(selectedLi.innerText);
+  //     wrapper.classList.remove("active");
+  //     selectBtn.firstElementChild.innerText = selectedLi.innerText;
+  // }
 }

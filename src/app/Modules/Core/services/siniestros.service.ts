@@ -4,11 +4,10 @@ import { Siniestro } from '../models/Siniestro.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SiniestrosService implements CRUDService<Siniestro> {
-
-  constructor() { }
+  constructor() {}
   getAll(): Observable<Siniestro[]> {
     throw new Error('Method not implemented.');
   }
@@ -24,5 +23,4 @@ export class SiniestrosService implements CRUDService<Siniestro> {
   delete(id: string | number): Observable<any> {
     throw new Error('Method not implemented.');
   }
-
 }

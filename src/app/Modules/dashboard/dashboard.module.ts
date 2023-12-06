@@ -8,19 +8,14 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '../Core/core.module';
 
-
 @NgModule({
-  declarations: [
-    LayoutPageComponent,
-    NavbarComponent,
-  ],
+  declarations: [LayoutPageComponent, NavbarComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
     RouterModule,
-    CoreModule
-
-  ]
+    CoreModule,
+  ],
 })
-export class DashboardModule { }
+export class DashboardModule {}

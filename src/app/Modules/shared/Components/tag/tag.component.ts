@@ -3,15 +3,13 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'tag',
-  template : `
+  template: `
     <span class="tag">
-        {{tag}}
+      {{ tag }}
     </span>
   `,
   styleUrls: ['./tag.component.css'],
 })
 export class TagComponent {
-
-  @Input() tag! : string;
-
+  @Input() tag!: string;
 }

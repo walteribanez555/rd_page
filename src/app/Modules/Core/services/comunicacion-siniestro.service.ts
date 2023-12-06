@@ -4,11 +4,12 @@ import { ComunicacionSiniestro } from '../models/ComunicacionSiniestro.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ComunicacionSiniestroService implements CRUDService<ComunicacionSiniestro> {
-
-  constructor() { }
+export class ComunicacionSiniestroService
+  implements CRUDService<ComunicacionSiniestro>
+{
+  constructor() {}
   getAll(): Observable<ComunicacionSiniestro[]> {
     throw new Error('Method not implemented.');
   }
@@ -18,11 +19,13 @@ export class ComunicacionSiniestroService implements CRUDService<ComunicacionSin
   create(item: ComunicacionSiniestro): Observable<ComunicacionSiniestro> {
     throw new Error('Method not implemented.');
   }
-  update(id: string | number, item: ComunicacionSiniestro): Observable<ComunicacionSiniestro> {
+  update(
+    id: string | number,
+    item: ComunicacionSiniestro
+  ): Observable<ComunicacionSiniestro> {
     throw new Error('Method not implemented.');
   }
   delete(id: string | number): Observable<any> {
     throw new Error('Method not implemented.');
   }
-
 }

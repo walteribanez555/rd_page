@@ -1,4 +1,4 @@
-import { NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { SharedModule } from 'src/app/Modules/shared/shared.module';
 import { PolizasRoutingModule } from './polizas-routing.module';
@@ -14,8 +14,6 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { PolizaPdfComponent } from './components/pdf/poliza-pdf/poliza-pdf.component';
 import { ModalBeneficiarioComponent } from './components/modals/modal-beneficiario/modal-beneficiario.component';
 import { GeneratePdfService } from './components/pdf/poliza-pdf/services/generate-pdf.service';
-
-
 
 @NgModule({
   declarations: [
@@ -35,12 +33,7 @@ import { GeneratePdfService } from './components/pdf/poliza-pdf/services/generat
     RouterModule,
     CurrencyPipe,
     QRCodeModule,
-
-
   ],
-  providers : [
-    ModalBenService,
-    GeneratePdfService,
-  ]
+  providers: [ModalBenService, GeneratePdfService],
 })
-export class PolizasModule { }
+export class PolizasModule {}

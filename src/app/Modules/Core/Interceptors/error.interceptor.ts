@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpErrorResponse,
-  HttpStatusCode
+  HttpStatusCode,
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
@@ -14,55 +14,44 @@ import { Token } from '../../shared/utils/tokens';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
+  constructor(private router: Router) {}
 
-  constructor(
-    private router : Router,
+  private tokenUtils = new Token();
 
-
-  ) {}
-
-  private tokenUtils = new  Token;
-
-
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
-
-
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
-      catchError( (error) => {
-        console.log("Error por aqui");
+      catchError((error) => {
+        console.log('Error por aqui');
 
         console.log(error);
-        if( error instanceof HttpErrorResponse){
-          if(error.error instanceof ErrorEvent){
+        if (error instanceof HttpErrorResponse) {
+          if (error.error instanceof ErrorEvent) {
             console.log(`Error event`);
-          }else {
+          } else {
             const errorType = errorHandler(error);
             console.log(error);
 
-            switch (errorType){
-
-              case  HttpStatusCode.BadRequest:
-
+            switch (errorType) {
+              case HttpStatusCode.BadRequest:
                 break;
 
-              case  498:
-                console.log("Expiro la Sesion");
+              case 498:
+                console.log('Expiro la Sesion');
                 this.tokenUtils.deleteToken();
                 this.router.navigateByUrl('/auth/login');
                 break;
             }
 
             throw new Error();
-
           }
-        }else{
+        } else {
           console.log('An error ocurred');
         }
-        return throwError(()=> new Error(error.statusText))
+        return throwError(() => new Error(error.statusText));
       })
-    )
+    );
   }
 }
-
-

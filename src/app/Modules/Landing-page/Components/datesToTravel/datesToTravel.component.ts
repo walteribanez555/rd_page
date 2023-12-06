@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { locationTravel } from './locationTravel';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'dates-to-travel',
@@ -12,36 +13,12 @@ export class DatesToTravelComponent {
 
   @Output() onChangePage = new EventEmitter();
 
+
   locations : locationTravel[] = [
-    {
-      location : "Europa",
-      isSelected : false,
-    },
-    {
-      location : "America Del Sur",
-      isSelected : false,
-    },
-    {
-      location : "America Del Norte",
-      isSelected : false,
-    },
-    {
-      location : "Centro America",
-      isSelected : false,
-    },
-    {
-      location : "Asia",
-      isSelected : false,
-    },
-    {
-      location : "Oceania",
-      isSelected : false,
-    },
-    {
-      location : "Multi Viajes",
-      isSelected : false,
-    },
+
   ];
+
+  @Input() places! : FormGroup;
 
 
   tags : String[] = [];
@@ -49,14 +26,28 @@ export class DatesToTravelComponent {
 
   changeLocation(positionSelected : number) {
 
-    this.locations[positionSelected].isSelected = !this.locations[positionSelected].isSelected;
+    this.locations.splice(positionSelected, 1);
+    this.places.get('toLocation')?.setValue(this.locations.map(location => location.location).join(', '));
 
-    console.log(this.locations[positionSelected]);
   }
 
 
   onChangeStep() {
+
     this.onChangePage.emit();
+  }
+
+  onSelectedDestiny( destiny : string) {
+    this.locations.push({
+      location : destiny,
+      isSelected : true,
+    })
+
+    this.places.get('toLocation')?.setValue(this.locations.map(location => location.location).join(', '));
+  }
+
+  onSelectedOrigen( place : string) {
+    this.places.get('fromLocation')?.setValue(place);
   }
 
 }

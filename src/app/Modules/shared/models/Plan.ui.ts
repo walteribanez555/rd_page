@@ -1,7 +1,3 @@
-import { Plan } from "../../Core/models";
+import { Plan } from '../../Core/models';
 
-
-export interface PlanUi extends Plan{
-
-
-}
+export interface PlanUi extends Plan {}

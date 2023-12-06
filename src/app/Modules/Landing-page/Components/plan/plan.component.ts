@@ -13,6 +13,8 @@ export class PlanComponent implements OnInit {
   @Input() servicioUi! : ServicioUi;
   tags : string[] = [];
 
+
+
   constructor(private modalService  : ModalService){
 
   }
@@ -23,7 +25,7 @@ export class PlanComponent implements OnInit {
 
 
   openModal(modalTemplate : TemplateRef<any>){
-    this.modalService.open(modalTemplate, this.servicioUi , {size : 'lg' , title : 'AMERICAN RED'}).subscribe(
+    this.modalService.open(modalTemplate, this.servicioUi , {size : 'lg' , title : this.servicioUi.servicio}).subscribe(
       (action : any) => {
         console.log('modalAction', action);
       }

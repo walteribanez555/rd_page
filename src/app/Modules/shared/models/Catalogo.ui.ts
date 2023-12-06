@@ -1,6 +1,6 @@
-import { Catalogo } from "../../Core/models";
-import { BeneficioUi } from "./Beneficio.ui";
+import { Catalogo } from '../../Core/models';
+import { BeneficioUi } from './Beneficio.ui';
 
-export interface CatalogoUi extends Catalogo{
-  beneficios : BeneficioUi[] | null;
+export interface CatalogoUi extends Catalogo {
+  beneficios: BeneficioUi[] | null;
 }

@@ -34,6 +34,14 @@
         Ver Mas Detalles
 
       </span>
+      <span class="see-more"  *ngIf="!servicioUi.isSelected; else selected" (click)="changeState()" >
+        Seleccionar
+      </span>
+      <ng-template #selected >
+        <span  class="see-more active" (click)="changeState()">
+          Seleccionado
+        </span>
+      </ng-template>
     </div>
 
   </div>

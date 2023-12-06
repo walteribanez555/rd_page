@@ -14,7 +14,7 @@
     <div class="field">
       <i class="fa-regular fa-calendar"></i>
       <label for="">Fecha de Salida</label>
-      <custom-calendar></custom-calendar>
+      <custom-calendar (onSelectDate)="setInitialDate($event)" ></custom-calendar>
 
 
     </div>
@@ -22,7 +22,7 @@
     <div class="field">
       <i class="fa-regular fa-calendar"></i>
       <label for="">Fecha de Retorno</label>
-      <custom-calendar></custom-calendar>
+      <custom-calendar (onSelectDate)="setFinalDate($event)"></custom-calendar>
 
 
     </div>
@@ -37,19 +37,27 @@
       <div class="field">
         <i class="fa-regular fa-calendar"></i>
         <label for="">Fecha de Salida</label>
-        <span>17/07/2024</span>
+        <span  *ngIf="!initialDate?.valid; else isInitialSet">yyyy-mm-dd</span>
+        <ng-template  #isInitialSet>
+          <span>{{initialDate?.value}}</span>
+        </ng-template>
       </div>
       <div class="field">
         <i class="fa-regular fa-calendar"></i>
         <label for="">Fecha de Salida</label>
-        <span>17/07/2024</span>
+        <span  *ngIf="!finalDate?.valid; else isFinalSet" >yyyy-mm-dd</span>
+        <ng-template #isFinalSet >
+          <span>{{finalDate?.value}}</span>
+        </ng-template>
 
       </div>
       <div class="field">
         <i class="fa-regular fa-calendar"></i>
         <label for="">Total de dias</label>
-        <span>30 dias</span>
-
+        <span *ngIf="!quantityDays?.valid; else isQuantitySet" >00 dias</span>
+        <ng-template #isQuantitySet>
+          <span>{{quantityDays?.value}}</span>
+        </ng-template>
       </div>
 
     </div>
