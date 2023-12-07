@@ -15,7 +15,7 @@
 
     <div class="list-planes" *ngIf="serviciosUi ; else noServices">
 
-      <plan *ngFor="let servicioUi of serviciosUiFiltered" [servicioUi]="servicioUi"  ></plan>
+      <plan *ngFor="let servicioUi of serviciosUiFiltered" [servicioUi]="servicioUi"  [onSelectedItem]="observerSelectedFromPlan"  (onItemSelected)="onSelectedItem($event)" ></plan>
 
     </div>
 

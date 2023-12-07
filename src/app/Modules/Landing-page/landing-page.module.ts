@@ -21,6 +21,7 @@ import { CoberturaComponent } from './Components/cobertura/cobertura.component';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '../Core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ExtraPolizaComponent } from './Components/extraPoliza/extra-poliza.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ModalPlanDetailsComponent,
     ListCoberturaComponent,
     CoberturaComponent,
+    ExtraPolizaComponent,
   ],
   imports: [
     CommonModule,

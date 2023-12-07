@@ -43,6 +43,11 @@ export class AgesTravelerComponent {
       return;
     }
 
+    if(this.adultDate === 0 && item === -1) {
+      this.onAlertMessage("No puede ser menor que 0");
+      return;
+    }
+
     this.adultDate += item;
   }
 
@@ -51,7 +56,11 @@ export class AgesTravelerComponent {
     if(this.adultDate > 0) {
       this.onAlertMessage("Ya se ha seleccionado a adultos");
       return;
+    }
 
+    if(this.seniorDate === 0  && item === -1 ) {
+      this.onAlertMessage("No puede ser menor que 0");
+      return;
     }
 
     this.seniorDate += item;

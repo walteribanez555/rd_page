@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { FormGroup } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
 import { ServicioUi } from 'src/app/Modules/shared/models';
 
 @Component({
@@ -10,6 +11,12 @@ import { ServicioUi } from 'src/app/Modules/shared/models';
 })
 export class PlanesComponent  implements OnInit {
   ngOnInit(): void {
+
+    this.onSelectedFromPlan = new Subject<ServicioUi>();
+    this.observerSelectedFromPlan = this.onSelectedFromPlan.asObservable();
+
+
+
     this.observerSelection?.subscribe({
       next: ( serviciosFiltered ) => {
         this.serviciosUiFiltered = serviciosFiltered;
@@ -28,12 +35,21 @@ export class PlanesComponent  implements OnInit {
 
 
 
+  onSelectedFromPlan?  : Subject<ServicioUi>;
+  observerSelectedFromPlan? : Observable<ServicioUi>;
+
+
+
   @Output() onChangePage = new EventEmitter();
   @Output() onBackStep = new EventEmitter();
 
 
+  @Input() planForm? : FormGroup;
+
   @Input() serviciosUi : ServicioUi[] | null = null;
   serviciosUiFiltered : ServicioUi[] | null = null;
+
+  @Input() planSelected? : FormGroup;
 
   @Input() observerSelection?  : Observable<ServicioUi[]>;
 
@@ -43,5 +59,17 @@ export class PlanesComponent  implements OnInit {
 
   onBackStepBtn() {
     this.onBackStep.emit();
+  }
+
+  onSelectedItem( servicioUi : ServicioUi) {
+    console.log(servicioUi);
+    if(servicioUi.isSelected){
+      this.onSelectedFromPlan?.next(servicioUi);
+      this.planForm?.get('planSelected')?.setValue(servicioUi);
+      return;
+    }
+    console.log("Plan deseleccionado");
+    this.planForm?.get('planSelected')?.reset();
+    return;
   }
 }

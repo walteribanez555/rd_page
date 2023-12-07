@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { ModalService } from '../modal-plan-details/services/modal-service';
 import { ServicioUi } from 'src/app/Modules/shared/models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'plan',
@@ -13,6 +14,11 @@ export class PlanComponent implements OnInit {
   @Input() servicioUi! : ServicioUi;
   tags : string[] = [];
 
+  @Output() onItemSelected = new EventEmitter<ServicioUi>();
+
+
+  @Input() onSelectedItem? : Observable<ServicioUi>;
+
 
 
   constructor(private modalService  : ModalService){
@@ -20,6 +26,25 @@ export class PlanComponent implements OnInit {
   }
   ngOnInit(): void {
     this.tags = this.servicioUi.disponibilidad.split(',');
+
+
+    this.onSelectedItem?.subscribe(
+      {
+        next : (servicioSelected ) => {
+          if(servicioSelected.servicio_id != this.servicioUi.servicio_id){
+            this.servicioUi.isSelected = false;
+          }
+
+        },
+        error : ( err ) => {
+
+        },
+        complete : ( ) => {
+
+        }
+
+      }
+    )
 
   }
 
@@ -34,6 +59,8 @@ export class PlanComponent implements OnInit {
 
   changeState(){
     this.servicioUi.isSelected= !this.servicioUi.isSelected;
+
+    this.onItemSelected.emit(this.servicioUi);
   }
 
 

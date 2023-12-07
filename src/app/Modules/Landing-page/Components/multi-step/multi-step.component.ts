@@ -5,7 +5,17 @@ import {
   inject,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, Observer, Subject, filter, forkJoin, map, mergeMap, switchMap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import {
+  Observable,
+  Observer,
+  Subject,
+  filter,
+  forkJoin,
+  map,
+  mergeMap,
+  switchMap,
+} from 'rxjs';
 import {
   Beneficio,
   Servicio,
@@ -45,6 +55,7 @@ export class MultiStepComponent implements OnInit {
   private beneficiosService = inject(BeneficiosService);
   private planesService = inject(PlanesService);
   private notificationService = inject(NotificationService);
+  private route = inject(ActivatedRoute);
   private serviciosFilter = new ServiciosFilter();
 
   locationsForm = new FormGroup({
@@ -55,17 +66,19 @@ export class MultiStepComponent implements OnInit {
   datesForm = new FormGroup({
     initialDate: new FormControl(null, [Validators.required]),
     finalDate: new FormControl(null, [Validators.required]),
-    quantityDays : new FormControl(null, [Validators.required]),
+    quantityDays: new FormControl(null, [Validators.required]),
   });
-
 
   quantityForm = new FormGroup({
-    adultQuantity : new FormControl(0, [Validators.required]),
-    seniorQuantity : new FormControl(0,[Validators.required])
+    adultQuantity: new FormControl(0, [Validators.required]),
+    seniorQuantity: new FormControl(0, [Validators.required]),
   });
 
-
-
+  planForm = new FormGroup({
+    planSelected: new FormControl<ServicioUi | null>(null, [
+      Validators.required,
+    ]),
+  });
 
   listForms: FormGroup[] = [];
   beneficios: Beneficio[] = [];
@@ -75,23 +88,30 @@ export class MultiStepComponent implements OnInit {
 
   serviciosToUi: ServicioUi[] | null = null;
 
+  onSelectDataToPlans?: Subject<ServicioUi[]>;
 
+  observerServiciosUi?: Observable<ServicioUi[]>;
 
-  onSelectDataToPlans?  : Subject<ServicioUi[]>;
-
-  observerServiciosUi? : Observable<ServicioUi[]>
-
+  userWeb: string | null = null;
 
   constructor() {}
 
   actualStep: number = 1;
 
   ngOnInit() {
-    this.listForms.push(this.locationsForm, this.datesForm, this.quantityForm,);
+    this.route.queryParamMap.subscribe((params) => {
+      this.userWeb = params.get('id');
+    });
+
+    this.listForms.push(
+      this.locationsForm,
+      this.datesForm,
+      this.quantityForm,
+      this.planForm
+    );
     this.onSelectDataToPlans = new Subject();
 
     this.observerServiciosUi = this.onSelectDataToPlans.asObservable();
-
 
     this.beneficiosService
       .getAll()
@@ -129,13 +149,13 @@ export class MultiStepComponent implements OnInit {
         },
         error: (err) => {
           this.notificationService.show(
-            "Error en el servidor, por favor volver mas despues",
+            'Error en el servidor, por favor volver mas despues',
             {
-              size : Size.big,
+              size: Size.big,
               imageUrl: TypeMessage.error,
-              positions : [PositionMessage.center]
+              positions: [PositionMessage.center],
             }
-          )
+          );
         },
         complete: () => {},
       });
@@ -150,36 +170,30 @@ export class MultiStepComponent implements OnInit {
   }
 
   onChangeStep(posStep: number) {
+    const formsFiltered: FormGroup[] = this.listForms.slice(0, posStep - 1);
+    const isComplete = formsFiltered.every((form) => form.valid);
 
-    const formsFiltered : FormGroup[] = this.listForms.slice(0,posStep-1);
-    const isComplete  = formsFiltered.every( form => form.valid);
-
-
-
-
-
-    if(!isComplete){
-      this.notificationService.show(
-        "Debe completar correctamente",
-        {
-          size : Size.normal,
-          positions: [PositionMessage.center],
-          imageUrl: TypeMessage.error,
-          duration : 2000,
-          closeOnTouch : true,
-        }
-      )
+    if (!isComplete) {
+      this.notificationService.show('Debe completar correctamente', {
+        size: Size.normal,
+        positions: [PositionMessage.center],
+        imageUrl: TypeMessage.error,
+        duration: 2000,
+        closeOnTouch: true,
+      });
 
       return;
     }
 
-
-    if(this.serviciosToUi){
-      const filteredServiciosUi : ServicioUi[] = this.serviciosFilter.filterByActions(formsFiltered, posStep-1, this.serviciosToUi);
+    if (this.serviciosToUi) {
+      const filteredServiciosUi: ServicioUi[] =
+        this.serviciosFilter.filterByActions(
+          formsFiltered,
+          posStep - 1,
+          this.serviciosToUi
+        );
       this.onSelectDataToPlans?.next(filteredServiciosUi);
-
     }
-
 
     if (posStep == 0 || posStep >= 8) {
       return;
