@@ -42,6 +42,7 @@ export class PlanesComponent  implements OnInit {
 
   @Output() onChangePage = new EventEmitter();
   @Output() onBackStep = new EventEmitter();
+  @Output() onSelectedPlan = new EventEmitter();
 
 
   @Input() planForm? : FormGroup;
@@ -66,6 +67,7 @@ export class PlanesComponent  implements OnInit {
     if(servicioUi.isSelected){
       this.onSelectedFromPlan?.next(servicioUi);
       this.planForm?.get('planSelected')?.setValue(servicioUi);
+      this.onSelectedPlan.emit(servicioUi);
       return;
     }
     console.log("Plan deseleccionado");

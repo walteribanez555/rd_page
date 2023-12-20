@@ -7,6 +7,10 @@ import { CustomCalendarComponent } from './Components/custom-calendar/custom-cal
 import { TagComponent } from './Components/tag/tag.component';
 import { NotificationComponent } from './Components/notification/notification.component';
 import { NotificationService } from './Components/notification/notification.service';
+import { SwitchBtnComponent } from './Components/switch_btn/switch_btn.component';
+import { GenderInputComponent } from './Components/gender-input/gender-input.component';
+import { InputDateComponent } from './Components/input-date/input-date.component';
+import { InputTelfComponent } from './Components/input-telf/input-telf.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +19,10 @@ import { NotificationService } from './Components/notification/notification.serv
     CustomCalendarComponent,
     TagComponent,
     NotificationComponent,
+    SwitchBtnComponent,
+    GenderInputComponent,
+    InputDateComponent,
+    InputTelfComponent,
   ],
   imports: [
     CommonModule,
@@ -22,6 +30,7 @@ import { NotificationService } from './Components/notification/notification.serv
     ReactiveFormsModule,
     DatePipe,
     SlicePipe,
+
   ],
   providers: [NotificationService],
   exports: [
@@ -30,6 +39,10 @@ import { NotificationService } from './Components/notification/notification.serv
     CustomCalendarComponent,
     TagComponent,
     NotificationComponent,
+    SwitchBtnComponent,
+    GenderInputComponent,
+    InputDateComponent,
+    InputTelfComponent,
   ],
 })
 export class SharedModule {}

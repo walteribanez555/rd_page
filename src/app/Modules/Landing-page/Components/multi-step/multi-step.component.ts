@@ -21,14 +21,22 @@ import {
   Servicio,
   Catalogo,
   Plan,
+  Extra,
+  Precio,
+  Venta,
 } from 'src/app/Modules/Core/models';
+import { Descuento } from 'src/app/Modules/Core/models/Descuento.model';
 import {
   ServiciosService,
   CatalogosService,
   BeneficiosService,
   PlanesService,
+  DescuentosService,
+  ExtrasService,
+  PreciosService,
 } from 'src/app/Modules/Core/services';
 import { ServiciosFilter } from 'src/app/Modules/Core/utils/filters';
+import { PreciosFilter } from 'src/app/Modules/Core/utils/filters/precios.filters';
 import {
   Size,
   TypeMessage,
@@ -36,6 +44,7 @@ import {
 } from 'src/app/Modules/shared/Components/notification/enums';
 import { NotificationService } from 'src/app/Modules/shared/Components/notification/notification.service';
 import { ServicioUi } from 'src/app/Modules/shared/models';
+import { BeneficiarioUi } from 'src/app/Modules/shared/models/Beneficiario.Ui';
 import { MapToServicioUi } from 'src/app/Modules/shared/utils/mappers/servicio.mappers';
 
 export interface ServByPlan {
@@ -57,6 +66,10 @@ export class MultiStepComponent implements OnInit {
   private notificationService = inject(NotificationService);
   private route = inject(ActivatedRoute);
   private serviciosFilter = new ServiciosFilter();
+  private preciosFilter = new PreciosFilter();
+  private descuentosService = inject(DescuentosService);
+  private extrasService = inject(ExtrasService);
+  private preciosService = inject(PreciosService);
 
   locationsForm = new FormGroup({
     fromLocation: new FormControl(null, [Validators.required]),
@@ -66,7 +79,7 @@ export class MultiStepComponent implements OnInit {
   datesForm = new FormGroup({
     initialDate: new FormControl(null, [Validators.required]),
     finalDate: new FormControl(null, [Validators.required]),
-    quantityDays: new FormControl(null, [Validators.required]),
+    quantityDays: new FormControl<number | null>(null, [Validators.required]),
   });
 
   quantityForm = new FormGroup({
@@ -80,17 +93,34 @@ export class MultiStepComponent implements OnInit {
     ]),
   });
 
+  ventaForm = new FormGroup({
+    ventaData: new FormControl<Venta | null>(null, [Validators.required]),
+  });
+
+  beneficiariosForm = new FormGroup({
+    beneficiariosData : new FormControl<BeneficiarioUi[] | null>(null,[Validators.required]),
+  })
+
+  extrasForm = new FormGroup({});
+
   listForms: FormGroup[] = [];
   beneficios: Beneficio[] = [];
   servicios: Servicio[] = [];
   catalogos: Catalogo[] = [];
   planes: Plan[] = [];
+  descuentos: Descuento[] = [];
+  extras: Extra[] = [];
+  precios: Precio[] = [];
 
   serviciosToUi: ServicioUi[] | null = null;
 
   onSelectDataToPlans?: Subject<ServicioUi[]>;
+  onSelectedPlan?: Subject<ServicioUi>;
+  onShowDetails?: Subject<any>;
 
   observerServiciosUi?: Observable<ServicioUi[]>;
+  observerOnSelectedPlan?: Observable<ServicioUi>;
+  observerOnShowDetails?: Observable<any>;
 
   userWeb: string | null = null;
 
@@ -107,28 +137,50 @@ export class MultiStepComponent implements OnInit {
       this.locationsForm,
       this.datesForm,
       this.quantityForm,
-      this.planForm
+      this.planForm,
+      this.extrasForm,
+      this.ventaForm,
+      this.beneficiariosForm,
     );
+
     this.onSelectDataToPlans = new Subject();
+    this.onSelectedPlan = new Subject();
+    this.onShowDetails = new Subject();
 
     this.observerServiciosUi = this.onSelectDataToPlans.asObservable();
+    this.observerOnSelectedPlan = this.onSelectedPlan.asObservable();
+    this.observerOnShowDetails = this.onShowDetails.asObservable();
 
     this.beneficiosService
       .getAll()
       .pipe(
         switchMap((data) => {
           this.beneficios = data;
+          return this.preciosService.getAll();
+        }),
+        switchMap((data) => {
+          this.precios = data;
+          console.log(this.precios);
           return this.catalogosService.getAll();
         }),
         switchMap((data) => {
+          console.log(data);
           this.catalogos = data;
           return this.serviciosService.getAll();
         }),
-        mergeMap((servicios: Servicio[]) => {
+        switchMap((servicios: Servicio[]) => {
           this.servicios = servicios;
+          return this.descuentosService.getAll();
+        }),
+        switchMap((descuentos: Descuento[]) => {
+          this.descuentos = descuentos;
+          return this.extrasService.getAll();
+        }),
+        mergeMap((extras: Extra[]) => {
+          this.extras = extras;
           const planesRequests: Observable<any>[] = [];
 
-          servicios.forEach((servicio) => {
+          this.servicios.forEach((servicio) => {
             planesRequests.push(
               this.planesService.getOne(servicio.servicio_id).pipe(
                 map((planesData) => {
@@ -142,10 +194,18 @@ export class MultiStepComponent implements OnInit {
         })
       )
       .subscribe({
-        next: (data: ServByPlan[]) => {
+        next: (data: any[]) => {
           this.serviciosToUi = data.map((item) =>
-            MapToServicioUi(this.catalogos, this.beneficios, item)
+            MapToServicioUi(
+              this.catalogos,
+              this.beneficios,
+              this.extras,
+              item,
+              this.precios
+            )
           );
+
+          console.log(this.serviciosToUi);
         },
         error: (err) => {
           this.notificationService.show(
@@ -159,6 +219,8 @@ export class MultiStepComponent implements OnInit {
         },
         complete: () => {},
       });
+
+    this.descuentosService.getAll().subscribe((data) => {});
   }
 
   isClicked: boolean = false;
@@ -185,6 +247,16 @@ export class MultiStepComponent implements OnInit {
       return;
     }
 
+    if (this.datesForm.get('quantityDays')!.value) {
+      this.serviciosToUi?.forEach((servicio) => {
+        servicio.precioSelected = this.preciosFilter.filterByDay(
+          servicio,
+          this.datesForm.get('quantityDays')!.value!
+        );
+      });
+      console.log(this.serviciosToUi);
+    }
+
     if (this.serviciosToUi) {
       const filteredServiciosUi: ServicioUi[] =
         this.serviciosFilter.filterByActions(
@@ -195,11 +267,17 @@ export class MultiStepComponent implements OnInit {
       this.onSelectDataToPlans?.next(filteredServiciosUi);
     }
 
-    if (posStep == 0 || posStep >= 8) {
+    if (posStep == 0 || posStep >= 9) {
       return;
     }
 
     this.actualStep = posStep;
+
+    this.onShowDetails?.next(this.actualStep);
+  }
+
+  onPlanSelected(servicioUi: ServicioUi) {
+    this.onSelectedPlan?.next(servicioUi);
   }
 
   onChangeClick() {

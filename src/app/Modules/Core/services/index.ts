@@ -12,3 +12,4 @@ export { ReembolsosService } from './reembolsos.service';
 export { ServiciosService } from './servicios.service';
 export { SiniestrosService } from './siniestros.service';
 export { VentasService } from './ventas.service';
+export {DescuentosService} from './descuentos.service';

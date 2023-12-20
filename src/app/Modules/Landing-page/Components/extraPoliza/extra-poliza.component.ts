@@ -1,16 +1,37 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Servicio } from 'src/app/Modules/Core/models';
+import { ServicioUi } from 'src/app/Modules/shared/models';
 
 @Component({
   selector: 'extra-poliza',
   styleUrls: ['./extra-poliza.component.css'],
   templateUrl : './extra-poliza.component.html',
 })
-export class ExtraPolizaComponent {
+export class ExtraPolizaComponent implements OnInit {
+  ngOnInit(): void {
+
+    this.onSelectedPlan?.subscribe(
+      {
+        next : ( service : ServicioUi )  => {
+          console.log(service);
+          this.selectedService = service;
+        }
+      }
+    )
+
+  }
 
 
   @Output() onChangePage = new EventEmitter();
   @Output() onBackStep = new EventEmitter();
+
+
+  @Input() onSelectedPlan? : Observable<ServicioUi>;
+
+  selectedService : ServicioUi | null = null;
 
 
 
@@ -20,6 +41,10 @@ export class ExtraPolizaComponent {
 
   onBackStepBtn() {
     this.onBackStep.emit();
+  }
+
+  onSelectedExtra(pos : number) {
+    this.selectedService!.extras[pos].isSelected = !this.selectedService!.extras[pos].isSelected;
   }
 
 

@@ -191,3 +191,36 @@ button span{
   transition: all 0.3s ease-in-out;
   background-color: var(--main-color);
 }
+
+
+
+@media (max-width: 1024px) {
+
+
+  .login-container{
+    grid-template-columns: 1fr;
+    width: 90vw;
+  }
+
+
+  .left{
+    display: none;
+  }
+
+
+
+  .field{
+    flex-direction: column;
+
+  }
+
+  .buttons-group{
+    justify-content: center;
+  }
+
+  input{
+     font-size: 12px;
+      margin-top: 20px;
+  }
+
+}

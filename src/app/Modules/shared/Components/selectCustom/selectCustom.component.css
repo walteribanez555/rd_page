@@ -107,9 +107,17 @@ li.selected {
   .search input {
     height: 30px;
     outline: none;
-    font-size: 15px;
+    font-size: 12px;
     border-radius: 5px;
     padding: 0 10px 0 23px;
+  }
+
+  .select-btn{
+    font-size: 12px;
+  }
+
+  .search i{
+    font-size: 12px;
   }
 
   .options li {
@@ -119,6 +127,6 @@ li.selected {
   }
 
   .wrapper {
-    width: calc(100vw - 50px);
+    width: 80%;
   }
 }

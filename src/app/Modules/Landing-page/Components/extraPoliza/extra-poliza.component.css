@@ -114,10 +114,10 @@ button:hover{
   background-color: var(--main-color);
 }
 
-.list-planes{
+.list{
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 10px;
   padding: 10px 0px;
   align-items: center;
   justify-content: center;
@@ -155,14 +155,6 @@ button:hover{
     padding: 0px;
   }
 
-  .list-location{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: start;
-    justify-content: center;
-
-  }
 
   button{
     margin: 15px 20px;
@@ -181,6 +173,10 @@ button:hover{
     margin-top: -10px;
   }
 
+
+  extra{
+    width: 100%;
+  }
 
 
 }

@@ -252,7 +252,8 @@ ages-traveler,
 planes,
 datos-polizas,
 payment,
-extra-poliza {
+extra-poliza,
+detail {
   width: 100%;
   height: 100%;
 }
@@ -280,7 +281,8 @@ ages-traveler.appears,
 planes.appears,
 datos-polizas.appears,
 payment.appears,
-extra-poliza.appears{
+extra-poliza.appears,
+detail.appears{
   -webkit-animation: fadeIn .6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
    animation: fadeIn .6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 

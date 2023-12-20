@@ -4,10 +4,11 @@
     <dates-to-travel [class.hidden]="actualStep !== 1" [places]="locationsForm"   (onChangePage)="onChangeStep(2)" [class.appears]="actualStep == 1" ></dates-to-travel>
     <destiny [class.hidden]="actualStep !== 2" [datesForm]="datesForm"  (onBackStep)="onChangeStep(1)"  (onChangePage)="onChangeStep(3)" [class.appears]="actualStep == 2"></destiny>
     <ages-traveler [class.hidden]="actualStep !== 3" [agesForm]="quantityForm"  (onBackStep)="onChangeStep(2)" (onChangePage)="onChangeStep(4)" [class.appears]="actualStep == 3"></ages-traveler>
-    <planes [class.hidden]="actualStep !==4" [planForm]="planForm"  [observerSelection]="observerServiciosUi" (onBackStep)="onChangeStep(3)" (onChangePage)="onChangeStep(5)" [class.appears]="actualStep == 4" [serviciosUi]="serviciosToUi" ></planes>
-    <extra-poliza  [class.hidden]="actualStep!==5" (onBackStep)="onChangeStep(4)" (onChangePage)="onChangeStep(6)"  [class.appears]="actualStep == 5"  ></extra-poliza>
-    <datos-polizas [class.hidden]="actualStep !==6" (onBackStep)="onChangeStep(5)" (onChangePage)="onChangeStep(7)"[class.appears]="actualStep == 5"></datos-polizas>
-    <payment [class.hidden]="actualStep !==7" (onBackStep)="onChangeStep(6)"  [class.appears]="actualStep == 8"></payment>
+    <planes [class.hidden]="actualStep !==4" [planForm]="planForm"  [observerSelection]="observerServiciosUi" (onSelectedPlan)="onPlanSelected($event)" (onBackStep)="onChangeStep(3)" (onChangePage)="onChangeStep(5)" [class.appears]="actualStep == 4" [serviciosUi]="serviciosToUi" ></planes>
+    <extra-poliza  [class.hidden]="actualStep!==5" [onSelectedPlan]="observerOnSelectedPlan" (onBackStep)="onChangeStep(4)" (onChangePage)="onChangeStep(6)"  [class.appears]="actualStep == 5"  ></extra-poliza>
+    <detail [class.hidden]="actualStep!==6"  [onDetail]="observerOnShowDetails" [forms]="listForms" (onBackStep)="onChangeStep(5)" (onChangePage)="onChangeStep(7)"  [class.appears]="actualStep == 6"></detail>
+    <datos-polizas [class.hidden]="actualStep!==7"  [onPageChanged]="observerOnShowDetails" [forms]="listForms"   (onBackStep)="onChangeStep(6)" (onChangePage)="onChangeStep(8)"[class.appears]="actualStep == 7"></datos-polizas>
+    <payment [class.hidden]="actualStep !==8" (onBackStep)="onChangeStep(7)"  [class.appears]="actualStep == 8"></payment>
 
 
   </div>
@@ -75,20 +76,27 @@
               <p>Selecciona los extras</p>
             </div>
           </li>
-          <span style="padding-top: 20px;" [class.active]="actualStep >= 6">
-            Selecciona el plan para continuar
-          </span>
-          <li class="step" (click)="onStepClicked(6)" [class.active]="actualStep >= 6">
-            <span >6</span>
+          <li class="step" (click)="onStepClicked(6)"  [class.active]="actualStep >= 6" >
+            <span>6</span>
             <div class="data-step">
               <span>Paso 6:</span>
-              <p>Rellena la informacion</p>
+              <p>Revisa los detalles</p>
             </div>
           </li>
-          <li class="step" (click)="onStepClicked(7)"  [class.active]="actualStep >= 7">
+          <span style="padding-top: 20px;" [class.active]="actualStep >= 7">
+            Revisa los detalles para continuar
+          </span>
+          <li class="step" (click)="onStepClicked(7)" [class.active]="actualStep >= 7">
             <span >7</span>
             <div class="data-step">
               <span>Paso 7:</span>
+              <p>Rellena la informacion</p>
+            </div>
+          </li>
+          <li class="step" (click)="onStepClicked(8)"  [class.active]="actualStep >= 8">
+            <span> 8</span>
+            <div class="data-step">
+              <span>Paso 8:</span>
               <p>Pagar</p>
             </div>
           </li>

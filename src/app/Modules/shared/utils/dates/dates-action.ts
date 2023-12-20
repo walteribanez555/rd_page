@@ -13,4 +13,26 @@ export class DatesAction {
 
     return diferenciaDays + 1;
   }
+
+
+  yearsBetweenDates(initialDate:  string, finalDate : string) {
+
+    const datenew = new Date(finalDate);
+    const dateold = new Date(initialDate);
+
+    var ynew = datenew.getFullYear();
+    var mnew = datenew.getMonth();
+    var dnew = datenew.getDate();
+    var yold = dateold.getFullYear();
+    var mold = dateold.getMonth();
+    var dold = dateold.getDate();
+    var diff = ynew - yold;
+    if (mold > mnew) diff--;
+    else {
+        if (mold == mnew) {
+            if (dold > dnew) diff--;
+        }
+    }
+    return diff;
+  }
 }
