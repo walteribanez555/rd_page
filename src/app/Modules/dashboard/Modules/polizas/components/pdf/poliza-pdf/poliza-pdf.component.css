@@ -1,81 +1,70 @@
-
-.polizaToPdf{
+.polizaToPdf {
   width: fit-content;
   height: fit-content;
   background-color: red;
   position: relative;
-
 }
 
 .poliza-imprimir span,
 .poliza-imprimir p,
-.poliza-imprimir h1{
-    font-size: 5px;
-    color: var(--text-color);
+.poliza-imprimir h1 {
+  font-size: 5px;
+  color: var(--text-color);
 }
 
-
-.poliza-imprimir{
-    /* bottom: -230%; */
-    /* bottom: 20%; */
-    width: 744px;
-    height: 1050px;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    position: relative;
-
+.poliza-imprimir {
+  /* bottom: -230%; */
+  /* bottom: 20%; */
+  width: 744px;
+  height: 1050px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
 }
 
-.poliza-imprimir .top{
-    width: 744px;
-    height: 150px;
+.poliza-imprimir .top {
+  width: 744px;
+    height: 130px;
     display: flex;
     position: relative;
     top: 0;
     flex-direction: column;
     justify-content: space-between;
     background-color: var(--main-color);
-
 }
 
-
-
-
-.poliza-imprimir .top .items{
+.poliza-imprimir .top .items {
   position: relative;
   width: 744px;
   height: 150px;
   margin-top: 0px;
   display: flex;
   flex-direction: row;
-
 }
 
-
-.top .saludo{
+.top .saludo {
   margin: 45px 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.top .saludo h1{
+.top .saludo h1 {
   margin-left: 20px;
-
-  font-size: 40px;
+  font-size: 25px;
   color: white;
   font-weight: bold;
 }
 
-.top .qr_space{
+.top .qr_space {
   position: absolute;
   top: 5%;
   right: 0;
   border-radius: 10px 0px 0px 10px;
   margin-top: 20px;
-  width: 180px;
+  width: 200px;
   height: 90px;
   background-color: white;
   display: flex;
@@ -86,7 +75,7 @@
   overflow: hidden;
 }
 
-.qr_space .qr{
+.qr_space .qr {
   width: 200px;
   margin-right: 10px;
   height: 100px;
@@ -94,36 +83,30 @@
   margin-top: -5px;
 }
 
-
-
-
-
-.qr_space .message{
+.qr_space .message {
   margin-left: 0px;
   width: 150px;
   font-size: 12px;
   margin-top: 20px;
-
 }
 
-
-.datos-beneficiario{
+.datos-beneficiario {
   position: relative;
   top: 10px;
   left: 50px;
-  border:  1px solid gainsboro;
+  border: 1px solid gainsboro;
   border-radius: 20px;
-  width : 644px;
-  height: 200px;
+  width: 644px;
+  height: 150px;
   background-color: transparent;
-  padding: 20px;
+  padding: 5px 20px;
 }
 
-.datos-beneficiario span{
-  font-size: 20px;
+.datos-beneficiario span {
+  font-size: 12px;
 }
 
-.datos-beneficiario .data{
+.datos-beneficiario .data {
   margin: 10px;
   width: calc(100% - 20px);
   height: calc(50% - 10px);
@@ -134,8 +117,7 @@
   justify-content: space-between;
 }
 
-
-.data .left{
+.data .left {
   margin-left: 0px;
   padding: 0px 0px;
   display: flex;
@@ -144,7 +126,7 @@
   justify-content: flex-start;
 }
 
-.data .right{
+.data .right {
   margin-right: 0px;
   padding: 0px 30px;
   display: flex;
@@ -152,39 +134,35 @@
   justify-content: flex-start;
 }
 
-
-
-.descriptions{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
-  border-right: 1px solid gainsboro;
-  width: 140px;
-  margin: 15px 0px 0px 0px;
-  height: 100%;
-  padding: 0px 5px;
-}
-
-.info{
+.descriptions {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   width: 140px;
-  margin: 15px 2px;
+  margin: 0px 2px;
   height: 100%;
   padding: 0px 5px;
 }
 
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 140px;
+  margin: 0px 2px;
+  height: 100%;
+  padding: 0px 5px;
+}
 
 .info span,
-.descriptions span{
-  font-size: 14px;
+.descriptions span {
+  font-size: 10px;
   margin: 2px 0px;
 }
 
-.nombre-beneficiario{
+.nombre-beneficiario {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -193,110 +171,99 @@
   font-weight: bold;
 }
 
-.nombre-beneficiario span{
+.nombre-beneficiario span {
   margin-left: 4px;
 }
 
-
 .logo {
-    display: flex;
-    width: 744px;
-    height: 192px;
-    color: red;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding:20px 60px 30px 30px
-
-
+  display: flex;
+  width: 744px;
+  height: 192px;
+  color: red;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20px 60px 30px 30px;
 }
 
-
-.logo .img{
-    width: 66px;
-    height: 66px;
-    margin-right: 30px;
-    position: relative;
-    top: 1;
+.logo .img {
+  width: 66px;
+  height: 66px;
+  margin-right: 30px;
+  position: relative;
+  top: 1;
 }
 
-.logo .img img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.logo .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.logo .nombre{
-    width: 450px;
-    height: 96px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: -20px;
-    margin-left: -20px;
-
+.logo .nombre {
+  width: 450px;
+  height: 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: -20px;
+  margin-left: -20px;
 }
 
-
-
- .logo .nombre p .assis {
-    font-weight: 120;
-    color: var(--main-color);
-    font-size: 50px;
+.logo .nombre p .assis {
+  font-weight: 120;
+  color: var(--main-color);
+  font-size: 50px;
 }
 
 .logo .nombre p .trip {
-    font-weight: bold;
-    color: var(--main-color);
-    font-size: 42px;
-    margin-left: -4px;
+  font-weight: bold;
+  color: var(--main-color);
+  font-size: 42px;
+  margin-left: -4px;
 }
 
-.logo .nombre p .com{
-    font-weight: bold;
-    color :#DF085A;
-    font-size: 20px;
+.logo .nombre p .com {
+  font-weight: bold;
+  color: #df085a;
+  font-size: 20px;
 }
 
-.logo .nombre .descripcion{
-    margin-top: -15px;
+.logo .nombre .descripcion {
+  margin-top: -15px;
 }
 
-.logo .nombre .descripcion span{
-    font-size: 12px;
-    letter-spacing: 0.2em;
+.logo .nombre .descripcion span {
+  font-size: 12px;
+  letter-spacing: 0.2em;
 }
 
-
-
-.data_plan{
+.data_plan {
   display: flex;
   flex-direction: column;
   width: 744px;
   height: 600px;
   align-items: center;
   justify-content: start;
-
 }
 
-.catalogo{
+.catalogo {
   width: 744px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
-.asistencia{
+.asistencia {
   width: 324px;
   display: flex;
   flex-direction: column;
 }
 
-.catalogo .plan{
+.catalogo .plan {
   width: 100%;
 }
 
-.catalogo .plan span{
+.catalogo .plan span {
   font-size: 30px;
   color: #ec197d;
   font-weight: bold;
@@ -307,18 +274,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
-
+  margin-top: 0px;
 }
 
-.catalogo .description span{
+.catalogo .description span {
   font-size: 12px;
   font-weight: bold;
   color: var(--text-color);
 }
 
 .beneficios {
-  padding: 20px 0px;
+  padding: 0px;
   width: 100%;
   height: 400px;
   display: flex;
@@ -326,37 +292,30 @@
   justify-content: center;
 }
 
-.beneficios .beneficio{
-  flex: 1 1 calc(50% - 20px); /* Adjust width as needed */
-  margin: 10px;
-  padding: 10px;
-  /* border-left: 1px solid var(--main-color); */
-  /* border: 1px solid #ccc; */
-  /* border-radius: 10px; */
-  /* box-sizing: border-box; */
+.beneficios .beneficio {
+  flex: 1 1 calc(50% - 20px);
+  margin: 0px 10px;
+  padding: 0px 10px;
 }
 
-.beneficio .title{
+.beneficio .title {
   display: flex;
   flex-direction: row;
-
 }
 
-
-
-.beneficio .title span{
-  font-size: 20px;
+.beneficio .title span {
+  font-size: 12px;
   color: var(--main-color);
   font-weight: bold;
 }
 
-.list-cats{
-  margin-top: 10px;
+.list-cats {
+  margin-top: 5px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 0px 10px;
+  padding: 5px 10px;
 }
 
 .list-cats .data {
@@ -365,27 +324,25 @@
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-start;
-  border-right:  1px solid var(--main-color);
+  border-right: 1px solid var(--main-color);
   padding-right: 5px;
   width: 85px;
   margin: 3px 0px;
 }
 
-.list-cats .cats{
-  width:  100%;
+.list-cats .cats {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding-left: 5px;
   justify-content: flex-start;
   margin: 3px 0px;
-
-
 }
 
 .list-cats .cats span,
-.list-cats .data span{
-  height: 15px;
+.list-cats .data span {
+  height: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -394,14 +351,12 @@
 }
 
 .list-cats .data span,
-.list-cats .cats span{
+.list-cats .cats span {
   font-size: 10px;
   color: var(--text-color);
 }
 
-
-
-.asistencia .soporte{
+.asistencia .soporte {
   display: flex;
   flex-direction: column;
   border: 1px solid #482484;
@@ -413,7 +368,7 @@
   position: relative;
 }
 
-.soporte .mensaje{
+.soporte .mensaje {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -421,73 +376,70 @@
   width: 100%;
 }
 
-.mensaje p{
+.mensaje p {
   font-size: 20px;
   text-align: left;
   color: var(--text-color);
 }
 
-.mensaje p span{
+.mensaje p span {
   color: #ec197d;
   font-size: 20px;
-
 }
 
-.soporte .contacto{
+.soporte .contacto {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   font-size: 20px;
 }
 
-.contacto span{
+.contacto span {
   font-size: 20;
 }
 
-.contacto span.title{
+.contacto span.title {
   font-size: 20px;
   color: #ec197d;
 }
 
-.contacto span.description{
+.contacto span.description {
   font-size: 23px;
   color: var(--text-color);
 }
 
-.asistencia .whatsappLogo{
+.asistencia .whatsappLogo {
   position: absolute;
   padding: 10px;
   left: 0;
   bottom: 0;
-
 }
 
-.whatsappLogo img{
-  fill :#ec197d;
-  color:  #ec197d;
+.whatsappLogo img {
+  fill: #ec197d;
+  color: #ec197d;
 }
 
-
-.ayuda{
+.ayuda {
   width: calc(100% - 100px);
-  height: 320px;
+  height: 100px;
   border-radius: 10px;
   border: 1px solid var(--main-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 0px 10px;
   position: relative;
+  top: 130px;
 }
 
-.ayuda span{
+.ayuda span {
   font-size: 12px;
-  padding: 10px 20px;
-
+  padding: 0px 20px;
 }
 
-.contacto{
+.contacto {
   font-size: 15px;
   color: green;
   display: flex;
@@ -496,65 +448,57 @@
   justify-content: center;
 }
 
-.footer{
-
-    width: 744px;
-    height: 20px;
-    display: flex;
-    position: absolute;
-    bottom: 0;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: var(--main-color);
-    padding-left: 30px;
-
+.footer {
+  width: 744px;
+  height: 30px;
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--main-color);
+  padding-left: 30px;
 }
 
-.footer .info{
+.footer .info {
   background-color: white;
   width: 714px;
-  height: 40px;
+  height: 60px;
   position: absolute;
   bottom: -15px;
   display: flex;
   flex-direction: column;
-
 }
-.line{
+.line {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-
 }
 
-.line hr{
+.line hr {
   width: 650px;
   color: var(--main-color);
   height: 1px;
-
 }
 
-.line .img{
+.line .img {
   width: fit-content;
   height: fit-content;
 }
 
-.line .img img{
+.line .img img {
   width: 20px;
   height: 30px;
   object-fit: fill;
 }
 
-.info .date{
+.info .date {
   margin-top: -20px;
   padding-left: 10px;
   font-size: 10px;
-
 }
 
-.date span{
+.date span {
   font-size: 8px;
 }
-
-

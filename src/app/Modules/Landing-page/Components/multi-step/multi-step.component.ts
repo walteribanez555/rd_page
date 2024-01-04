@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnInit,
   inject,
@@ -8,13 +9,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
   Observable,
-  Observer,
   Subject,
-  filter,
+  catchError,
   forkJoin,
   map,
   mergeMap,
+  of,
   switchMap,
+  throwError,
 } from 'rxjs';
 import {
   Beneficio,
@@ -24,8 +26,16 @@ import {
   Extra,
   Precio,
   Venta,
+  Cupon,
+  Cliente,
+  Poliza,
 } from 'src/app/Modules/Core/models';
+import { Beneficiario, BeneficiarioToPost, BeneficiarioToResp } from 'src/app/Modules/Core/models/Beneficiario.model';
+import { ClienteToPost } from 'src/app/Modules/Core/models/Cliente.model';
 import { Descuento } from 'src/app/Modules/Core/models/Descuento.model';
+import { PolizaToPost } from 'src/app/Modules/Core/models/Poliza.model';
+import { PolizaExtraToPost } from 'src/app/Modules/Core/models/PolizaExtra.model';
+import { VentaToPost, VentaResp } from 'src/app/Modules/Core/models/Venta.model';
 import {
   ServiciosService,
   CatalogosService,
@@ -34,7 +44,13 @@ import {
   DescuentosService,
   ExtrasService,
   PreciosService,
+  CuponesService,
+  BeneficiariosService,
+  ClientesService,
+  PolizasService,
+  VentasService,
 } from 'src/app/Modules/Core/services';
+import { PolizasExtrasService } from 'src/app/Modules/Core/services/polizas-extras.service';
 import { ServiciosFilter } from 'src/app/Modules/Core/utils/filters';
 import { PreciosFilter } from 'src/app/Modules/Core/utils/filters/precios.filters';
 import {
@@ -45,6 +61,7 @@ import {
 import { NotificationService } from 'src/app/Modules/shared/Components/notification/notification.service';
 import { ServicioUi } from 'src/app/Modules/shared/models';
 import { BeneficiarioUi } from 'src/app/Modules/shared/models/Beneficiario.Ui';
+import { DatesAction } from 'src/app/Modules/shared/utils/dates/dates-action';
 import { MapToServicioUi } from 'src/app/Modules/shared/utils/mappers/servicio.mappers';
 
 export interface ServByPlan {
@@ -59,6 +76,7 @@ export interface ServByPlan {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultiStepComponent implements OnInit {
+
   private serviciosService = inject(ServiciosService);
   private catalogosService = inject(CatalogosService);
   private beneficiosService = inject(BeneficiosService);
@@ -70,6 +88,16 @@ export class MultiStepComponent implements OnInit {
   private descuentosService = inject(DescuentosService);
   private extrasService = inject(ExtrasService);
   private preciosService = inject(PreciosService);
+  private cuponesService = inject(CuponesService);
+  private clientesService = inject(ClientesService);
+  private polizasService = inject(PolizasService);
+  private ventasService = inject(VentasService);
+  private notificacionesModalService = inject(NotificationService);
+  private polizasExtrasService = inject(PolizasExtrasService);
+  private beneficiariosService = inject(BeneficiariosService);
+  private cdr = inject(ChangeDetectorRef);
+
+
 
   locationsForm = new FormGroup({
     fromLocation: new FormControl(null, [Validators.required]),
@@ -101,6 +129,16 @@ export class MultiStepComponent implements OnInit {
     beneficiariosData : new FormControl<BeneficiarioUi[] | null>(null,[Validators.required]),
   })
 
+
+  ventaRespForm = new FormGroup({
+    ventRespData : new FormControl< VentaResp| null>(null, [Validators.required]),
+  })
+
+
+  beneficiariosRespForm = new FormGroup({
+    polizaRespForm : new FormControl<Poliza | null>(null, [Validators.required]),
+  })
+
   extrasForm = new FormGroup({});
 
   listForms: FormGroup[] = [];
@@ -111,6 +149,8 @@ export class MultiStepComponent implements OnInit {
   descuentos: Descuento[] = [];
   extras: Extra[] = [];
   precios: Precio[] = [];
+  cupones : Cupon[] = [];
+
 
   serviciosToUi: ServicioUi[] | null = null;
 
@@ -121,6 +161,14 @@ export class MultiStepComponent implements OnInit {
   observerServiciosUi?: Observable<ServicioUi[]>;
   observerOnSelectedPlan?: Observable<ServicioUi>;
   observerOnShowDetails?: Observable<any>;
+
+  onLoadProcess?: Subject<any>;
+  observerProcess?: Observable<any>;
+
+
+  onIntentPayment? : Subject<any>;
+  observerPayment? : Observable<any>;
+
 
   userWeb: string | null = null;
 
@@ -141,15 +189,21 @@ export class MultiStepComponent implements OnInit {
       this.extrasForm,
       this.ventaForm,
       this.beneficiariosForm,
+      this.ventaRespForm,
+      this.beneficiariosRespForm,
     );
 
     this.onSelectDataToPlans = new Subject();
     this.onSelectedPlan = new Subject();
     this.onShowDetails = new Subject();
+    this.onIntentPayment = new Subject();
+
+
 
     this.observerServiciosUi = this.onSelectDataToPlans.asObservable();
     this.observerOnSelectedPlan = this.onSelectedPlan.asObservable();
     this.observerOnShowDetails = this.onShowDetails.asObservable();
+    this.observerPayment = this.onIntentPayment.asObservable();
 
     this.beneficiosService
       .getAll()
@@ -158,13 +212,15 @@ export class MultiStepComponent implements OnInit {
           this.beneficios = data;
           return this.preciosService.getAll();
         }),
-        switchMap((data) => {
+        switchMap( (data) => {
           this.precios = data;
-          console.log(this.precios);
+          return this.cuponesService.getAll();
+        }),
+        switchMap((data) => {
+          this.cupones = data;
           return this.catalogosService.getAll();
         }),
         switchMap((data) => {
-          console.log(data);
           this.catalogos = data;
           return this.serviciosService.getAll();
         }),
@@ -201,11 +257,13 @@ export class MultiStepComponent implements OnInit {
               this.beneficios,
               this.extras,
               item,
-              this.precios
+              this.precios,
+              this.cupones,
             )
           );
 
           console.log(this.serviciosToUi);
+
         },
         error: (err) => {
           this.notificationService.show(
@@ -254,7 +312,6 @@ export class MultiStepComponent implements OnInit {
           this.datesForm.get('quantityDays')!.value!
         );
       });
-      console.log(this.serviciosToUi);
     }
 
     if (this.serviciosToUi) {
@@ -267,14 +324,206 @@ export class MultiStepComponent implements OnInit {
       this.onSelectDataToPlans?.next(filteredServiciosUi);
     }
 
+
+
     if (posStep == 0 || posStep >= 9) {
       return;
     }
 
-    this.actualStep = posStep;
+    if (posStep == 8) {
+      this.createIntentPayment().subscribe({
+        next : (resp) => {
+          this.actualStep = posStep;
+          this.onShowDetails?.next(this.actualStep);
 
-    this.onShowDetails?.next(this.actualStep);
+        },
+        error : (err) => {
+          console.log(err);
+        },
+        complete : ( ) => {
+          this.actualStep = posStep;
+          console.log(this.actualStep);
+          this.onShowDetails?.next(this.actualStep);
+          this.cdr.detectChanges();
+        }
+      })
+    }else{
+      this.actualStep = posStep;
+      this.onShowDetails?.next(this.actualStep);
+    }
   }
+
+
+  createIntentPayment() :Observable<any>{
+    const beneficiariosData: BeneficiarioUi[] =
+      this.listForms[6].value.beneficiariosData;
+
+    const titularBeneficiario = beneficiariosData[0];
+
+    // console.log({titularBeneficiario});
+
+    this.onLoadProcess = new Subject();
+
+    this.observerProcess = this.onLoadProcess.asObservable();
+
+    this.onLoading(this.observerProcess);
+
+    this.clientesService
+      .getOne(titularBeneficiario.nro_identificacion+'_2')
+      .subscribe({
+        next: (cliente) => {
+          this.createVenta(cliente[0], this.listForms);
+        },
+        error: (_) => {
+          console.log(_);
+
+          const nuevoCliente: ClienteToPost = {
+            nombre: titularBeneficiario.primer_nombre,
+            apellido: titularBeneficiario.primer_apellido,
+            tipo_cliente: 1,
+            nro_identificacion: titularBeneficiario.nro_identificacion,
+            origen: titularBeneficiario.origen,
+            email: titularBeneficiario.email,
+            nro_contacto: titularBeneficiario.telefono,
+            status: 1,
+            office_id : 2,
+          };
+
+          this.clientesService.create(nuevoCliente).subscribe({
+            next: (cliente: Cliente) => {
+              this.createVenta(cliente, this.listForms);
+            },
+            error: (err) => {
+              this.onLoadProcess?.complete();
+              this.onError(
+                'El email ya esta registrado a otro pasaporte o nro identificacion'
+              );
+            },
+            complete: () => {
+              console.log('Completado');
+            },
+          });
+        },
+      });
+
+      return this.observerProcess;
+  }
+
+  createVenta(cliente: Cliente, forms: FormGroup[]) {
+    // console.log(this.listForms);
+
+    const nuevaVenta: VentaToPost = {
+      username: 'raforios',
+      office_id: 2,
+      cliente_id: cliente.id ?? cliente.cliente_id!,
+      tipo_venta: 1,
+      forma_pago: 1,
+      cantidad: `${this.listForms[6].value.beneficiariosData.length}`,
+      servicio_id: `${this.listForms[3].value.planSelected.servicio_id}`,
+      extras_id: `${(
+        this.listForms[5].value.ventaData.selectedExtras as Extra[]
+      )
+        .map((selectedExtra: Extra) => selectedExtra.beneficio_id)
+        .join(',')}`,
+      fecha_salida: this.listForms[1].value.initialDate as string,
+      fecha_retorno: this.listForms[1].value.finalDate,
+      status: 1,
+      plus: 0,
+      descuento: `${this.listForms[5].value.ventaData.total_cupones}`,
+      tipo_descuento: `${this.listForms[5].value.ventaData.tipo_cupones}`,
+    };
+
+    this.ventasService
+      .create(nuevaVenta)
+      .pipe(
+        mergeMap((respFromVentas: VentaResp) => {
+          this.ventaRespForm.setValue({ventRespData : respFromVentas});
+          return this.createExtras(respFromVentas, this.listForms).pipe(
+            catchError((err) => throwError(err)),
+            map(() => respFromVentas)
+          );
+        }),
+        mergeMap((respFromVentas: VentaResp) => {
+          const nuevaPoliza: PolizaToPost = {
+            venta_id: respFromVentas.id ?? respFromVentas.venta_id!,
+            servicio_id: (this.listForms[3].value.planSelected as ServicioUi)
+              .servicio_id,
+            destino: this.listForms[0].value.toLocation.toUpperCase(),
+            fecha_salida: this.listForms[1].value.initialDate,
+            fecha_retorno: this.listForms[1].value.finalDate,
+            extra: 1,
+            status: 4,
+          };
+          return this.polizasService.create(nuevaPoliza);
+        }),
+        switchMap((poliza: Poliza) => {
+
+          this.listForms[8].get('polizaRespForm')?.setValue(poliza);
+
+          const beneficiarios: BeneficiarioUi[] = this.listForms[6].value
+            .beneficiariosData as BeneficiarioUi[];
+
+          const beneficiariosToIt: BeneficiarioToPost[] = beneficiarios.map(
+            (beneficiario) => {
+              return {
+                poliza_id: poliza.poliza_id ?? poliza.id!,
+                primer_apellido: beneficiario.primer_apellido,
+                primer_nombre: beneficiario.primer_nombre,
+                segundo_apellido: beneficiario.segundo_apellido,
+                segundo_nombre: beneficiario.segundo_nombre,
+                fecha_nacimiento: DatesAction.invert_date(
+                  beneficiario.fecha_nacimiento
+                ),
+                sexo: parseInt(beneficiario.sexo),
+                origen: beneficiario.origen,
+                email: beneficiario.email,
+                telefono: beneficiario.telefono,
+                nro_identificacion: beneficiario.nro_identificacion,
+              };
+            }
+          );
+
+          const requests: any[] = beneficiariosToIt.map((beneficiario) =>
+            this.beneficiariosService.create(beneficiario)
+          );
+
+          return forkJoin(requests);
+        }),
+        catchError((error) => {
+          console.error('Error occurred:', error.message);
+          return throwError(error);
+        })
+      )
+      .subscribe({
+        next: (resp : BeneficiarioToResp[]) => {
+          this.onIntentPayment?.complete();
+        },
+        error: (err) => {
+          this.onLoadProcess?.complete();
+          this.onError('Ocurrio un error');
+        },
+        complete: () => {
+          this.onLoadProcess?.complete();
+          this.onSuccess('Venta Realizada Correctamente');
+        },
+      });
+  }
+
+  createExtras = (venta: VentaResp, forms: FormGroup[]): Observable<any> => {
+    if (venta.extras_total.length === 0) {
+      return of(true);
+    }
+
+    const polizaExtraToPost: PolizaExtraToPost = {
+      venta_id: venta.venta_id ?? venta.id!,
+      beneficio_id: `${(forms[5].value.ventaData.selectedExtras as Extra[])
+        .map((selectedExtra: Extra) => selectedExtra.beneficio_id)
+        .join(',')}`,
+      monto_adicional: venta.extras_total,
+    };
+
+    return this.polizasExtrasService.create(polizaExtraToPost);
+  };
 
   onPlanSelected(servicioUi: ServicioUi) {
     this.onSelectedPlan?.next(servicioUi);
@@ -286,5 +535,35 @@ export class MultiStepComponent implements OnInit {
 
   onClickInfo() {
     this.isHideInfo = !this.isHideInfo;
+  }
+
+  onSuccess(message: string) {
+    this.notificacionesModalService.show(message, {
+      size: Size.normal,
+      duration: 3000,
+      positions: [PositionMessage.center],
+      imageUrl: 'assets/icons/check.svg',
+      closeOnTouch: true,
+    });
+  }
+
+  onError(message: string) {
+    this.notificacionesModalService.show(message, {
+      size: Size.normal,
+      duration: 3000,
+      positions: [PositionMessage.center],
+      imageUrl: 'assets/icons/warning.svg',
+      closeOnTouch: true,
+    });
+  }
+
+  onLoading(observerProcess: Observable<any>) {
+    this.notificacionesModalService.show('Cargando', {
+      size: Size.normal,
+      positions: [PositionMessage.center],
+      imageUrl: 'assets/icons/loading.svg',
+      closeOnTouch: false,
+      notifier: observerProcess,
+    });
   }
 }

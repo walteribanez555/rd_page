@@ -4,7 +4,7 @@
 
       <div class="items">
         <div class="saludo">
-          <img style="width: 35px; height: 50px; object-fit: fill;"
+          <img style="width: 30px; height: 40px; object-fit: fill;"
             src="assets/images/isologo-blanco.png">
 
           <h1>Póliza de Asistencia</h1>
@@ -44,26 +44,33 @@
             <span>
               Teléfono
             </span>
+            <span>
+              Precio
+            </span>
 
 
           </div>
           <div class="info">
             <div class="nombre-beneficiario">
-              <span>Walter Ronny </span>
+              <span>{{beneficiario?.primer_nombre}}</span>
             </div>
             <div class="nombre-beneficiario">
-              <span>Ibañez Saucedo</span>
+              <span>{{beneficiario?.primer_apellido}}</span>
             </div>
 
             <div class="nombre-beneficiario">
-              <span>8912914</span>
+              <span>{{beneficiario?.nro_identificacion}}</span>
             </div>
             <div class="nombre-beneficiario">
-              <span>07/01/2002</span>
+              <span>{{beneficiario?.fecha_nacimiento!.split('T')[0]}}</span>
             </div>
             <div class="nombre-beneficiario">
-              <span>78140498</span>
+              <span>{{beneficiario?.telefono}}</span>
             </div>
+            <div class="nombre-beneficiario">
+              <span>{{servicioUi?.precioSelected | currency }}</span>
+            </div>
+
 
           </div>
 
@@ -89,20 +96,20 @@
           </div>
           <div class="info">
             <div class="nombre-beneficiario">
-              <span>20-12-2023</span>
+              <span>{{poliza?.fecha_salida!.split('T')[0]}}</span>
             </div>
             <div class="nombre-beneficiario">
-              <span>20-12-2023</span>
+              <span>{{poliza?.fecha_retorno!.split('T')[0]}}</span>
             </div>
 
             <div class="nombre-beneficiario">
-              <span>20582</span>
+              <span>{{poliza?.poliza_id}}</span>
             </div>
             <div class="nombre-beneficiario">
-              <span>22</span>
+              <span>{{poliza?.nro_dias}}</span>
             </div>
             <div class="nombre-beneficiario">
-              <span>Bolivia</span>
+              <span>{{poliza?.destino}}</span>
             </div>
 
           </div>
@@ -118,156 +125,40 @@
     <div class="data_plan">
 
       <div class="catalogo">
-        <div class="plan">
-          <!-- <span>PLAN {{servicio.servicio}}</span> -->
-        </div>
         <div class="description">
-          <span>CERTIFICAMOS QUE:</span>
-          <span>ESTÁ PROTEGIDO POR LA PÓLIZA DE ASISTENCIA DE VIAJES</span>
-          <span style="color: var(--main-color); margin-top: 20px; font-size: 25px;">PLAN EURORED</span>
+          <span style="color: var(--main-color); margin-top: 20px; font-size: 15px;">PLAN EURORED</span>
           <hr style="width: calc(100% - 50px); border: 1px solid gainsboro;">
         </div>
         <div class="beneficios">
-          <div class="beneficio">
+          <div class="beneficio" *ngFor="let catalogo of servicioUi?.catalogos" >
             <div class="title">
-              <span>Beneficios Medicos</span>
+              <span>{{catalogo.etiqueta}}</span>
             </div>
-            <div class="list-cats">
-              <div class="data">
-                <ng-container>
+            <div class="list-cats" *ngFor="let beneficio of catalogo.beneficios?.reverse()">
+              <div class="data" *ngIf="beneficio.plan">
 
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
+                  <span *ngIf="beneficio.plan[0].cobertura; else incluye  " >{{  beneficio.plan[0].cobertura | currency:'USD':'$':'1.2-2' |uppercase}}</span>
 
-                </ng-container>
+                  <ng-template  #incluye >
+                    <span  *ngIf="beneficio.plan[0].complemento =='1'; else noIncluye" >Incluye</span>
+
+                    <ng-template  #noIncluye >
+                      <span  >No incluye</span>
+                    </ng-template>
+
+                  </ng-template>
 
               </div>
               <div class="cats">
-                <ng-container>
 
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
+                  <span>{{beneficio.descripcion}}</span>
 
-
-                </ng-container>
               </div>
             </div>
 
 
           </div>
-          <div class="beneficio">
-            <div class="title">
-              <span>Beneficios Medicos</span>
-            </div>
-            <div class="list-cats">
-              <div class="data">
-                <ng-container>
 
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-
-                </ng-container>
-
-              </div>
-              <div class="cats">
-                <ng-container>
-
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-
-
-                </ng-container>
-              </div>
-            </div>
-
-
-          </div>
-          <div class="beneficio">
-            <div class="title">
-              <span>Beneficios Medicos</span>
-            </div>
-            <div class="list-cats">
-              <div class="data">
-                <ng-container>
-
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-
-                </ng-container>
-
-              </div>
-              <div class="cats">
-                <ng-container>
-
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-
-
-                </ng-container>
-              </div>
-            </div>
-
-
-          </div>
-          <div class="beneficio">
-            <div class="title">
-              <span>Beneficios Medicos</span>
-            </div>
-            <div class="list-cats">
-              <div class="data">
-                <ng-container>
-
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-                  <span>{{150.32 | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-
-                </ng-container>
-
-              </div>
-              <div class="cats">
-                <ng-container>
-
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-                  <span>Cobertura Covid</span>
-
-
-                </ng-container>
-              </div>
-            </div>
-
-
-          </div>
 
         </div>
 
@@ -299,7 +190,7 @@
 
           </div>
           <div class="date">
-            <span>07/07/2023</span>
+            <span>{{actualDate}}</span>
           </div>
         </div>
       </div>

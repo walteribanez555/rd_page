@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { GeneratePdfService } from '../../pdf/poliza-pdf/services/generate-pdf.service';
+import { Beneficiario, Poliza } from 'src/app/Modules/Core/models';
+import { ServicioUi } from 'src/app/Modules/shared/models';
 
 
 
@@ -27,7 +29,10 @@ export class ModalBeneficiarioComponent {
 
   @Input() size? ='md';
   @Input() title? = 'Modal title';
+  @Input() beneficiario? : Beneficiario;
+  @Input() servicioUi? : ServicioUi;
 
+  @Input() poliza? : Poliza;
 
   @Output() closeEvent = new EventEmitter();
   @Output() submitEvent = new EventEmitter();

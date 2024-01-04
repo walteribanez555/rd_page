@@ -7,3 +7,8 @@ export interface Descuento {
   fecha_hasta:  string;
   status:       number;
 }
+
+
+export interface DescuentoToPost extends Omit<Descuento, 'descuento_id'>{
+
+}

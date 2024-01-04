@@ -1,3 +1,4 @@
+import { Cupon } from "../../Core/models";
 import { ExtraUi } from "./Extra.ui";
 import { PlanUi } from "./Plan.ui";
 import { ServicioUi } from "./Servicio.ui";
@@ -12,9 +13,12 @@ export interface VentaUi {
   servicioUi : ServicioUi;
   totalPago : number;
   total_descuento : number;
+  total_cupones : number;
+  tipo_cupones : number;
   total_plus : number;
   selectedExtras : PlanUi[];
   total_polizas :number;
+
 
 
 }

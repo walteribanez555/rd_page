@@ -3,5 +3,20 @@
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr 10fr;
-  padding: 40px;
+  padding: 10px;
+}
+
+
+
+@media (max-width : 1024px) {
+
+  .container{
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100%;
+    align-items: flex-start;
+
+    justify-content: flex-end;
+  }
+
 }

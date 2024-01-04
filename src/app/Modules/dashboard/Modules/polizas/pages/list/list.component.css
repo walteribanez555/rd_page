@@ -22,7 +22,7 @@
   /* color: var(--main-color); */
   position: absolute;
   left: 20px;
-  top: 15px;
+  top: 25px;
   scale: 1.25;
 }
 
@@ -147,4 +147,72 @@ table a {
   color: var(--text-color);
   height: 80px;
   vertical-align: middle;
+}
+
+
+.switch-display {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  padding: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+
+.switch-display button{
+  padding: 10px 20px;
+  border: 1px solid var(--main-color);
+  background-color: white;
+  color: var(--main-color);
+  border-radius: 10px;
+  cursor:  pointer;
+  font-size: 12px;
+}
+
+.switch-display button.active{
+  background-color: var(--main-color);
+  color: white;
+}
+
+@media (max-width: 1024px) {
+  .input-field input {
+    width: 100%;
+    font-size: 12px;
+    padding: 10px 40px;
+    border-radius: 10px;
+    border: 1px solid gainsboro;
+    color: var(--text-color);
+  }
+
+  .input-field i {
+    top: 20px;
+  }
+
+  .table-list{
+    width: 100%;
+    position: relative;
+    overflow-x: auto;
+    border: 5px;
+  }
+
+  table{
+      width: 100%;
+      border-spacing: 0px;
+  }
+
+  /* .table-list {
+    width: 100%;
+    border: 1px solid gainsboro;
+    overflow-y: auto;
+    position: relative;
+    z-index: 2;
+    overflow-x: hidden;
+    border-radius: 5px;
+  } */
+
+
+  .switch-display {
+    display: none;
+  }
 }

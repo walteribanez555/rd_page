@@ -11,6 +11,10 @@ import { SwitchBtnComponent } from './Components/switch_btn/switch_btn.component
 import { GenderInputComponent } from './Components/gender-input/gender-input.component';
 import { InputDateComponent } from './Components/input-date/input-date.component';
 import { InputTelfComponent } from './Components/input-telf/input-telf.component';
+import { MenuHamburguerComponent } from './Components/menuHamburguer/menuHamburguer.component';
+import { RouterModule } from '@angular/router';
+import { CoberturaComponent } from './Components/cobertura/cobertura.component';
+import { ListCoberturaComponent } from './Components/list-cobertura/list-cobertura.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,9 @@ import { InputTelfComponent } from './Components/input-telf/input-telf.component
     GenderInputComponent,
     InputDateComponent,
     InputTelfComponent,
+    MenuHamburguerComponent,
+    CoberturaComponent,
+    ListCoberturaComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +37,7 @@ import { InputTelfComponent } from './Components/input-telf/input-telf.component
     ReactiveFormsModule,
     DatePipe,
     SlicePipe,
+    RouterModule,
 
   ],
   providers: [NotificationService],
@@ -43,6 +51,9 @@ import { InputTelfComponent } from './Components/input-telf/input-telf.component
     GenderInputComponent,
     InputDateComponent,
     InputTelfComponent,
+    MenuHamburguerComponent,
+    CoberturaComponent,
+    ListCoberturaComponent
   ],
 })
 export class SharedModule {}

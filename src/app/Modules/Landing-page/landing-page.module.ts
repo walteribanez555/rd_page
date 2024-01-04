@@ -16,8 +16,6 @@ import { PlanesComponent } from './Components/planes/planes.component';
 import { PlanComponent } from './Components/plan/plan.component';
 import { ModalPlanDetailsComponent } from './Components/modal-plan-details/modal-plan-details.component';
 import { ModalService } from './Components/modal-plan-details/services/modal-service';
-import { ListCoberturaComponent } from './Components/list-cobertura/list-cobertura.component';
-import { CoberturaComponent } from './Components/cobertura/cobertura.component';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '../Core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +23,8 @@ import { ExtraPolizaComponent } from './Components/extraPoliza/extra-poliza.comp
 import { ExtraComponent } from './Components/extra/extra.component';
 import { DetailComponent } from './Components/detail/detail.component';
 import { PolizaComponent } from './Components/poliza/poliza.component';
+import { ConfirmPaymentComponent } from './Pages/confirm-payment/confirm-payment.component';
+import { PolizasModule } from '../dashboard/Modules/polizas/polizas.module';
 
 @NgModule({
   declarations: [
@@ -40,12 +40,11 @@ import { PolizaComponent } from './Components/poliza/poliza.component';
     PlanesComponent,
     PlanComponent,
     ModalPlanDetailsComponent,
-    ListCoberturaComponent,
-    CoberturaComponent,
     ExtraPolizaComponent,
     ExtraComponent,
     DetailComponent,
     PolizaComponent,
+    ConfirmPaymentComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +55,7 @@ import { PolizaComponent } from './Components/poliza/poliza.component';
     CoreModule,
     ReactiveFormsModule,
     FormsModule,
+    PolizasModule,
   ],
   providers: [ModalService],
   exports: [],

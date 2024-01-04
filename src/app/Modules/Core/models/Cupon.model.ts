@@ -9,3 +9,9 @@ export interface Cupon {
   fecha_hasta: string;
   status:      number;
 }
+
+
+
+export interface CuponToPost extends Omit<Cupon, 'cupon_id'>{
+
+}

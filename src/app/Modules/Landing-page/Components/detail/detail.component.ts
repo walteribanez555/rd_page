@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { Extra } from 'src/app/Modules/Core/models';
 import { PlanUi, ServicioUi } from 'src/app/Modules/shared/models';
 import { VentaUi } from 'src/app/Modules/shared/models/Venta.ui';
 import { VentaMappers } from 'src/app/Modules/shared/utils/mappers/venta.mappers';
@@ -74,10 +75,15 @@ export class DetailComponent implements OnInit {
 
     this.ventaUi = this.ventaMapper.mapVenta((this.forms[3].get('planSelected')?.value as ServicioUi), adultQuantity > 0 ? adultQuantity : seniorQuantity, 0);
 
+    console.log(this.ventaUi);
+
     const totalExtras = this.selectedPlanesExtras.reduce(
       (accum, actualValue) => accum + actualValue.costo!,
       0
     );
+
+
+
     this.totalPayment =
       totalExtras +
       (this.forms[3].get('planSelected')?.value as ServicioUi).precioSelected!;

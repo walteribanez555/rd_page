@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '../Core/core.module';
+import { LandingPageModule } from '../Landing-page/landing-page.module';
 
 @NgModule({
   declarations: [LayoutPageComponent, NavbarComponent],
@@ -16,6 +17,7 @@ import { CoreModule } from '../Core/core.module';
     SharedModule,
     RouterModule,
     CoreModule,
+    LandingPageModule,
   ],
 })
 export class DashboardModule {}

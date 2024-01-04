@@ -113,12 +113,20 @@
                 {{ventaUi.total_plus | currency}}
               </div>
             </div>
-            <div class="item" *ngIf="ventaUi.total_descuento > 0">
+            <div class="item discount" *ngIf="ventaUi.total_descuento > 0">
               <div class="left">
                 <span>Descuento</span>
               </div>
               <div class="right">
                 {{ventaUi.total_descuento | currency}}
+              </div>
+            </div>
+            <div class="item discount"  *ngIf="ventaUi.total_cupones > 0">
+              <div class="left">
+                <span>Cupones</span>
+              </div>
+              <div class="right">
+                {{ ventaUi.total_cupones | currency }}
               </div>
             </div>
 

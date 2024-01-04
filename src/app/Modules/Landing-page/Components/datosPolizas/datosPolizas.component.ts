@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, map } from 'rxjs';
+import { Size, TypeMessage, PositionMessage } from 'src/app/Modules/shared/Components/notification/enums';
+import { NotificationService } from 'src/app/Modules/shared/Components/notification/notification.service';
 import { BeneficiarioUi } from 'src/app/Modules/shared/models/Beneficiario.Ui';
 
 @Component({
@@ -10,6 +12,10 @@ import { BeneficiarioUi } from 'src/app/Modules/shared/models/Beneficiario.Ui';
   styleUrls: ['./datosPolizas.component.css'],
 })
 export class DatosPolizasComponent implements OnInit {
+  private notificationService = inject(NotificationService);
+
+
+
   ngOnInit(): void {
     this.onPageChanged?.subscribe({
       next: (step: number) => {
@@ -65,12 +71,18 @@ export class DatosPolizasComponent implements OnInit {
 
   onChangeStep() {
     this.setBeneficiarios();
+
+
+
     this.onChangePage.emit();
   }
 
   onBackStepBtn() {
     this.onBackStep.emit();
   }
+
+
+
 
 
 
@@ -105,6 +117,11 @@ export class DatosPolizasComponent implements OnInit {
 
 
   setBeneficiarios(){
+
+    if(!this.polizasForm.every( polizaform => polizaform.valid)){
+      return;
+    }
+
     this.polizasForm.forEach(polizaForm => {
 
       const {nombres, apellidos, edad, email,iden,telf,sexo, titular, date, origen  } = polizaForm.value;
@@ -127,9 +144,14 @@ export class DatosPolizasComponent implements OnInit {
       this.listBeneficiarios.push(nuevaBeneficiario);
     })
 
+
+
+
     this.forms[6].get('beneficiariosData')?.setValue(this.listBeneficiarios);
 
 
 
   }
+
+
 }

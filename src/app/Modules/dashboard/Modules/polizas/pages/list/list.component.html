@@ -26,7 +26,19 @@
 
     </div>
 
-    <div class="table-list">
+
+    <!-- <div class="switch-display">
+      <button [class.active]="onTableDisplay"  (click)="onChangeTypeListDisplay(true)">
+        <span>Tabla</span>
+      </button>
+
+
+      <button [class.active]="!onTableDisplay"  (click)="onChangeTypeListDisplay(false)" >
+        <span>Elemento</span>
+      </button>
+    </div> -->
+
+    <div class="table-list"  *ngIf="onTableDisplay; else onCardDisplay">
       <table>
         <tr>
           <th>Id</th>
@@ -99,6 +111,12 @@
 
       </table>
     </div>
+
+
+    <ng-template #onCardDisplay >
+      <span>Display on Card</span>
+
+    </ng-template>
 
   </div>
 

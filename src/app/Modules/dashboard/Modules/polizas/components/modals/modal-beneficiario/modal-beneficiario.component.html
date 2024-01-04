@@ -2,7 +2,7 @@
 <div class="modal" >
   <div class="modal-header">
     <img src="assets/images/isologo-blanco.png" >
-    <span>{{title}}</span>
+    <span>{{beneficiario?.primer_nombre + ' ' + beneficiario?.primer_apellido}}</span>
     <span class="modal-close" (click)="close()">x</span>
   </div>
   <div class="modal-content">
@@ -15,49 +15,35 @@
           Nro Identificacion
         </span>
         <span>
-          8912915
+          {{beneficiario?.nro_identificacion}}
         </span>
       </div>
 
       <div class="field">
         <span class="title">
-          Primer Nombre
+          Nombre(s)
         </span>
         <span>
-          Walter
+          {{beneficiario?.primer_nombre}}
         </span>
       </div>
       <div class="field">
         <span class="title">
-          Segundo Nombre
+          Apellido(s)
         </span>
         <span>
-          Ronny
+          {{beneficiario?.primer_apellido}}
         </span>
       </div>
-      <div class="field">
-        <span class="title">
-          Primer Apellido
-        </span>
-        <span>
-          Ibañez
-        </span>
-      </div>
-      <div class="field">
-        <span class="title">
-          Segundo Apellido
-        </span>
-        <span>
-          Saucedo
-        </span>
-      </div>
+
+
 
       <div class="field">
         <span class="title">
           Fecha de Nacimiento
         </span>
         <span>
-          27/01/2002
+          {{beneficiario?.fecha_nacimiento!.split('T')[0]}}
         </span>
       </div>
 
@@ -66,7 +52,7 @@
           Edad
         </span>
         <span>
-          25
+          {{beneficiario?.edad}}
         </span>
       </div>
       <div class="field">
@@ -74,7 +60,7 @@
           Email
         </span>
         <span>
-          walteribanez555@gmail.com
+          {{beneficiario?.email}}
         </span>
       </div>
       <div class="field">
@@ -82,7 +68,7 @@
           Nro Telefono
         </span>
         <span>
-          78140498
+          {{beneficiario?.telefono}}
         </span>
       </div>
       <div class="field">
@@ -90,7 +76,7 @@
           Origen
         </span>
         <span>
-          Bolivia
+          {{beneficiario?.origen}}
         </span>
       </div>
 
@@ -110,4 +96,4 @@
 
 <div class="modal-backdrop" (click)="close()" ></div>
 
-<poliza-pdf  (isLoaded)="getCanva($event)" ></poliza-pdf>
+<poliza-pdf  (isLoaded)="getCanva($event)" [beneficiario]="beneficiario" [servicioUi]="servicioUi" [poliza]="poliza" ></poliza-pdf>

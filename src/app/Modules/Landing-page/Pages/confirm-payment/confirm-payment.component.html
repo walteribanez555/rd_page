@@ -1,0 +1,54 @@
+<div class="payment" style="display: flex; align-items: center; justify-content: center;">
+  <menu-hamburguer></menu-hamburguer>
+  <div class="modal"  *ngIf="servicioUi">
+
+    <div class="left">
+
+      <img src="assets/icons/check.svg" width="100px" height="100px">
+      <span>Pago Realizado Exitosamente</span>
+
+
+
+
+    </div>
+
+    <div class="right">
+      <p class="title">Detalles que debes de conocer al adquirir tu <span style="color: var(--main-color);" >RedCard Assist</span></p>
+      <ul style="margin-top: 20px;">
+        <li>
+          <p>Para ver los detalles del  <span style="font-weight: bold; color: var(--main-color);">condicionado </span> esta el siguiente enlace:</p>
+          <a routerLink="../condicionado">
+            Condicionado
+          </a>
+        </li>
+        <li>
+          <p>Puedes descargar ahora mismo tus <span style="font-weight: bold; color: var(--main-color);">polizas</span></p>
+          <div *ngFor="let beneficiario of listBeneficiarios" style="padding: 10px 0px;">
+            <card-beneficiario [beneficiario]="beneficiario" style="margin: 10px 0px;"  [servicioUi]="servicioUi" [poliza]="poliza!" ></card-beneficiario>
+          </div>
+        </li>
+        <li>
+          <p> <span style="font-weight: bold; color: var(--main-color);">Para descargar de nuevo tu poliza</span>, puedes ingresar con tu nro de registro (dni o pasaporte) y el password
+            que se te envio al email del titular (el primero o unico de la lista al registrar) con el siguiente enlace:</p>
+          <a routerLink="../../auth/login" class="login-icon">
+            <i class="fa-solid fa-user "></i>
+          </a>
+        </li>
+        <li>
+          <p>En caso de requerir <span style="font-weight: bold; color: var(--main-color);">soporte</span>, puedes comunicarte al siguiente numero:</p>
+          <a href="#" class="whts-icon">
+            <i class="fa-brands fa-whatsapp "></i>
+            <span>+591 78140498</span>
+          </a>
+
+        </li>
+      </ul>
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
