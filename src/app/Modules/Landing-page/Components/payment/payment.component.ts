@@ -117,7 +117,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       .bypassSecurityTrustHtml(`<form target="payments"   action="https://www.livees.net/Checkout/api4" method="POST" id="ID-FORM">
                                   <input type="hidden" name="_"    value="7ivl54rybfz1eg2u864conm0sxb2th1a3k878waje5cqp961d">
                                   <input type="hidden" name="__" value="37iohn566gle80fmfqrcd4tx27wk439busaje3804pvy5b2z1">
-                                  <input type="hidden" name="postURL" value="http://192.168.0.13:4200/landing-page/confirm-payment">
+                                  <input type="hidden" name="postURL" value="http://192.168.0.13:4200/confirm-payment">
                                   <input type="hidden" name="amt2" value="${this.payment_amount}">
                                   <input type="hidden" name="currency" value="USD">
                                   <input type="hidden" name="invno" value="${this.createIntentPayment}-${this.beneficiarios_id}">

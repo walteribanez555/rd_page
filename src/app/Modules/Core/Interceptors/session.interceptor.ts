@@ -14,23 +14,29 @@ import { Token } from '../../shared/utils/tokens';
 export class SessionInterceptor implements HttpInterceptor {
   constructor() {}
 
-  private tokenUtils = new Token();
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this.tokenUtils.getToken();
+    const token = Token.getToken();
+
     if (!token) {
-      const requestWithToken = req.clone({
+      const requestWithDefaultToken = req.clone({
         headers: new HttpHeaders({
           Authorization: 'ExternalUser902010',
           Schema: 'redcard',
         }),
       });
-      return next.handle(requestWithToken);
+      return next.handle(requestWithDefaultToken);
     } else {
-      return next.handle(req);
+      const requestWithToken = req.clone({
+        headers: new HttpHeaders({
+          Authorization: token,
+          Schema: 'redcard',
+        }),
+      });
+      return next.handle(requestWithToken);
     }
   }
 }

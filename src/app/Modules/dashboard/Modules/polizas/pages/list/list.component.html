@@ -5,7 +5,10 @@
       <div class="avatar">
         <i class="fa-solid fa-user"></i>
       </div>
-      <span>walteribanez555@gmail.com</span>
+      <img  width="50px" height="20px" *ngIf="!user; else isUser" src="assets/icons/loading-white.svg">
+      <ng-template #isUser >
+        <span  class="name-user" >{{user!.email}}</span>
+      </ng-template>
 
     </div>
 

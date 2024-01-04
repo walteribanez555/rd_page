@@ -18,9 +18,9 @@ import {
 } from 'src/app/Modules/Core/services';
 import { NotificationService } from 'src/app/Modules/shared/Components/notification/notification.service';
 import { MapToServicioUi } from 'src/app/Modules/shared/utils/mappers/servicio.mappers';
-import { ServByPlan } from '../../Components/multi-step/multi-step.component';
 import { Size, PositionMessage } from 'src/app/Modules/shared/Components/notification/enums';
 import { ServicioUi } from 'src/app/Modules/shared/models';
+import { ServByPlan } from 'src/app/Modules/Landing-page/Components/multi-step/multi-step.component';
 
 @Component({
   selector: 'app-confirm-payment',

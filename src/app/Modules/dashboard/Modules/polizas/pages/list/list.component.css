@@ -149,6 +149,29 @@ table a {
   vertical-align: middle;
 }
 
+@keyframes fadeInName {
+  0% {
+    position: relative;
+    left: 200px;
+    opacity: 0;
+  }
+
+  100% {
+    position: relative;
+    left: 0px;
+    opacity: 1;
+  }
+}
+
+.name-user{
+  animation: fadeInName 1s forwards;
+  font-weight: bold;
+}
+
+
+.profile{
+  width: 500px;
+}
 
 .switch-display {
   display: flex;
@@ -212,6 +235,11 @@ table a {
   } */
 
 
+  .profile{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
   .switch-display {
     display: none;
   }

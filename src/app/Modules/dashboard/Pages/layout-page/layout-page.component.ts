@@ -10,70 +10,70 @@ import { ServiciosService } from 'src/app/Modules/Core/services/servicios.servic
 })
 export class LayoutPageComponent  implements OnInit {
   ngOnInit(): void {
-    this.servicioService.getAll().subscribe(
-      {
-        next : (data) => {
-          console.log(data);
+    // this.servicioService.getAll().subscribe(
+    //   {
+    //     next : (data) => {
+    //       console.log(data);
 
-        },
-        error : (err) => {
-          console.log(err);
+    //     },
+    //     error : (err) => {
+    //       console.log(err);
 
-        },
+    //     },
 
-        complete : ( ) => {
+    //     complete : ( ) => {
 
-        }
-      }
-    );
-    this.beneficiosService.getAll().subscribe(
-      {
-        next : ( data ) => {
-          console.log(data);
+    //     }
+    //   }
+    // );
+    // this.beneficiosService.getAll().subscribe(
+    //   {
+    //     next : ( data ) => {
+    //       console.log(data);
 
-        },
-        error : ( err ) => {
-          console.log(err);
+    //     },
+    //     error : ( err ) => {
+    //       console.log(err);
 
-        },
-        complete : () => {
+    //     },
+    //     complete : () => {
 
-        }
+    //     }
 
-      }
-    )
-    this.catalogosService.getAll().subscribe(
-      {
-        next : ( data ) => {
-          console.log(data);
+    //   }
+    // )
+    // this.catalogosService.getAll().subscribe(
+    //   {
+    //     next : ( data ) => {
+    //       console.log(data);
 
-        },
-        error : ( err ) => {
-          console.log(err);
+    //     },
+    //     error : ( err ) => {
+    //       console.log(err);
 
-        },
-        complete : () => {
+    //     },
+    //     complete : () => {
 
-        }
+    //     }
 
-      }
-    );
-    this.planesService.getAll().subscribe(
-      {
-        next : (data) => {
-          console.log(data);
+    //   }
+    // );
+    // this.planesService.getAll().subscribe(
+    //   {
+    //     next : (data) => {
+    //       console.log(data);
 
-        },
-        error : ( err ) => {
-          console.log(err);
+    //     },
+    //     error : ( err ) => {
+    //       console.log(err);
 
-        },
-        complete : ( ) => {
+    //     },
+    //     complete : ( ) => {
 
-        }
+    //     }
 
-      }
-    )
+    //   }
+    // )
 
   }
 

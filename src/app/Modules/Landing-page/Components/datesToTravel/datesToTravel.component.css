@@ -122,7 +122,8 @@ button:hover{
     overflow-y: auto;
     padding: 20px 30px;
     overflow-x: hidden;
-    padding-top: 50px;
+    padding-bottom: 10vh;
+    padding-top: 100px;
   }
 
 

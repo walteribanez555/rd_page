@@ -225,7 +225,8 @@ button{
     overflow-y: auto;
     padding: 20px 30px;
     overflow-x: hidden;
-    padding-top: 50px;
+    padding-top: 100px;
+    padding-bottom: 10vh;
   }
 
   h1,

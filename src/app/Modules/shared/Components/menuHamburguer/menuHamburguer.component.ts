@@ -9,7 +9,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     </div>
 
     <div class="element-container">
-      <a class="float-element" routerLink="../../auth/login">
+      <a class="float-element" routerLink="../dashboard/policies/list">
         <i class="fa-solid fa-user "></i>
       </a>
       <a class="float-element">

@@ -369,7 +369,7 @@ export class MultiStepComponent implements OnInit {
     this.onLoading(this.observerProcess);
 
     this.clientesService
-      .getOne(titularBeneficiario.nro_identificacion+'_2')
+      .getOne(titularBeneficiario.nro_identificacion)
       .subscribe({
         next: (cliente) => {
           this.createVenta(cliente[0], this.listForms);

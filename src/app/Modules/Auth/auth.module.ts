@@ -6,6 +6,9 @@ import { LayoutPageComponent } from './Pages/layout-page/layout-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './Pages/login/login.component';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { SessionService } from './Services/session.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +20,13 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     AuthRoutingModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
+  providers : [
+    SessionService,
   ]
 })
 export class AuthModule { }

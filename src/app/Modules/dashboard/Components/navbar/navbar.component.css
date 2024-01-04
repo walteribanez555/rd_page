@@ -39,7 +39,6 @@ nav {
   margin: 20px 0px;
   border: 1px solid gainsboro;
   border-radius: 30px;
-  transition: all 0.3s ease-in-out;
   cursor: pointer;
   overflow: hidden;
   position: relative;
@@ -62,7 +61,6 @@ nav {
 
 .item:hover {
   background-color: gray;
-  transition: all 0.3s ease-in-out;
   color: white;
 }
 

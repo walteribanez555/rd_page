@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { LandingPageRoutingModule } from './landing-page-routing.module';
 import { LayoutPageComponent } from './Pages/layout-page/layout-page.component';
 import { SharedModule } from '../shared/shared.module';
-import { HomeComponent } from './Pages/home/home.component';
 import { MultiStepComponent } from './Components/multi-step/multi-step.component';
 import { DestinyComponent } from './Components/destiny/destiny.component';
 import { DatesToTravelComponent } from './Components/datesToTravel/datesToTravel.component';
@@ -23,13 +22,11 @@ import { ExtraPolizaComponent } from './Components/extraPoliza/extra-poliza.comp
 import { ExtraComponent } from './Components/extra/extra.component';
 import { DetailComponent } from './Components/detail/detail.component';
 import { PolizaComponent } from './Components/poliza/poliza.component';
-import { ConfirmPaymentComponent } from './Pages/confirm-payment/confirm-payment.component';
 import { PolizasModule } from '../dashboard/Modules/polizas/polizas.module';
 
 @NgModule({
   declarations: [
     LayoutPageComponent,
-    HomeComponent,
     MultiStepComponent,
     DestinyComponent,
     DatesToTravelComponent,
@@ -44,7 +41,6 @@ import { PolizasModule } from '../dashboard/Modules/polizas/polizas.module';
     ExtraComponent,
     DetailComponent,
     PolizaComponent,
-    ConfirmPaymentComponent,
   ],
   imports: [
     CommonModule,
