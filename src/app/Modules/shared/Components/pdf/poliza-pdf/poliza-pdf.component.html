@@ -52,10 +52,10 @@
           </div>
           <div class="info">
             <div class="nombre-beneficiario">
-              <span>{{beneficiario?.primer_nombre}}</span>
+              <span>{{beneficiario?.primer_nombre?.toLocaleUpperCase()}}</span>
             </div>
             <div class="nombre-beneficiario">
-              <span>{{beneficiario?.primer_apellido}}</span>
+              <span>{{beneficiario?.primer_apellido?.toLocaleUpperCase()}}</span>
             </div>
 
             <div class="nombre-beneficiario">
@@ -92,6 +92,9 @@
             <span>
               Destino
             </span>
+            <span>
+              Emisor
+            </span>
 
           </div>
           <div class="info">
@@ -111,6 +114,10 @@
             <div class="nombre-beneficiario">
               <span>{{poliza?.destino}}</span>
             </div>
+            <div class="nombre-beneficiario">
+              <span>{{venta?.username}}</span>
+            </div>
+
 
           </div>
 

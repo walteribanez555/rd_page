@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { GeneratePdfService } from '../../pdf/poliza-pdf/services/generate-pdf.service';
-import { Beneficiario, Poliza } from 'src/app/Modules/Core/models';
+import { Beneficiario, Poliza, Venta } from 'src/app/Modules/Core/models';
 import { ServicioUi } from 'src/app/Modules/shared/models';
 
 
@@ -33,6 +33,7 @@ export class ModalBeneficiarioComponent {
   @Input() servicioUi? : ServicioUi;
 
   @Input() poliza? : Poliza;
+  @Input() venta? : Venta;
 
   @Output() closeEvent = new EventEmitter();
   @Output() submitEvent = new EventEmitter();
@@ -110,7 +111,8 @@ export class ModalBeneficiarioComponent {
     ) as HTMLCanvasElement[]
 
     this.pdfService.generatePdfAsync(...allCanvases).subscribe({
-      next: () => {
+      next: (resp)  => {
+        console.log({resp});
         // PDF generation succeeded
         console.log('PDF generated successfully.');
       },

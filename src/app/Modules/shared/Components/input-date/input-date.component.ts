@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {  Component, EventEmitter, Input, Output } from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
 import { DatesAction } from '../../utils/dates/dates-action';
 
 @Component({
@@ -16,12 +15,14 @@ import { DatesAction } from '../../utils/dates/dates-action';
   styleUrls: ['./input-date.component.css'],
 })
 export class InputDateComponent {
-  date: string | null = null;
+  date: string  = "";
 
 
-  @Input() dateControl!: FormControl;
-  @Input() ageControl!: FormControl;
-  @Input() travelDate! : string;
+  @Input() dateControl?: FormControl;
+  @Input() ageControl?: FormControl;
+  @Input() travelDate? : string;
+
+  @Output() onSetValidDate = new EventEmitter();
 
 
   datesAction = new DatesAction();
@@ -37,18 +38,19 @@ export class InputDateComponent {
     }
 
     // console.log(this.date?.split('-'));
-    if (this.date!.length === 10) {
+    if (this.date.length === 10) {
       const arrayToMap = this.date!.split('-');
       this.arraymove(arrayToMap, 0, 1);
 
-      this.ageControl.setValue(
+      this.ageControl?.setValue(
         this.datesAction.yearsBetweenDates(
           arrayToMap.join('-'),
-          this.travelDate
+          this.travelDate!
         )
       );
 
-      this.dateControl.setValue(this.date);
+      this.onSetValidDate.emit(this.date);
+      this.dateControl?.setValue(this.date);
     }
   }
 
@@ -58,3 +60,4 @@ export class InputDateComponent {
     arr.splice(toIndex, 0, element);
   }
 }
+

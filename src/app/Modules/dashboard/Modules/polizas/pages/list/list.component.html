@@ -1,36 +1,13 @@
 <div class="page">
 
-  <div class="top">
-    <div class="profile">
-      <div class="avatar">
-        <i class="fa-solid fa-user"></i>
-      </div>
-      <img  width="50px" height="20px" *ngIf="!user; else isUser" src="assets/icons/loading-white.svg">
-      <ng-template #isUser >
-        <span  class="name-user" >{{user!.email}}</span>
-      </ng-template>
-
-    </div>
-
-    <div class="page-title">
-      <h1>Lista de Compras</h1>
-
-    </div>
+  <div class="page-title">
+    <h1>Lista de Compras</h1>
   </div>
-  <div class="content">
-
-    <div class="top">
-      <div class="input-field">
-        <input type="text" placeholder="numero de venta">
-        <i class="fa-solid fa-magnifying-glass"></i>
-
-      </div>
 
 
-    </div>
 
 
-    <!-- <div class="switch-display">
+  <!-- <div class="switch-display">
       <button [class.active]="onTableDisplay"  (click)="onChangeTypeListDisplay(true)">
         <span>Tabla</span>
       </button>
@@ -41,86 +18,59 @@
       </button>
     </div> -->
 
-    <div class="table-list"  *ngIf="onTableDisplay; else onCardDisplay">
-      <table>
-        <tr>
-          <th>Id</th>
-          <th>Status</th>
-          <th>Fecha Compra</th>
-          <th>Cantidad</th>
-          <th>Total Pago</th>
-          <th></th>
-        </tr>
+    <div class="info">
+      <div class="table-data ">
+        <table>
+          <tr>
+            <th>Codigo Venta</th>
+            <th>Servicio</th>
+            <th>Status</th>
+            <th>Fecha Compra</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Extras</th>
+            <th>Descuento</th>
+            <th>Total Pago</th>
 
-        <tr >
-          <td routerLink="./1">25</td>
-          <td routerLink="./1">
-            <span class="status active">Activa</span>
-          </td>
-          <td routerLink="./1">2023/05/02</td>
-          <td routerLink="./1">3</td>
-          <td routerLink="./1">{{120| currency}}</td>
-          <td >
-          </td>
-        </tr>
-
-        <tr>
-          <td>25</td>
-          <td>
-            <span class="status cotizacion">Cotizacion</span>
-          </td>
-          <td>2023/05/02</td>
-          <td>3</td>
-          <td>{{120| currency }}</td>
-          <td>
-            <span class="pago-link">Pagar</span>
-          </td>
-        </tr>
-        <tr>
-          <td>25</td>
-          <td>
-            <span class="status standby">Stand By</span>
-          </td>
-          <td>2023/05/02</td>
-          <td>2</td>
-          <td>{{120 | currency}}</td>
-          <td></td>
-
-        </tr>
-        <tr>
-          <td>25</td>
-          <td>
-            <span class="status process">Anulado</span>
-          </td>
-          <td>2023/05/02</td>
-          <td>1</td>
-          <td>{{'30000' | currency}}</td>
-          <td></td>
-
-        </tr>
-
-        <tr>
-          <td>25</td>
-          <td>
-            <span class="status vigente">Vigente</span>
-          </td>
-          <td>2023/05/02</td>
-          <td>1</td>
-          <td>{{'30000' | currency}}</td>
-          <td></td>
-
-        </tr>
+          </tr>
 
 
-      </table>
+          <tr *ngFor="let venta of ventas.reverse()" [routerLink]="'../'+ venta.venta_id "  [queryParams]="{ poliza_id : venta.poliza_id, beneficiario_id : venta.beneficiario_id}">
+            <td >{{venta.venta_id }}</td>
+            <td>{{mapService(venta.servicio_id)}}</td>
+            <td >
+              <span class="status" [ngClass]="getStatusClass(venta.status)">{{venta.status == 1 ? "Cotizacion" :
+                venta.status == 2 ? "Realizada" : "Cancelada"}}</span>
+            </td>
+            <td >{{venta.fecha_venta.split('T')[0]}}</td>
+            <td>{{mapQuantity(venta.cantidad)}}</td>
+            <td >{{getTotalPayment(venta.total) | currency}}</td>
+
+            <!-- <td>{{ getClientName(venta.cliente_id) | async}}</td> -->
+            <td>{{  getAmountByQuantity(venta.plus, venta.cantidad) | currency}}</td>
+            <td>{{  getTotalPayment(venta.descuento, venta.cantidad) | currency }}</td>
+            <td>{{  getAmountByQuantity(venta.total_pago, venta.cantidad) | currency}}</td>
+
+          </tr>
+
+
+
+
+
+
+
+
+        </table>
+
+
+      </div>
+
+
+
     </div>
 
 
-    <ng-template #onCardDisplay >
-      <span>Display on Card</span>
 
-    </ng-template>
 
-  </div>
 
 </div>

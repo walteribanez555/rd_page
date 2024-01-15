@@ -1,0 +1,35 @@
+
+@keyframes fadeInName {
+  0% {
+    position: relative;
+    left: 200px;
+    opacity: 0;
+  }
+
+  100% {
+    position: relative;
+    left: 0px;
+    opacity: 1;
+  }
+}
+
+.name-user{
+  animation: fadeInName 1s forwards;
+  font-weight: bold;
+}
+
+
+.profile{
+  width: 500px;
+}
+
+
+@media (max-width:1024px) {
+
+  .profile{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+}

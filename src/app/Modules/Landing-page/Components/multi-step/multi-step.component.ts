@@ -413,7 +413,7 @@ export class MultiStepComponent implements OnInit {
     // console.log(this.listForms);
 
     const nuevaVenta: VentaToPost = {
-      username: 'raforios',
+      username: 'WEBREDCARD',
       office_id: 2,
       cliente_id: cliente.id ?? cliente.cliente_id!,
       tipo_venta: 1,
@@ -444,41 +444,50 @@ export class MultiStepComponent implements OnInit {
           );
         }),
         mergeMap((respFromVentas: VentaResp) => {
-          const nuevaPoliza: PolizaToPost = {
-            venta_id: respFromVentas.id ?? respFromVentas.venta_id!,
-            servicio_id: (this.listForms[3].value.planSelected as ServicioUi)
-              .servicio_id,
-            destino: this.listForms[0].value.toLocation.toUpperCase(),
-            fecha_salida: this.listForms[1].value.initialDate,
-            fecha_retorno: this.listForms[1].value.finalDate,
-            extra: 1,
-            status: 4,
-          };
-          return this.polizasService.create(nuevaPoliza);
-        }),
-        switchMap((poliza: Poliza) => {
+          const beneficiarios: BeneficiarioUi[] = this.listForms[6].value
+            .beneficiariosData as BeneficiarioUi[];
 
-          this.listForms[8].get('polizaRespForm')?.setValue(poliza);
+          const requests : any[] = beneficiarios.map( beneficiario => {
+            const nuevaPoliza: PolizaToPost = {
+              venta_id: respFromVentas.id ?? respFromVentas.venta_id!,
+              servicio_id: (this.listForms[3].value.planSelected as ServicioUi)
+                .servicio_id,
+              destino: this.listForms[0].value.toLocation.toUpperCase(),
+              fecha_salida: this.listForms[1].value.initialDate,
+              fecha_retorno: this.listForms[1].value.finalDate,
+              extra: (forms[5].value.ventaData.selectedExtras as Extra[]).length,
+              status: 4,
+            };
+
+            return this.polizasService.create(nuevaPoliza);
+          })
+
+
+          return forkJoin(requests);
+        }),
+        switchMap((polizas: any[]) => {
+          console.log(polizas);
+          this.listForms[8].get('polizaRespForm')?.setValue(polizas);
 
           const beneficiarios: BeneficiarioUi[] = this.listForms[6].value
             .beneficiariosData as BeneficiarioUi[];
 
-          const beneficiariosToIt: BeneficiarioToPost[] = beneficiarios.map(
-            (beneficiario) => {
+          const beneficiariosToIt: BeneficiarioToPost[] = polizas.map(
+            (poliza , index) => {
               return {
                 poliza_id: poliza.poliza_id ?? poliza.id!,
-                primer_apellido: beneficiario.primer_apellido,
-                primer_nombre: beneficiario.primer_nombre,
-                segundo_apellido: beneficiario.segundo_apellido,
-                segundo_nombre: beneficiario.segundo_nombre,
+                primer_apellido: beneficiarios[index].primer_apellido,
+                primer_nombre: beneficiarios[index].primer_nombre,
+                segundo_apellido: beneficiarios[index].segundo_apellido,
+                segundo_nombre: beneficiarios[index].segundo_nombre,
                 fecha_nacimiento: DatesAction.invert_date(
-                  beneficiario.fecha_nacimiento
+                  beneficiarios[index].fecha_nacimiento
                 ),
-                sexo: parseInt(beneficiario.sexo),
-                origen: beneficiario.origen,
-                email: beneficiario.email,
-                telefono: beneficiario.telefono,
-                nro_identificacion: beneficiario.nro_identificacion,
+                sexo: parseInt(beneficiarios[index].sexo),
+                origen: beneficiarios[index].origen,
+                email: beneficiarios[index].email,
+                telefono: beneficiarios[index].telefono,
+                nro_identificacion: beneficiarios[index].nro_identificacion,
               };
             }
           );
@@ -504,7 +513,7 @@ export class MultiStepComponent implements OnInit {
         },
         complete: () => {
           this.onLoadProcess?.complete();
-          this.onSuccess('Venta Realizada Correctamente');
+          this.onSuccess('Cotizacion registrada, se procedera al pago de la venta.');
         },
       });
   }

@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 import { ModalBeneficiarioComponent } from '../modal-beneficiario.component';
 import { ServicioUi } from 'src/app/Modules/shared/models';
 import { BeneficiarioUi } from 'src/app/Modules/shared/models/Beneficiario.Ui';
-import { Beneficiario, Poliza } from 'src/app/Modules/Core/models';
+import { Beneficiario, Poliza, Venta } from 'src/app/Modules/Core/models';
 
 @Injectable()
 export class ModalBenService {
@@ -24,7 +24,7 @@ export class ModalBenService {
     @Inject(DOCUMENT) private document: Document,
   ) {}
 
-  open(content: TemplateRef<any>, options?: { size?: string; title?: string , servicioUi: ServicioUi, beneficiario : Beneficiario, poliza : Poliza }) {
+  open(content: TemplateRef<any>, options?: { size?: string; title?: string , servicioUi: ServicioUi, beneficiario : Beneficiario, poliza : Poliza, venta : Venta }) {
     const modalComponentFactory = this.resolver.resolveComponentFactory(
       ModalBeneficiarioComponent
     );
@@ -38,6 +38,7 @@ export class ModalBenService {
     modalComponent.instance.beneficiario = options?.beneficiario;
     modalComponent.instance.servicioUi = options?.servicioUi;
     modalComponent.instance.poliza = options?.poliza;
+    modalComponent.instance.venta = options?.venta;
     modalComponent.instance.closeEvent.subscribe(()=> this.closeModal());
     modalComponent.instance.submitEvent.subscribe(() => this.submitModal());
 

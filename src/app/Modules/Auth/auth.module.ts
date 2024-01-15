@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SessionService } from './Services/session.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserService } from './Services/user.service';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers : [
     SessionService,
+    UserService,
   ]
 })
 export class AuthModule { }

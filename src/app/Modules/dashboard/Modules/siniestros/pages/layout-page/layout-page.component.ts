@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
 
-  template: `<router-outlet></router-outlet>`,
+  template: `<router-outlet>`,
   styleUrls: ['./layout-page.component.css'],
 })
 export class LayoutPageComponent { }

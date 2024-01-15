@@ -18,8 +18,10 @@ import {
   ServiciosService,
   SiniestrosService,
   VentasService,
+
 } from './services';
 import { PolizasExtrasService } from './services/polizas-extras.service';
+import { ReportesService } from './services/reportes.service';
 
 @NgModule({
   declarations: [],
@@ -40,7 +42,8 @@ import { PolizasExtrasService } from './services/polizas-extras.service';
     SiniestrosService,
     VentasService,
     DescuentosService,
-    PolizasExtrasService
+    PolizasExtrasService,
+    ReportesService,
   ],
   exports: [],
   bootstrap: [],

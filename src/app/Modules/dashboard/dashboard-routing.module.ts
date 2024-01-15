@@ -22,7 +22,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'accidents',
+        path: 'siniestros',
         loadChildren: () =>
           import('./Modules/siniestros/siniestros.module').then(
             (m) => m.SiniestrosModule

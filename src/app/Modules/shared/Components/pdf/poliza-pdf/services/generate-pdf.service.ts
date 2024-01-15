@@ -11,19 +11,24 @@ export class GeneratePdfService {
 
 
   generatePdfFromCanvas(...canvases: HTMLCanvasElement[]) {
+    if (canvases.length === 0) {
+      console.warn('No canvases provided for PDF generation.');
+      return;
+    }
+
     const doc = new jsPDF('p', 'pt', 'a4');
 
     canvases.forEach((canva, index) => {
       if (index > 0) {
         doc.addPage();
       }
-      const img = canva.toDataURL('image/png');
+      const img = canva.toDataURL("image/jpeg", 0.3);
       const bufferX = 0;
       const bufferY = 0;
       const imgProps = doc.getImageProperties(img);
       const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      doc.addImage(img, 'JPEG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'SLOW');
     });
 
     doc.save(`redcard_policie.pdf`);

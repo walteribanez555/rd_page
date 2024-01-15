@@ -1,0 +1,71 @@
+<div class="page">
+
+  <div class="page-title">
+    <h1>Lista de Siniestros</h1>
+  </div>
+
+
+
+
+  <!-- <div class="switch-display">
+      <button [class.active]="onTableDisplay"  (click)="onChangeTypeListDisplay(true)">
+        <span>Tabla</span>
+      </button>
+
+
+      <button [class.active]="!onTableDisplay"  (click)="onChangeTypeListDisplay(false)" >
+        <span>Elemento</span>
+      </button>
+    </div> -->
+
+    <div class="info">
+      <div class="table-data ">
+        <table>
+          <tr>
+            <th>Codigo Siniestro</th>
+            <th>Codigo Poliza</th>
+            <th>Fecha Salida</th>
+            <th>Fecha Retorno</th>
+            <th>Fecha Siniestro</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Pais Ocurrencia</th>
+            <th>Ciudad Ocurrencia</th>
+
+          </tr>
+
+
+          <tr *ngFor="let siniestro of siniestros.reverse()" [routerLink]="'../'+ siniestro.venta_id "  [queryParams]="{ poliza_id : siniestro.poliza_id, beneficiario_id : siniestro.beneficiario_id , siniestro_id : siniestro.siniestro_id}">
+            <td>{{siniestro.siniestro_id}}</td>
+            <td>{{siniestro.poliza_id}}</td>
+            <td>{{siniestro.fecha_salida.split('T')[0]}}</td>
+            <td>{{siniestro.fecha_retorno.split('T')[0]}}</td>
+            <td>{{siniestro.fecha_siniestro.split('T')[0]}}</td>
+            <td>{{siniestro.primer_nombre}}</td>
+            <td>{{siniestro.primer_apellido}}</td>
+            <td>{{siniestro.pais_ocurrencia}}</td>
+            <td>{{siniestro.ciudad_ocurrencia}}</td>
+
+          </tr>
+
+
+
+
+
+
+
+
+        </table>
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+
+
+</div>

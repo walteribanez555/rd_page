@@ -1,4 +1,4 @@
-import { NgModule, Pipe } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe, SlicePipe } from '@angular/common';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { SelectCustomComponent } from './Components/selectCustom/selectCustom.component';
@@ -16,7 +16,6 @@ import { RouterModule } from '@angular/router';
 import { CoberturaComponent } from './Components/cobertura/cobertura.component';
 import { ListCoberturaComponent } from './Components/list-cobertura/list-cobertura.component';
 import { ConfirmPaymentComponent } from './pages/confirm-payment/confirm-payment.component';
-import { PolizasModule } from '../dashboard/Modules/polizas/polizas.module';
 import { CardBeneficiarioComponent } from './Components/card-beneficiario/card-beneficiario.component';
 import { CardPolizaComponent } from './Components/card-poliza/card-poliza.component';
 import { PolizaPdfComponent } from './Components/pdf/poliza-pdf/poliza-pdf.component';

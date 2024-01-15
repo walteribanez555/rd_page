@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild, inject } from '@angular/core';
 import { GeneratePdfService } from './services/generate-pdf.service';
 import html2canvas from 'html2canvas';
-import { Beneficiario, Poliza } from 'src/app/Modules/Core/models';
+import { Beneficiario, Poliza, Venta } from 'src/app/Modules/Core/models';
 import { ServicioUi } from 'src/app/Modules/shared/models';
 
 
@@ -14,6 +14,10 @@ import { ServicioUi } from 'src/app/Modules/shared/models';
 })
 export class PolizaPdfComponent  implements OnInit {
   ngOnInit(): void {
+
+    console.log(this.poliza);
+    console.log(this.beneficiario);
+
     if (this.servicioUi && this.servicioUi.catalogos) {
       this.servicioUi.catalogos = this.servicioUi.catalogos
         .filter(c => c.beneficios && Array.isArray(c.beneficios)) // Filtering out elements where beneficios is null or not an array
@@ -34,6 +38,7 @@ export class PolizaPdfComponent  implements OnInit {
   @Input() beneficiario? : Beneficiario;
   @Input() servicioUi? : ServicioUi;
   @Input() poliza? : Poliza;
+  @Input() venta? : Venta;
   actualDate = new Date().toDateString();
 
 

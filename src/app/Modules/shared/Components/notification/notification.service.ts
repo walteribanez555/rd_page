@@ -34,7 +34,6 @@ export class NotificationService {
       closeOnTouch?: boolean;
     }
   ) {
-    console.log(message, options);
 
     const modalComponentFactory = this.resolver.resolveComponentFactory(
       NotificationComponent

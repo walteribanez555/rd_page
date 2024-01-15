@@ -1,0 +1,52 @@
+<div class="page">
+  <div class="page-title">
+    <h1>Reportar Siniestro</h1>
+  </div>
+
+  <div class="info">
+
+    <form   [formGroup]="siniestroForm"  (ngSubmit)="onSubmitForm()" >
+      <div class="field">
+        <span>Selecciona que tipo de siniestro fue</span>
+        <input-type-siniestro [tipoSiniestros]="tiposSiniestros"  (onChangeActualItem)="onChangeType($event)" ></input-type-siniestro>
+      </div>
+
+      <div class="field">
+
+        <div class="field w-100">
+          <label for="descripcion">Descripcion</label>
+          <textarea type="text" placeholder="descripcion" formControlName="descripcion"  name="descripcion"  ></textarea>
+        </div>
+        <div class="field w-100">
+          <label  >Fecha Siniestro</label>
+          <input-date (onSetValidDate)="onSetValidDate($event)"  ></input-date>
+        </div>
+        <div class="field w-100">
+          <label for="pais_ocurrencia">Pais Ocurrencia</label>
+          <input type="text" name="pais_ocurrencia" formControlName="pais_ocurrencia" placeholder="Pais">
+        </div>
+        <div class="field w-100">
+          <label for="ciudad_ocurrencia">Ciudad Ocurrencia</label>
+          <input type="text" name="ciudad_ocurrencia" formControlName="ciudad_ocurrencia" placeholder="Ciudad" >
+        </div>
+        <div class="field w-100">
+          <label for="url_archivo">Url Archivo (opcional)</label>
+          <input type="file" name="url_archivo"   (change)="onFileSelected($event)"  >
+        </div>
+        <div class="field w-100">
+          <button type="submit " class="w-100" >
+            Registrar Siniestro
+          </button>
+        </div>
+      </div>
+
+
+    </form>
+
+
+
+  </div>
+
+
+
+</div>

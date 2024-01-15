@@ -8,9 +8,10 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '../Core/core.module';
 import { LandingPageModule } from '../Landing-page/landing-page.module';
+import { UserProfileComponent } from './Components/user-profile/user-profile.component';
 
 @NgModule({
-  declarations: [LayoutPageComponent, NavbarComponent],
+  declarations: [LayoutPageComponent, NavbarComponent, UserProfileComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

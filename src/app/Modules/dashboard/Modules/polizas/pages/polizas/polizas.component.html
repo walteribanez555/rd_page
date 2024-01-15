@@ -1,27 +1,23 @@
 <div class="page">
-  <div class="top">
-    <div class="router-back"  (click)="onBackBtn()">
-      <i class="fa-solid fa-arrow-left fa-2xl"></i>
-
-    </div>
-    <div class="page-title">
-      <h1>Compra : 125</h1>
-
-    </div>
+  <div class="page-title">
+    <h1>Compra : {{venta_id}}</h1>
 
   </div>
-  <div class="content">
-    <div class="top">
-      <i class="fa-solid fa-shield fa-2xl"></i>
-      <span class="title">
-        Polizas
-      </span>
-    </div>
-    <div class="list">
-      <card-poliza></card-poliza>
 
 
-    </div>
 
+  <div class="info">
+    <span  *ngIf="!isReady; else ready" >Cargando la informacion</span>
+    <ng-template #ready>
+
+      <div class="list">
+        <card-poliza [poliza]="poliza!" [servicio]="servicio!" [isClient]="isClient"  [beneficiario]="listBeneficiarios[0]"  ></card-poliza>
+        <card-beneficiario *ngFor="let beneficiario of listBeneficiarios; let i = index" [beneficiario]="beneficiario!"
+          style="margin: 10px 0px;" [servicioUi]="servicioUi!" [poliza]="poliza!" [venta]="venta!"></card-beneficiario>
+      </div>
+
+    </ng-template>
   </div>
+
+
 </div>

@@ -112,7 +112,7 @@ export const countries : Country[] = [
     "Code": "BT"
   },
   {
-    "Name": "Bolivia, Plurinational State of",
+    "Name": "Bolivia",
     "Code": "BO"
   },
   {

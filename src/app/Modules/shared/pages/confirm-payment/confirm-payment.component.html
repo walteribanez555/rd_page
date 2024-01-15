@@ -21,10 +21,10 @@
             Condicionado
           </a>
         </li>
-        <li>
+        <li >
           <p>Puedes descargar ahora mismo tus <span style="font-weight: bold; color: var(--main-color);">polizas</span></p>
-          <div *ngFor="let beneficiario of listBeneficiarios" style="padding: 10px 0px;">
-            <card-beneficiario [beneficiario]="beneficiario" style="margin: 10px 0px;"  [servicioUi]="servicioUi" [poliza]="poliza!" ></card-beneficiario>
+          <div *ngFor="let beneficiario of listBeneficiarios; let i = index" style="padding: 10px 0px;">
+            <card-beneficiario [beneficiario]="beneficiario" style="margin: 10px 0px;"  [servicioUi]="servicioUi" [poliza]="polizas[i]"  [venta]="venta!" ></card-beneficiario>
           </div>
         </li>
         <li>

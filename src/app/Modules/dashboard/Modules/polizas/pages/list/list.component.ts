@@ -6,9 +6,13 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, switchMap } from 'rxjs';
 import { UserService } from 'src/app/Modules/Auth/Services/user.service';
 import { User } from 'src/app/Modules/Auth/models/User';
+import { Servicio, Venta } from 'src/app/Modules/Core/models';
+import { Reporte } from 'src/app/Modules/Core/models/Reporte.model';
+import { ServiciosService, VentasService } from 'src/app/Modules/Core/services';
+import { ReportesService } from 'src/app/Modules/Core/services/reportes.service';
 import {
   Size,
   PositionMessage,
@@ -21,67 +25,79 @@ import { NotificationService } from 'src/app/Modules/shared/Components/notificat
   styleUrls: ['./list.component.css'],
 })
 export class ListComponent implements OnInit, AfterViewInit {
-  ngAfterViewInit(): void {
-    const bodyElement = this.elRef.nativeElement.querySelector('body');
-  }
+  ngAfterViewInit(): void {}
 
   private notificationModalService = inject(NotificationService);
-  private userService = inject(UserService);
+  private serviciosService = inject(ServiciosService);
+  private reportesService = inject(ReportesService);
 
-  user: User | null = null;
+  ventas: Reporte[] = [];
 
   ngOnInit(): void {
-    const username = localStorage.getItem('client_id');
-    const office_id = localStorage.getItem('office_id');
+    const client_id = localStorage.getItem('client_id');
 
+    const process = new Subject();
+    const observerProcess = process.asObservable();
 
-    if( !username || !office_id){
-      this.onError('Usuario No encontrado');
-      return;
-    }
+    this.onLoading(observerProcess);
 
-    if (username && office_id) {
-      this.userService.getUser(username + '_' + office_id).subscribe({
-        next: (user) => {
-
-          this.user = user[0];
+    this.serviciosService
+      .getAll()
+      .pipe(
+        switchMap((servicios) => {
+          this.servicios = servicios;
+          return this.reportesService.getByClientId(client_id!);
+        })
+      ).subscribe({
+        next: (resp) => {
+          this.ventas = resp;
+          process.complete();
         },
         error: (err) => {
-          this.onError('Usuario No encontrado');
+          this.onError(err);
         },
         complete: () => {},
       });
-    }
-
-
-
-    if (window.innerWidth < 1024) {
-      this.onTableDisplay = false;
-    }
 
     // this.onError("No implementado correctamente");
   }
   // private renderer: Renderer2, private elementRef: ElementRef
 
   screenWidth?: number;
+  servicios: Servicio[] = [];
 
-  private elRef = inject(ElementRef);
-
-  onTableDisplay: boolean = true;
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    const withScreen: number = event.target.innerWidth;
-
-    if (withScreen < 1024) {
-      this.onTableDisplay = false;
-      return;
-    }
-    this.onTableDisplay = true;
+  mapQuantity(quantity: string) {
+    return quantity
+      .split(',')
+      .reduce((prev, actual) => prev + parseInt(actual), 0);
   }
 
-  onChangeTypeListDisplay(state: boolean) {
-    this.onTableDisplay = state;
+  mapService( servicio_id  : number){
+
+
+
+    return this.servicios.filter( serv => serv.servicio_id === servicio_id)[0].servicio;
+  }
+
+  getTotalPayment( total: string, quantity ="1" ) {
+    const count = quantity
+      .split(',')
+      .reduce((prev, actual) => prev + parseInt(actual), 0);
+
+    const price = total
+      .split(',')
+      .reduce((prev, actual) => prev + parseInt(actual), 0 );
+
+    return price/count;
+  }
+
+  getAmountByQuantity( amount : number , quantity = "1"){
+    const count = quantity
+      .split(',')
+      .reduce((prev, actual) => prev + parseInt(actual), 0);
+
+    return amount/count;
+
   }
 
   onSuccess(message: string) {
@@ -112,5 +128,12 @@ export class ListComponent implements OnInit, AfterViewInit {
       closeOnTouch: false,
       notifier: observerProcess,
     });
+  }
+
+  getStatusClass(status: number) {
+    return {
+      success: status === 2,
+      deleted: status === 3,
+    };
   }
 }
