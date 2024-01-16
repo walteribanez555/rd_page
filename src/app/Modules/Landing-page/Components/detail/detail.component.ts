@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { Extra } from 'src/app/Modules/Core/models';
 import { PlanUi, ServicioUi } from 'src/app/Modules/shared/models';
 import { VentaUi } from 'src/app/Modules/shared/models/Venta.ui';
+import { CountryRegion } from 'src/app/Modules/shared/utils/data/countries-region.ts/countries-region';
 import { VentaMappers } from 'src/app/Modules/shared/utils/mappers/venta.mappers';
 
 @Component({
@@ -37,7 +38,9 @@ export class DetailComponent implements OnInit {
   @Output() onChangePage = new EventEmitter();
   @Output() onBackStep = new EventEmitter();
 
-  destinyList: string[] = [];
+  destinyList: CountryRegion[] = [];
+  origen? : CountryRegion
+
 
   selectedPlanesExtras: PlanUi[] = [];
 
@@ -56,7 +59,8 @@ export class DetailComponent implements OnInit {
   }
 
   mapData() {
-    this.destinyList = this.forms[0].get('toLocation')?.value.split(',');
+    this.origen = this.forms['0'].get('fromLocation')?.value as CountryRegion;
+    this.destinyList = this.forms[0].get('toLocation')?.value as CountryRegion[];
     this.selectedPlanesExtras = (
       this.forms[3].get('planSelected')?.value as ServicioUi
     ).extras.filter((extra) => extra.isSelected);

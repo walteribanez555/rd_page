@@ -8,6 +8,7 @@ import { NotificationService } from 'src/app/Modules/shared/Components/notificat
 import { ImagesService } from '../../services/images.service';
 import { RespBucketS3 } from '../../models/RespBucketS3.model';
 import { ComunicacionSiniestro, ComunicacionSiniestroPost } from 'src/app/Modules/Core/models/ComunicacionSiniestro.model';
+import { transformSignalstoString, trasnformStringtoSignals } from '../../utils/mappers/Messages.Mappers';
 
 @Component({
   selector: 'chat',
@@ -37,6 +38,7 @@ export class ChatComponent  implements OnInit {
     this.comunicacionService.getAll().subscribe({
       next : ( resp ) => {
 
+        resp.forEach( item => item.mensaje = trasnformStringtoSignals(item.mensaje));
         this.comunicacionSiniestros = resp.filter(item => item.siniestro_id == this.siniestro.siniestro_id);
         console.log(this.comunicacionSiniestros);
         process.complete();
@@ -119,9 +121,9 @@ export class ChatComponent  implements OnInit {
 
 
     const newMessage : ComunicacionSiniestroPost = {
-      mensaje : message! as string,
+      mensaje : transformSignalstoString(message! as string),
       siniestro_id :  this.siniestro.siniestro_id!,
-      url_archivo : filePath ,
+      url_archivo : filePath,
       es_operador : 0,
       fecha_mesaje : new Date().toISOString().split('T')[0]
     }
@@ -129,7 +131,7 @@ export class ChatComponent  implements OnInit {
 
     this.comunicacionService.create(newMessage).subscribe({
       next : (resp) => {
-        console.log(resp);
+        resp.mensaje = trasnformStringtoSignals(resp.mensaje);
         this.comunicacionSiniestros.push(resp);
         this.chatForm.get('url_archivo')!.setValue(null);
         this.chatForm.get('message')?.setValue(null);

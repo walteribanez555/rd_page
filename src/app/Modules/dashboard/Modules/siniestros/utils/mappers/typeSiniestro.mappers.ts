@@ -11,7 +11,7 @@ export function mapTyeSiniestro(catalogos: Catalogo[], planes: Plan[]) {
 
 export function mapCatPlan(catalogo: Catalogo, planes: Plan[]) {
   const planesToTipe: Plan[] = planes.filter(
-    (plan) => plan.tipo_beneficio === catalogo.catalogo_id
+    (plan) => plan.tipo_beneficio === catalogo.valor
   );
 
   const nuevoTipoSiniestro: TipoSiniestro = {

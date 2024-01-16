@@ -15,7 +15,7 @@
           </div>
           <div class="field  m-h-10 wrap">
             <siniestro-details class="w-100 " [siniestro]="siniestro!" [beneficiario]="beneficiario!" ></siniestro-details>
-            <input-type-siniestro  class="w-100" [tipoSiniestros]="[tipoSiniestro!]"  [size]="'w-100'"  [disable]="true" ></input-type-siniestro>
+            <input-type-siniestro [isCreating]="false" class="w-100" [tipoSiniestros]="[tipoSiniestro!]"  [size]="'w-100'"  [disable]="true" ></input-type-siniestro>
           </div>
           <div class="field  m-h-10 w-55 h-100"  >
             <chat [siniestro]="siniestro!" [beneficiario]="beneficiario!" ></chat>

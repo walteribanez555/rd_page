@@ -30,12 +30,19 @@ import {
   Cliente,
   Poliza,
 } from 'src/app/Modules/Core/models';
-import { Beneficiario, BeneficiarioToPost, BeneficiarioToResp } from 'src/app/Modules/Core/models/Beneficiario.model';
+import {
+  Beneficiario,
+  BeneficiarioToPost,
+  BeneficiarioToResp,
+} from 'src/app/Modules/Core/models/Beneficiario.model';
 import { ClienteToPost } from 'src/app/Modules/Core/models/Cliente.model';
 import { Descuento } from 'src/app/Modules/Core/models/Descuento.model';
 import { PolizaToPost } from 'src/app/Modules/Core/models/Poliza.model';
 import { PolizaExtraToPost } from 'src/app/Modules/Core/models/PolizaExtra.model';
-import { VentaToPost, VentaResp } from 'src/app/Modules/Core/models/Venta.model';
+import {
+  VentaToPost,
+  VentaResp,
+} from 'src/app/Modules/Core/models/Venta.model';
 import {
   ServiciosService,
   CatalogosService,
@@ -61,6 +68,7 @@ import {
 import { NotificationService } from 'src/app/Modules/shared/Components/notification/notification.service';
 import { ServicioUi } from 'src/app/Modules/shared/models';
 import { BeneficiarioUi } from 'src/app/Modules/shared/models/Beneficiario.Ui';
+import { CountryRegion } from 'src/app/Modules/shared/utils/data/countries-region.ts/countries-region';
 import { DatesAction } from 'src/app/Modules/shared/utils/dates/dates-action';
 import { MapToServicioUi } from 'src/app/Modules/shared/utils/mappers/servicio.mappers';
 
@@ -76,7 +84,6 @@ export interface ServByPlan {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultiStepComponent implements OnInit {
-
   private serviciosService = inject(ServiciosService);
   private catalogosService = inject(CatalogosService);
   private beneficiosService = inject(BeneficiosService);
@@ -96,8 +103,6 @@ export class MultiStepComponent implements OnInit {
   private polizasExtrasService = inject(PolizasExtrasService);
   private beneficiariosService = inject(BeneficiariosService);
   private cdr = inject(ChangeDetectorRef);
-
-
 
   locationsForm = new FormGroup({
     fromLocation: new FormControl(null, [Validators.required]),
@@ -126,18 +131,20 @@ export class MultiStepComponent implements OnInit {
   });
 
   beneficiariosForm = new FormGroup({
-    beneficiariosData : new FormControl<BeneficiarioUi[] | null>(null,[Validators.required]),
-  })
-
+    beneficiariosData: new FormControl<BeneficiarioUi[] | null>(null, [
+      Validators.required,
+    ]),
+  });
 
   ventaRespForm = new FormGroup({
-    ventRespData : new FormControl< VentaResp| null>(null, [Validators.required]),
-  })
-
+    ventRespData: new FormControl<VentaResp | null>(null, [
+      Validators.required,
+    ]),
+  });
 
   beneficiariosRespForm = new FormGroup({
-    polizaRespForm : new FormControl<Poliza | null>(null, [Validators.required]),
-  })
+    polizaRespForm: new FormControl<Poliza | null>(null, [Validators.required]),
+  });
 
   extrasForm = new FormGroup({});
 
@@ -149,8 +156,7 @@ export class MultiStepComponent implements OnInit {
   descuentos: Descuento[] = [];
   extras: Extra[] = [];
   precios: Precio[] = [];
-  cupones : Cupon[] = [];
-
+  cupones: Cupon[] = [];
 
   serviciosToUi: ServicioUi[] | null = null;
 
@@ -165,16 +171,17 @@ export class MultiStepComponent implements OnInit {
   onLoadProcess?: Subject<any>;
   observerProcess?: Observable<any>;
 
-
-  onIntentPayment? : Subject<any>;
-  observerPayment? : Observable<any>;
-
+  onIntentPayment?: Subject<any>;
+  observerPayment?: Observable<any>;
 
   userWeb: string | null = null;
 
   constructor() {}
 
   actualStep: number = 1;
+
+  destinyList: string = '';
+  origen?: CountryRegion;
 
   ngOnInit() {
     this.route.queryParamMap.subscribe((params) => {
@@ -190,15 +197,13 @@ export class MultiStepComponent implements OnInit {
       this.ventaForm,
       this.beneficiariosForm,
       this.ventaRespForm,
-      this.beneficiariosRespForm,
+      this.beneficiariosRespForm
     );
 
     this.onSelectDataToPlans = new Subject();
     this.onSelectedPlan = new Subject();
     this.onShowDetails = new Subject();
     this.onIntentPayment = new Subject();
-
-
 
     this.observerServiciosUi = this.onSelectDataToPlans.asObservable();
     this.observerOnSelectedPlan = this.onSelectedPlan.asObservable();
@@ -212,7 +217,7 @@ export class MultiStepComponent implements OnInit {
           this.beneficios = data;
           return this.preciosService.getAll();
         }),
-        switchMap( (data) => {
+        switchMap((data) => {
           this.precios = data;
           return this.cuponesService.getAll();
         }),
@@ -258,12 +263,11 @@ export class MultiStepComponent implements OnInit {
               this.extras,
               item,
               this.precios,
-              this.cupones,
+              this.cupones
             )
           );
 
           console.log(this.serviciosToUi);
-
         },
         error: (err) => {
           this.notificationService.show(
@@ -305,6 +309,20 @@ export class MultiStepComponent implements OnInit {
       return;
     }
 
+    if (this.locationsForm.get('fromLocation')?.value) {
+      this.origen = this.locationsForm.get('fromLocation')!
+        .value as unknown as CountryRegion;
+    }
+
+    if (this.locationsForm.get('toLocation')?.value) {
+      this.destinyList = (
+        this.locationsForm.get('toLocation')!
+          .value as unknown as CountryRegion[]
+      )
+        .map((dest) => dest.country)
+        .join(',');
+    }
+
     if (this.datesForm.get('quantityDays')!.value) {
       this.serviciosToUi?.forEach((servicio) => {
         servicio.precioSelected = this.preciosFilter.filterByDay(
@@ -324,37 +342,33 @@ export class MultiStepComponent implements OnInit {
       this.onSelectDataToPlans?.next(filteredServiciosUi);
     }
 
-
-
     if (posStep == 0 || posStep >= 9) {
       return;
     }
 
     if (posStep == 8) {
       this.createIntentPayment().subscribe({
-        next : (resp) => {
+        next: (resp) => {
           this.actualStep = posStep;
           this.onShowDetails?.next(this.actualStep);
-
         },
-        error : (err) => {
+        error: (err) => {
           console.log(err);
         },
-        complete : ( ) => {
+        complete: () => {
           this.actualStep = posStep;
           console.log(this.actualStep);
           this.onShowDetails?.next(this.actualStep);
           this.cdr.detectChanges();
-        }
-      })
-    }else{
+        },
+      });
+    } else {
       this.actualStep = posStep;
       this.onShowDetails?.next(this.actualStep);
     }
   }
 
-
-  createIntentPayment() :Observable<any>{
+  createIntentPayment(): Observable<any> {
     const beneficiariosData: BeneficiarioUi[] =
       this.listForms[6].value.beneficiariosData;
 
@@ -382,11 +396,11 @@ export class MultiStepComponent implements OnInit {
             apellido: titularBeneficiario.primer_apellido,
             tipo_cliente: 1,
             nro_identificacion: titularBeneficiario.nro_identificacion,
-            origen: titularBeneficiario.origen,
+            origen: titularBeneficiario.origen.country,
             email: titularBeneficiario.email,
             nro_contacto: titularBeneficiario.telefono,
             status: 1,
-            office_id : 2,
+            office_id: 2,
           };
 
           this.clientesService.create(nuevoCliente).subscribe({
@@ -406,7 +420,7 @@ export class MultiStepComponent implements OnInit {
         },
       });
 
-      return this.observerProcess;
+    return this.observerProcess;
   }
 
   createVenta(cliente: Cliente, forms: FormGroup[]) {
@@ -437,7 +451,7 @@ export class MultiStepComponent implements OnInit {
       .create(nuevaVenta)
       .pipe(
         mergeMap((respFromVentas: VentaResp) => {
-          this.ventaRespForm.setValue({ventRespData : respFromVentas});
+          this.ventaRespForm.setValue({ ventRespData: respFromVentas });
           return this.createExtras(respFromVentas, this.listForms).pipe(
             catchError((err) => throwError(err)),
             map(() => respFromVentas)
@@ -447,21 +461,21 @@ export class MultiStepComponent implements OnInit {
           const beneficiarios: BeneficiarioUi[] = this.listForms[6].value
             .beneficiariosData as BeneficiarioUi[];
 
-          const requests : any[] = beneficiarios.map( beneficiario => {
+          const requests: any[] = beneficiarios.map((beneficiario) => {
             const nuevaPoliza: PolizaToPost = {
               venta_id: respFromVentas.id ?? respFromVentas.venta_id!,
               servicio_id: (this.listForms[3].value.planSelected as ServicioUi)
                 .servicio_id,
-              destino: this.listForms[0].value.toLocation.toUpperCase(),
+              destino: (this.listForms[0].value.toLocation as  CountryRegion[]).map(dest => dest.country).join(','),
               fecha_salida: this.listForms[1].value.initialDate,
               fecha_retorno: this.listForms[1].value.finalDate,
-              extra: (forms[5].value.ventaData.selectedExtras as Extra[]).length,
+              extra: (forms[5].value.ventaData.selectedExtras as Extra[])
+                .length,
               status: 4,
             };
 
             return this.polizasService.create(nuevaPoliza);
-          })
-
+          });
 
           return forkJoin(requests);
         }),
@@ -473,7 +487,7 @@ export class MultiStepComponent implements OnInit {
             .beneficiariosData as BeneficiarioUi[];
 
           const beneficiariosToIt: BeneficiarioToPost[] = polizas.map(
-            (poliza , index) => {
+            (poliza, index) => {
               return {
                 poliza_id: poliza.poliza_id ?? poliza.id!,
                 primer_apellido: beneficiarios[index].primer_apellido,
@@ -484,7 +498,7 @@ export class MultiStepComponent implements OnInit {
                   beneficiarios[index].fecha_nacimiento
                 ),
                 sexo: parseInt(beneficiarios[index].sexo),
-                origen: beneficiarios[index].origen,
+                origen: beneficiarios[index].origen.country,
                 email: beneficiarios[index].email,
                 telefono: beneficiarios[index].telefono,
                 nro_identificacion: beneficiarios[index].nro_identificacion,
@@ -504,7 +518,7 @@ export class MultiStepComponent implements OnInit {
         })
       )
       .subscribe({
-        next: (resp : BeneficiarioToResp[]) => {
+        next: (resp: BeneficiarioToResp[]) => {
           this.onIntentPayment?.complete();
         },
         error: (err) => {
@@ -513,7 +527,9 @@ export class MultiStepComponent implements OnInit {
         },
         complete: () => {
           this.onLoadProcess?.complete();
-          this.onSuccess('Cotizacion registrada, se procedera al pago de la venta.');
+          this.onSuccess(
+            'Cotizacion registrada, se procedera al pago de la venta.'
+          );
         },
       });
   }

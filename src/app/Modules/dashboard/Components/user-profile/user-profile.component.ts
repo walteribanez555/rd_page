@@ -31,6 +31,14 @@ import { NotificationService } from 'src/app/Modules/shared/Components/notificat
         </ng-template>
       </div>
 
+      <div class="language">
+        <select name="" id="">
+          <option value="">Español</option>
+          <option value="">Portugues</option>
+          <option value="">Ingles</option>
+        </select>
+      </div>
+
 
     </div>
     `,

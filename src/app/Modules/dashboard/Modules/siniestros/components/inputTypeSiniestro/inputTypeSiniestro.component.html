@@ -1,5 +1,7 @@
-<div class="type-siniestro">
-  <div class="catalogo {{size}} "  *ngFor="let tipoSiniestro of tipoSiniestros; let i = index " [class.selected]="tipoSiniestro.isSelected" >
+<div class="type-siniestro"   >
+  <div class="catalogo {{size}} "  *ngFor="let tipoSiniestro of tipoSiniestros; let i = index "
+  [class.selected]="tipoSiniestro.isSelected"
+  [ngClass]="{ 'isChild' : tipoSiniestro.catalogo.valor ==4 && isCreating, 'isParent' : tipoSiniestro.catalogo.valor==2 && isCreating}" >
     <div class="top">
       <input  [disabled]="disable" type="checkbox" [id]="'customCheckbox' + i" class="custom-checkbox" [(ngModel)]="tipoSiniestro.isSelected"
         (change)="onChangeActionChild(i)">

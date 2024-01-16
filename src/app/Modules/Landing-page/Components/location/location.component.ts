@@ -7,7 +7,7 @@ import { locationTravel } from '../datesToTravel/locationTravel';
   template: `
   <div class="card" [class.selected]="location.isSelected"  (click)="changeLocation()">
     <i class="fa-solid fa-globe" [class.selected]="location.isSelected"></i>
-    <span [class.selected]="location.isSelected" >{{location.location}}</span>
+    <span [class.selected]="location.isSelected" >{{location.location.country}}</span>
     <span class="icon" (click)="changeLocation()" >x</span>
 
   </div>`,
@@ -15,8 +15,7 @@ import { locationTravel } from '../datesToTravel/locationTravel';
 })
 export class LocationComponent {
 
-
-  @Input() location! : locationTravel;
+@Input() location! : any;
 
   @Input() position! : number;
 
@@ -27,6 +26,7 @@ export class LocationComponent {
   changeLocation() {
     this.selectionChanged.emit(this.position);
   }
+
 
 
 

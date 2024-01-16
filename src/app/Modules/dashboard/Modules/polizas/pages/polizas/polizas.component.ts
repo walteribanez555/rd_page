@@ -17,7 +17,6 @@ import { MapToServicioUi } from 'src/app/Modules/shared/utils/mappers/servicio.m
   templateUrl : './polizas.component.html',
 })
 export class PolizasComponent implements OnInit {
-
   private notificationModalService = inject(NotificationService);
   private location = inject(Location);
   private activatedRoute = inject(ActivatedRoute);
@@ -109,12 +108,10 @@ export class PolizasComponent implements OnInit {
         return this.cuponesService.getAll();
       }),
       switchMap((resp: Cupon[]) => {
-        console.log({resp});
         this.cupones = resp;
         return this.catalogosService.getAll();
       }),
       switchMap((resp: Catalogo[]) => {
-        console.log({resp});
         this.catalogos = resp;
         return this.extrasService.getAll();
       }),
@@ -138,6 +135,9 @@ export class PolizasComponent implements OnInit {
           this.precios,
           this.cupones
         );
+        console.log("Hola");
+
+        console.log({servicio : this.servicioUi});
 
         this.servicioUi.precioSelected =
           this.venta!.total_pago / parseInt(this.venta!.cantidad);
@@ -185,9 +185,6 @@ export class PolizasComponent implements OnInit {
       notifier: observerProcess,
     });
   }
-
-
-
 
 
 }

@@ -19,6 +19,18 @@
 
 }
 
+
+.catalogo.isChild{
+  border-top: none;
+}
+.catalogo.catalogo.isChild .top{
+  display: none;
+}
+
+.catalogo.isParent{
+  border-bottom: none;
+}
+
 .w-50{
   width: 50%;
 }
@@ -31,6 +43,15 @@
   border: 3px solid var(--main-color);
   color: var(--main-color);
 }
+
+.catalogo.isChild.selected{
+  border-top: none;
+}
+
+.catalogo.isParent.selected{
+  border-bottom: none;
+}
+
 
 .top{
   font-size: 15px;

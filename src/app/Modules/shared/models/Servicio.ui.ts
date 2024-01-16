@@ -1,4 +1,4 @@
-import {  Cupon, Precio, Servicio } from '../../Core/models';
+import { Cupon, Precio, Servicio } from '../../Core/models';
 import { CatalogoUi } from './Catalogo.ui';
 import { PlanUi } from './Plan.ui';
 

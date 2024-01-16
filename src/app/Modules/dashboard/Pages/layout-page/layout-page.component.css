@@ -29,7 +29,11 @@ dashboard-navbar {
 @media (max-width: 1024px) {
 
   user-profile {
-    height: 5vh;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
   }
 
   .container {
@@ -52,7 +56,7 @@ dashboard-navbar {
     flex-direction: column;
     overflow-x: hidden;
     padding: 10px;
-    padding-top: 0px;
+    padding-top: 20px;
     padding-bottom: 30px;
     position: sticky;
 

@@ -13,7 +13,7 @@
     </div>
 
     <div class="right">
-      <p class="title">Detalles que debes de conocer al adquirir tu <span style="color: var(--main-color);" >RedCard Assist</span></p>
+      <p class="title">Detalles que debes de conocer al adquirir tu <span style="color: var(--main-color);" >REDCARD ASSIST</span></p>
       <ul style="margin-top: 20px;">
         <li>
           <p>Para ver los detalles del  <span style="font-weight: bold; color: var(--main-color);">condicionado </span> esta el siguiente enlace:</p>
@@ -24,7 +24,8 @@
         <li >
           <p>Puedes descargar ahora mismo tus <span style="font-weight: bold; color: var(--main-color);">polizas</span></p>
           <div *ngFor="let beneficiario of listBeneficiarios; let i = index" style="padding: 10px 0px;">
-            <card-beneficiario [beneficiario]="beneficiario" style="margin: 10px 0px;"  [servicioUi]="servicioUi" [poliza]="polizas[i]"  [venta]="venta!" ></card-beneficiario>
+            <card-beneficiario  [beneficiario]="beneficiario!"
+            style="margin: 10px 0px;" [servicioUi]="servicioUi!" [poliza]="polizas[0]" [venta]="venta!"></card-beneficiario>
           </div>
         </li>
         <li>

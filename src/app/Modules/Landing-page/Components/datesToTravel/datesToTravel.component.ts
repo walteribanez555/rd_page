@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { locationTravel } from './locationTravel';
 import { FormGroup } from '@angular/forms';
+import { CountryRegion } from 'src/app/Modules/shared/utils/data/countries-region.ts/countries-region';
 
 @Component({
   selector: 'dates-to-travel',
@@ -27,7 +28,7 @@ export class DatesToTravelComponent {
   changeLocation(positionSelected : number) {
 
     this.locations.splice(positionSelected, 1);
-    this.places.get('toLocation')?.setValue(this.locations.map(location => location.location).join(', '));
+    this.places.get('toLocation')?.setValue(this.locations.map(location => location.location));
 
   }
 
@@ -37,17 +38,21 @@ export class DatesToTravelComponent {
     this.onChangePage.emit();
   }
 
-  onSelectedDestiny( destiny : string) {
+  onSelectedDestiny( destiny : CountryRegion) {
+
+
     this.locations.push({
       location : destiny,
       isSelected : true,
     })
 
-    this.places.get('toLocation')?.setValue(this.locations.map(location => location.location).join(', '));
+    this.places.get('toLocation')?.setValue(this.locations.map(location => location.location));
+
   }
 
-  onSelectedOrigen( place : string) {
+  onSelectedOrigen( place : CountryRegion) {
     this.places.get('fromLocation')?.setValue(place);
   }
+
 
 }

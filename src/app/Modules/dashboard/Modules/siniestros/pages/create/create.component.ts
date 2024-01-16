@@ -30,6 +30,7 @@ import { ImagesService } from '../../services/images.service';
 import { RespBucketS3 } from '../../models/RespBucketS3.model';
 import { SiniestroPost } from 'src/app/Modules/Core/models/Siniestro.model';
 import { DatesAction } from 'src/app/Modules/shared/utils/dates/dates-action';
+import { transformSignalstoString, trasnformStringtoSignals } from '../../utils/mappers/Messages.Mappers';
 
 
 @Component({
@@ -152,19 +153,22 @@ export class CreateComponent implements OnInit {
       fileToUpload = url_archivo as File;
     }
 
-    if ( fileToUpload && this.isFileExtension(fileToUpload.name.split('.').reverse()[0])) {
-      const resp: RespBucketS3 = await this.imagesService.subirArchivo(
-        fileToUpload
-      );
-      filePath = resp.Location;
-    }else{
-      process.complete();
-      this.onError("File not supported");
-      return;
+    if(fileToUpload){
+      if ( fileToUpload && this.isFileExtension(fileToUpload.name.split('.').reverse()[0])) {
+        const resp: RespBucketS3 = await this.imagesService.subirArchivo(
+          fileToUpload
+        );
+        filePath = resp.Location;
+      }else{
+        process.complete();
+        this.onError("File not supported");
+        return;
+      }
     }
 
+
     const nuevoSiniestro: SiniestroPost = {
-      descripcion: descripcion! as string,
+      descripcion: transformSignalstoString(descripcion! as string),
       fecha_siniestro: DatesAction.invert_date(fecha_siniestro),
       pais_ocurrencia: (pais_ocurrencia! as string)
         .trimEnd()
@@ -174,7 +178,7 @@ export class CreateComponent implements OnInit {
         .toLocaleUpperCase(),
       url_archivo: filePath,
       beneficiario_id: this.beneficiario!.beneficiario_id,
-      tipo_siniestro: this.selectedTipoSiniestro!.catalogo.catalogo_id,
+      tipo_siniestro: this.selectedTipoSiniestro!.catalogo.valor,
     };
 
     this.siniestroService.create(nuevoSiniestro).subscribe({

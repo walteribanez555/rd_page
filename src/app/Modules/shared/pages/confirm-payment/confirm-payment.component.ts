@@ -132,8 +132,17 @@ export class ConfirmPaymentComponent implements OnInit {
             this.cupones
           );
 
+
+
           this.servicioUi.precioSelected =
             this.venta!.total_pago / parseInt(this.venta!.cantidad);
+
+            console.log("))))))))");
+          console.log(this.servicioUi);
+          console.log(this.polizas);
+          console.log(this.venta);
+          console.log(this.listBeneficiarios);
+          console.log("))))))))");
 
           this.onLoadProcess?.complete();
         },

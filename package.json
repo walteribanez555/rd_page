@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "start:server": "ng serve --host 192.168.0.10 --port 4500",
+    "start:server": "ng serve --host 192.168.0.13 --port 4500",
     "test": "ng test"
   },
   "private": true,

@@ -18,6 +18,8 @@ export class CardBeneficiarioComponent implements OnInit {
   ngOnInit(): void {
     this.cdr.detectChanges();
 
+    // console.log(this.beneficiario, this.servicioUi, this.poliza, this.venta);
+
   }
 
   private cdr = inject(ChangeDetectorRef);

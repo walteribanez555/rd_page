@@ -8,6 +8,7 @@ import { Size, PositionMessage } from 'src/app/Modules/shared/Components/notific
 import { NotificationService } from 'src/app/Modules/shared/Components/notification/notification.service';
 import { mapCatPlan, mapTyeSiniestro } from '../../utils/mappers/typeSiniestro.mappers';
 import { TipoSiniestro } from '../../models/TipoSiniestro.ui.model';
+import { trasnformStringtoSignals } from '../../utils/mappers/Messages.Mappers';
 
 @Component({
   templateUrl  : './siniestro.component.html',
@@ -42,12 +43,15 @@ export class SiniestroComponent implements OnInit {
       }),
       switchMap( resp => {
           console.log({resp}, "Resp");
+          resp[0].descripcion = trasnformStringtoSignals(resp[0].descripcion);
           this.siniestro = resp[0];
           return this.catalogoService.getAll()
       } )
     ).subscribe({
       next : ( resp) => {
-        this.catalogo = resp.filter( cat => cat.catalogo_id === this.siniestro?.tipo_siniestro)[0];
+        console.log(this.siniestro);
+        console.log(this.catalogo);
+        this.catalogo = resp.filter( cat => (cat.valor == this.siniestro?.tipo_siniestro))[0];
         this.tipoSiniestro = mapCatPlan(this.catalogo, this.planes);
 
         this.tipoSiniestro.isSelected= true;

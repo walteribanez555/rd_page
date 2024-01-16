@@ -10,7 +10,6 @@ import { PlanUi } from "../../models/Plan.ui";
 import { mapBeneficiosToCatalogo } from "./catalogo.mappers";
 import { CuponValidator } from "../validators/cupon.validator";
 
-
 export function MapToServicioUi(
   catalogos: Catalogo[],
   beneficios: Beneficio[],
@@ -19,6 +18,9 @@ export function MapToServicioUi(
   precios : Precio[],
   cupones : Cupon[],
 ): ServicioUi {
+
+
+  console.log({catalogos, beneficios, extras, servPlan, precios, cupones});
 
 
 
@@ -31,7 +33,7 @@ export function MapToServicioUi(
 
   //   }
   // ).filter( beneficio => beneficio);
-  const beneficiosFiltered = beneficios.filter((beneficio) => servPlan.planes[0].extra===0 ).map( beneficio => mapToBeneficio(beneficio,...servPlan.planes.filter( plan => plan.beneficio_id === beneficio.beneficio_id)));
+  const beneficiosFiltered = beneficios.filter((beneficio) => servPlan.planes[0].extra===0 ).map( beneficio => mapToBeneficio(beneficio,...servPlan.planes));
   // const beneficiosExtraFiltered = beneficios.map((beneficio) => {
   //   if(servPlan.planes[0].extra){
   //     return mapExtraToServicio(extras, ...servPlan.planes);
