@@ -9,7 +9,7 @@
 
   <hr>
 
-  <div class="row"  >
+  <div class="row" *ngIf="TypePayment === 1 "  >
 
     <div class="list"  *ngIf="htmlContent" [class.visible]="getPaymentIntentReady()" [innerHTML]="htmlContent" ></div>
 
@@ -29,6 +29,32 @@
 
 
   </div>
+
+
+  <div class="row" *ngIf="TypePayment === 2 && client_secret"  >
+
+    <payment-stripe style="width: 100%; padding: 30px;" [amount]="payment_amount" [clientSecret]="client_secret" [venta_id]="stringReturnData"  ></payment-stripe>
+
+    <!-- <div class="list"  *ngIf="htmlContent" [class.visible]="getPaymentIntentReady()" [innerHTML]="htmlContent" ></div>
+
+
+    <div class="details" *ngIf="getPaymentIntentReady()">
+      <p>Caso de venta exitosa se mostrara un mensaje de exito, caso contrario comunicarse con soporte</p>
+
+              <div class="fr-payment"    >
+                <div   style="width: 100%; height: fit-content;" [innerHTML]="paymentFragment">
+                </div>
+              </div>
+
+
+
+    </div> -->
+
+
+
+  </div>
+
+
 
 
   <!-- <div class="button-group">

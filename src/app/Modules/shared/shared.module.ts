@@ -1,50 +1,59 @@
-import { NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe, SlicePipe } from '@angular/common';
-import { NavbarComponent } from './Components/navbar/navbar.component';
-import { SelectCustomComponent } from './Components/selectCustom/selectCustom.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CustomCalendarComponent } from './Components/custom-calendar/custom-calendar.component';
-import { TagComponent } from './Components/tag/tag.component';
-import { NotificationComponent } from './Components/notification/notification.component';
-import { NotificationService } from './Components/notification/notification.service';
-import { SwitchBtnComponent } from './Components/switch_btn/switch_btn.component';
+import { PopupComponent } from './Components/popup/popup.component';
+import { FileDropComponent } from './Components/file-drop/file-drop.component';
+import { LoadingDivComponent } from './Components/loading-div/loading-div.component';
+import { LoadingProcessComponent } from './Components/loading-process/loading-process.component';
+import { NumberDisplayComponent } from './Components/number-display/number-display.component';
+import { SearchBoxComponent } from './Components/search-box/search-box.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { GenderInputComponent } from './Components/gender-input/gender-input.component';
+import { CustomCalendarComponent } from './Components/custom-calendar/custom-calendar.component';
 import { InputDateComponent } from './Components/input-date/input-date.component';
 import { InputTelfComponent } from './Components/input-telf/input-telf.component';
-import { MenuHamburguerComponent } from './Components/menuHamburguer/menuHamburguer.component';
+import { SelectCustomComponent } from './Components/selectCustom/selectCustom.component';
+import { SwitchBtnComponent } from './Components/switch_btn/switch_btn.component';
+import { TagComponent } from './Components/tag/tag.component';
+import { NotificationModalComponent } from './Components/notification/notification-modal.component';
+import { NotificationService } from './Components/notification/notification.service';
+import { LocationComponent } from './Components/location/location.component';
 import { RouterModule } from '@angular/router';
-import { CoberturaComponent } from './Components/cobertura/cobertura.component';
-import { ListCoberturaComponent } from './Components/list-cobertura/list-cobertura.component';
-import { ConfirmPaymentComponent } from './pages/confirm-payment/confirm-payment.component';
-import { CardBeneficiarioComponent } from './Components/card-beneficiario/card-beneficiario.component';
+import { FilterComponent } from './Components/filter/filter.component';
 import { CardPolizaComponent } from './Components/card-poliza/card-poliza.component';
-import { PolizaPdfComponent } from './Components/pdf/poliza-pdf/poliza-pdf.component';
+import { ModalBeneficiarioComponent } from './Components/modals/modal-beneficiario/modal-beneficiario.component';
 import { ModalBenService } from './Components/modals/modal-beneficiario/service/modal.service';
 import { GeneratePdfService } from './Components/pdf/poliza-pdf/services/generate-pdf.service';
 import { QRCodeModule } from 'angularx-qrcode';
-import { ModalBeneficiarioComponent } from './Components/modals/modal-beneficiario/modal-beneficiario.component';
+import { PolizaPdfComponent } from './Components/pdf/poliza-pdf/poliza-pdf.component';
+import { CardBeneficiarioComponent } from './Components/card-beneficiario/card-beneficiario.component';
+import { ConfirmPolizaComponent } from './Pages/confirm-poliza/confirm-poliza.component';
 import { CoreModule } from '../Core/core.module';
+import { ConfirmPaymentComponent } from './Pages/confirm-payment/confirm-payment.component';
 
 @NgModule({
   declarations: [
-    NavbarComponent,
-    SelectCustomComponent,
+    PopupComponent,
+    FileDropComponent,
+    LoadingDivComponent,
+    LoadingProcessComponent,
+    NumberDisplayComponent,
+    SearchBoxComponent,
     CustomCalendarComponent,
-    TagComponent,
-    NotificationComponent,
-    SwitchBtnComponent,
     GenderInputComponent,
     InputDateComponent,
     InputTelfComponent,
-    MenuHamburguerComponent,
-    CoberturaComponent,
-    ListCoberturaComponent,
-    ConfirmPaymentComponent,
-    CardBeneficiarioComponent,
+    SelectCustomComponent,
+    SwitchBtnComponent,
+    TagComponent,
+    NotificationModalComponent,
+    LocationComponent,
+    FilterComponent,
     CardPolizaComponent,
-    PolizaPdfComponent,
+    CardBeneficiarioComponent,
     ModalBeneficiarioComponent,
-
+    PolizaPdfComponent,
+    ConfirmPolizaComponent,
+    ConfirmPaymentComponent,
   ],
   imports: [
     CommonModule,
@@ -57,24 +66,28 @@ import { CoreModule } from '../Core/core.module';
     QRCodeModule,
     CoreModule,
   ],
-  providers: [NotificationService, ModalBenService, GeneratePdfService],
   exports: [
-    NavbarComponent,
-    SelectCustomComponent,
+    PopupComponent,
+    FileDropComponent,
+    LoadingDivComponent,
+    LoadingProcessComponent,
+    NumberDisplayComponent,
+    SearchBoxComponent,
     CustomCalendarComponent,
-    TagComponent,
-    NotificationComponent,
-    SwitchBtnComponent,
     GenderInputComponent,
     InputDateComponent,
     InputTelfComponent,
-    MenuHamburguerComponent,
-    CoberturaComponent,
-    ListCoberturaComponent,
-    CardBeneficiarioComponent,
+    SelectCustomComponent,
+    SwitchBtnComponent,
+    TagComponent,
+    NotificationModalComponent,
+    LocationComponent,
+    FilterComponent,
     CardPolizaComponent,
+    CardBeneficiarioComponent,
     PolizaPdfComponent,
     ModalBeneficiarioComponent,
   ],
+  providers: [NotificationService, ModalBenService, GeneratePdfService],
 })
 export class SharedModule {}

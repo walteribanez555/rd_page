@@ -63,8 +63,9 @@ h1 span.title {
 
 .field select,
 .field input {
-  width: 50vh;
-  padding: 10px 20px;
+  /* width: 50vh; */
+  width: 100%;
+  padding: 15px 20px;
   outline: none;
   border: 1px solid gainsboro;
   border-radius: 10px;
@@ -239,12 +240,11 @@ button:hover {
 @media (max-width: 1024px) {
   .container {
     justify-content: normal;
-    height: 90vh;
+    height: calc(90vh - var(--main-header-height));
     overflow-y: auto;
     padding: 20px 30px;
     overflow-x: hidden;
-    padding-bottom: 10vh;
-    padding-top: 100px;
+    padding-top: 50px;
   }
 
   .button-group {
@@ -302,4 +302,15 @@ button:hover {
   .title{
     font-size: 10px;
   }
+
+  .field .item{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .right{
+    width: 100%;
+  }
+
+
 }

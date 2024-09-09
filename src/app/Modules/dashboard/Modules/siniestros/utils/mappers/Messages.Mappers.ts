@@ -18,7 +18,6 @@ export function transformSignalstoString(input: string): string {
 return transformedString;
 
 
-  return transformedString;
 }
 
 

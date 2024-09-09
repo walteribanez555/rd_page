@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ComunicacionSiniestro } from 'src/app/Modules/Core/models';
+import { ComunicacionSiniestro } from 'src/app/Modules/Core/models/ComunicacionSiniestro.model';
 
 @Component({
   selector: 'message',

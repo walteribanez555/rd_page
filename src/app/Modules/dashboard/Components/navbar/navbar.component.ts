@@ -16,7 +16,7 @@ export class NavbarComponent {
 
   logout(){
     this.sessionService.logout();
-    this.router.navigateByUrl('/cotizar');
+    this.router.navigateByUrl('/auth/login');
   }
 
 

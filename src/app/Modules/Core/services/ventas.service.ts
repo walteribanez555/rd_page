@@ -49,4 +49,19 @@ export class VentasService implements CRUDService<Venta> {
   delete(id: string | number): Observable<any> {
     throw new Error('Method not implemented.');
   }
+
+
+  createIntentPaymentStripe( price : number , details :string) {
+
+
+    const api = "https://02mlhdeei4.execute-api.us-east-1.amazonaws.com/dev_v1/payments";
+
+    return this.http.post(api , {price, details});
+
+
+
+  }
+
+
+
 }

@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { LandingPageRoutingModule } from './landing-page-routing.module';
 import { LayoutPageComponent } from './Pages/layout-page/layout-page.component';
-import { SharedModule } from '../shared/shared.module';
 import { MultiStepComponent } from './Components/multi-step/multi-step.component';
 import { DestinyComponent } from './Components/destiny/destiny.component';
 import { DatesToTravelComponent } from './Components/datesToTravel/datesToTravel.component';
 import { AgesTravelerComponent } from './Components/agesTraveler/agesTraveler.component';
-import { LocationComponent } from './Components/location/location.component';
 import { PaymentComponent } from './Components/payment/payment.component';
 import { DatosPolizasComponent } from './Components/datosPolizas/datosPolizas.component';
 import { PlanesComponent } from './Components/planes/planes.component';
@@ -23,6 +21,13 @@ import { ExtraComponent } from './Components/extra/extra.component';
 import { DetailComponent } from './Components/detail/detail.component';
 import { PolizaComponent } from './Components/poliza/poliza.component';
 import { PolizasModule } from '../dashboard/Modules/polizas/polizas.module';
+import { MultiviajeComponent } from './Components/multiviaje/multiviaje.component';
+import { ExtraDetailComponent } from './Components/extra/extra-detail/extraDetail.component';
+import { ExtraDetailService } from './Components/extra/extra-detail/extraDetail.service';
+import { SharedModule } from '../shared/shared.module';
+import { ListCoberturaComponent } from './Components/list-cobertura/list-cobertura.component';
+import { CoberturaComponent } from './Components/cobertura/cobertura.component';
+import { PaymentStripeComponent } from './Components/payment/paymentStripe/paymentStripe.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,6 @@ import { PolizasModule } from '../dashboard/Modules/polizas/polizas.module';
     DestinyComponent,
     DatesToTravelComponent,
     AgesTravelerComponent,
-    LocationComponent,
     PaymentComponent,
     DatosPolizasComponent,
     PlanesComponent,
@@ -41,6 +45,11 @@ import { PolizasModule } from '../dashboard/Modules/polizas/polizas.module';
     ExtraComponent,
     DetailComponent,
     PolizaComponent,
+    MultiviajeComponent,
+    ExtraDetailComponent,
+    ListCoberturaComponent,
+    CoberturaComponent,
+    PaymentStripeComponent,
   ],
   imports: [
     CommonModule,
@@ -51,9 +60,8 @@ import { PolizasModule } from '../dashboard/Modules/polizas/polizas.module';
     CoreModule,
     ReactiveFormsModule,
     FormsModule,
-    PolizasModule,
   ],
-  providers: [ModalService],
+  providers: [ModalService,ExtraDetailService],
   exports: [],
 })
 export class LandingPageModule {}

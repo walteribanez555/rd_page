@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Inject, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, TemplateRef, inject } from '@angular/core';
 import { ModalService } from '../modal-plan-details/services/modal-service';
-import { ServicioUi } from 'src/app/Modules/shared/models';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { ServicioUi } from 'src/app/Modules/shared/models/Servicio.ui';
 
 @Component({
   selector: 'plan',
@@ -14,6 +15,11 @@ export class PlanComponent implements OnInit {
   @Input() servicioUi! : ServicioUi;
   tags : string[] = [];
 
+  private http = inject(HttpClient);
+  priceWithDiscount = 0;
+
+
+
   @Output() onItemSelected = new EventEmitter<ServicioUi>();
 
 
@@ -24,6 +30,35 @@ export class PlanComponent implements OnInit {
   constructor(private modalService  : ModalService){
 
   }
+
+
+  getDiscount(servicioUi: ServicioUi) {
+    if (servicioUi.listcupones.length > 0) {
+      const totalAmountDiscount = servicioUi.listcupones.reduce(
+        (acc, coupon) => {
+          if (coupon.tipo_valor === 2) {
+            // If coupon type is 1, add the fixed value to the accumulator
+            return acc + coupon.valor;
+          } else if (coupon.tipo_valor === 1) {
+            // If coupon type is 2, calculate the percentage discount and subtract it from the accumulator
+            return acc + (servicioUi.precioSelected! * coupon.valor) / 100;
+          }
+          return acc; // For unknown coupon types, return accumulator without any changes
+        },
+        0
+      );
+
+
+      this.priceWithDiscount = servicioUi.precioSelected! - totalAmountDiscount;
+
+      if(servicioUi.precioSelected == this.priceWithDiscount) return false;
+
+      return true;
+    }
+
+    return false;
+  }
+
   ngOnInit(): void {
     this.tags = this.servicioUi.disponibilidad.split(',');
 
@@ -61,6 +96,27 @@ export class PlanComponent implements OnInit {
     this.servicioUi.isSelected= !this.servicioUi.isSelected;
 
     this.onItemSelected.emit(this.servicioUi);
+  }
+
+
+  downloadPdf() {
+    const pdfUrl = `/assets/pdf/${this.servicioUi.img}.pdf`;
+
+    // Use HttpClient to fetch the PDF file as a Blob
+    this.http.get(pdfUrl, { responseType: 'blob' }).subscribe((blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+
+      // Create a link element and trigger the download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${this.servicioUi.img}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up resources
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
   }
 
 

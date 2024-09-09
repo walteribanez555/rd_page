@@ -5,7 +5,7 @@ import {
   Injectable,
   Injector,
 } from '@angular/core';
-import { NotificationComponent } from './notification.component';
+import { NotificationModalComponent } from './notification-modal.component';
 import { Observable, Subject } from 'rxjs';
 import { PositionMessage } from './enums/PositionMessage.enum';
 import { Size } from './enums/SizeMessage.enum';
@@ -34,9 +34,10 @@ export class NotificationService {
       closeOnTouch?: boolean;
     }
   ) {
+    console.log(message, options);
 
     const modalComponentFactory = this.resolver.resolveComponentFactory(
-      NotificationComponent
+      NotificationModalComponent
     );
 
     const modalComponent = modalComponentFactory.create(this.injector, []);

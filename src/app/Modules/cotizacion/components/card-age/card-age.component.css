@@ -1,0 +1,33 @@
+.card-age{
+  width: fit-content;
+  padding: 10px 10px;
+  border: 1px solid gainsboro;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--body-bg);
+}
+
+
+.less, .more{
+  width: 50px;
+  padding: 10px 20px;
+  border: 1px solid gainsboro;
+  cursor: pointer;
+  border-radius: 8px;
+
+}
+
+.quantity {
+  padding: 0px 20px;
+}
+
+
+@media (max-width: 768px) {
+  .card-age{
+    width: 100%;
+  }
+
+}

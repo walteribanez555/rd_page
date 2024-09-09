@@ -1,4 +1,4 @@
-import { Catalogo } from "src/app/Modules/Core/models/Catalogo.model";
+import { Catalogo } from "src/app/Modules/Core/models";
 import { BeneficioUi } from "../../models/Beneficio.ui";
 import { CatalogoUi } from "../../models/Catalogo.ui";
 

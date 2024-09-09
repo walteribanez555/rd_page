@@ -1,5 +1,6 @@
-import { Catalogo, Plan } from 'src/app/Modules/Core/models';
+import { Catalogo } from 'src/app/Modules/Core/models';
 import { TipoSiniestro } from '../../models/TipoSiniestro.ui.model';
+import { Plan } from 'src/app/Modules/Core/models/Plan.model';
 
 export function mapTyeSiniestro(catalogos: Catalogo[], planes: Plan[]) {
   const tipoSiniestros: TipoSiniestro[] = catalogos.map((catalogo) => {

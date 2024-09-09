@@ -1,0 +1,131 @@
+button {
+  padding: 10px 80px;
+  border: 1px solid var(--main-color);
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  background-color: var(--main-color);
+  font-weight: bold;
+}
+
+.page-cotizacion {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.quoter {
+  max-width: 100%;
+  /* width: 800px; */
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  border-radius: 8px;
+  padding: 10px;
+  gap: 10px;
+  align-items: center;
+  overflow-y: auto;
+}
+@media (min-width: 1024px) {
+  .quoter {
+    max-height: 100vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  .logo{
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  img.background {
+    display: none;
+  }
+}
+
+img.background {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  object-fit: fill;
+}
+
+.quoter .title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.field {
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.field--row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.field .title {
+  font-size: 14px;
+}
+
+input,
+select {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid gainsboro;
+  outline: var(--text-color);
+}
+
+
+
+@media (max-width: 768px) {
+  .field {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .field .field--row {
+    flex-direction: column;
+  }
+}
+
+.logo{
+  width: 200px;
+  height: 70px;
+}
+
+@media (max-width: 768px) {
+
+
+  .page-cotizacion{
+    overflow-y: auto;
+  }
+
+  location-input {
+    width: 100%;
+    padding: 0px 35px 0px 20px;
+  }
+
+  card-age {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+}

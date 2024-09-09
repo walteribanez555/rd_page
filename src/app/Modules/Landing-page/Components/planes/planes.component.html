@@ -1,18 +1,17 @@
 <div class="container">
   <h1>
     <span style="color: gainsboro;" >Paso 4: </span>
-    <span  class="title">Elije Tu Plan...</span>
+    <span  class="title">SELECCIONA TU PLAN</span>
   </h1>
 
 
-  <h2>Elije el Plan que Mas te Convenga</h2>
+  <h2>Selecciona el plan ideal para tu viaje</h2>
 
   <hr>
 
   <div class="field">
     <i class="fa-solid fa-file-shield"></i>
     <span>Planes Disponibles</span>
-
     <div class="list-planes" *ngIf="serviciosUi ; else noServices">
 
       <plan *ngFor="let servicioUi of serviciosUiFiltered" [servicioUi]="servicioUi"  [onSelectedItem]="observerSelectedFromPlan"  (onItemSelected)="onSelectedItem($event)" ></plan>

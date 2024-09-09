@@ -1,6 +1,7 @@
 import { FormGroup } from '@angular/forms';
+import { country } from 'aws-sdk/clients/importexport';
 import { ServicioUi } from 'src/app/Modules/shared/models/Servicio.ui';
-import { CountryRegion } from 'src/app/Modules/shared/utils/data/countries-region.ts/countries-region';
+import { CountryRegionLng } from 'src/app/Modules/shared/utils/data/countries-region.ts/country-region-lng';
 import { hasValidDestinies } from 'src/app/Modules/shared/utils/data/countries-region.ts/filter-countries.region';
 
 export class ServiciosFilter {
@@ -13,13 +14,12 @@ export class ServiciosFilter {
 
     if (position >= 1) {
       const formDestiny = forms[0];
-      const dFinal = (formDestiny.get('toLocation')?.value as CountryRegion[])
+      const dFinal = (formDestiny.get('toLocation')?.value as CountryRegionLng[])
 
 
       serviciosFiltered = this.filterByCountries(serviciosFiltered, dFinal);
       console.log({serviciosFiltered});
     }
-
 
     if (position >= 2) {
       const formDates = forms[1];
@@ -47,9 +47,8 @@ export class ServiciosFilter {
     return serviciosFiltered;
   }
 
-  filterByCountries(serviciosUi: ServicioUi[], countries: CountryRegion[]) {
+  filterByCountries(serviciosUi: ServicioUi[], countries: CountryRegionLng[]) {
     return serviciosUi.filter((servicioUi) => hasValidDestinies(countries, servicioUi.disponibilidad));
-
   }
 
   filterByQuantityDays(serviciosUi: ServicioUi[], quantityDays: number) {

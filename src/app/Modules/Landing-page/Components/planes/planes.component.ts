@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { ServicioUi } from 'src/app/Modules/shared/models';
+import { ServicioUi } from 'src/app/Modules/shared/models/Servicio.ui';
 
 @Component({
   selector: 'planes',
@@ -10,10 +11,14 @@ import { ServicioUi } from 'src/app/Modules/shared/models';
   styleUrls: ['./planes.component.css'],
 })
 export class PlanesComponent  implements OnInit {
+
+  constructor(private http: HttpClient) { }
+
   ngOnInit(): void {
 
     this.onSelectedFromPlan = new Subject<ServicioUi>();
     this.observerSelectedFromPlan = this.onSelectedFromPlan.asObservable();
+
 
 
 
@@ -73,5 +78,26 @@ export class PlanesComponent  implements OnInit {
     console.log("Plan deseleccionado");
     this.planForm?.get('planSelected')?.reset();
     return;
+  }
+
+
+  downloadPdf() {
+    const pdfUrl = '/assets/pdf/CoberturasRedcard.pdf';
+
+    // Use HttpClient to fetch the PDF file as a Blob
+    this.http.get(pdfUrl, { responseType: 'blob' }).subscribe((blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+
+      // Create a link element and trigger the download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Coberturas REDCARD.pdf';
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up resources
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
   }
 }

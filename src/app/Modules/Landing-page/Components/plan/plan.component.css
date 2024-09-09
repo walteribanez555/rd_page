@@ -1,6 +1,6 @@
 .container {
   width: 250px;
-  height: 360px;
+  height: 430px;
   border: 1px solid gainsboro;
   box-shadow: 0 0 10px #e4e4e4;
   border-radius: 10px;
@@ -22,7 +22,7 @@
 
 .top {
   background: #e12822;
-  height: calc(400px / 3);
+  height: calc(430px / 3);
   /* border-radius: 10px 10px 10px 10px; */
   color: white;
   font-size: 12px;
@@ -36,6 +36,11 @@ span.plan-name {
   font-weight: bold;
   font-size: 25px;
 }
+
+span.discount {
+  text-decoration: line-through;
+}
+
 
 .info {
   display: flex;
@@ -96,7 +101,7 @@ tag {
 .field .see-more:hover{
   transition: all 0.3S ease-in-out;
   background-color: var(--main-color);
-  border: none;
+  border: 3px solid var(--main-color);
   color: white;
 
 }

@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { error } from 'console';
+import { parse } from 'path';
 import {
   Observable,
   Subject,
@@ -22,8 +24,6 @@ import {
   Beneficio,
   Servicio,
   Catalogo,
-  Plan,
-  Extra,
   Precio,
   Venta,
   Cupon,
@@ -33,10 +33,11 @@ import {
 import {
   Beneficiario,
   BeneficiarioToPost,
-  BeneficiarioToResp,
 } from 'src/app/Modules/Core/models/Beneficiario.model';
 import { ClienteToPost } from 'src/app/Modules/Core/models/Cliente.model';
 import { Descuento } from 'src/app/Modules/Core/models/Descuento.model';
+import { Extra } from 'src/app/Modules/Core/models/Extra.model';
+import { Plan } from 'src/app/Modules/Core/models/Plan.model';
 import { PolizaToPost } from 'src/app/Modules/Core/models/Poliza.model';
 import { PolizaExtraToPost } from 'src/app/Modules/Core/models/PolizaExtra.model';
 import {
@@ -65,11 +66,18 @@ import {
   TypeMessage,
   PositionMessage,
 } from 'src/app/Modules/shared/Components/notification/enums';
+
 import { NotificationService } from 'src/app/Modules/shared/Components/notification/notification.service';
-import { ServicioUi } from 'src/app/Modules/shared/models';
-import { BeneficiarioUi } from 'src/app/Modules/shared/models/Beneficiario.Ui';
+import { BeneficiarioUi } from 'src/app/Modules/shared/models/Beneficiario.ui';
+import { ServicioUi } from 'src/app/Modules/shared/models/Servicio.ui';
+import { countrys } from 'src/app/Modules/shared/utils/data/countries-lng';
 import { CountryRegion } from 'src/app/Modules/shared/utils/data/countries-region.ts/countries-region';
+import { CountryRegionLng } from 'src/app/Modules/shared/utils/data/countries-region.ts/country-region-lng';
 import { DatesAction } from 'src/app/Modules/shared/utils/dates/dates-action';
+import {
+  mapMultiviaje,
+  getExpirationDate,
+} from 'src/app/Modules/shared/utils/mappers/multiviaje.mappers';
 import { MapToServicioUi } from 'src/app/Modules/shared/utils/mappers/servicio.mappers';
 
 export interface ServByPlan {
@@ -103,10 +111,15 @@ export class MultiStepComponent implements OnInit {
   private polizasExtrasService = inject(PolizasExtrasService);
   private beneficiariosService = inject(BeneficiariosService);
   private cdr = inject(ChangeDetectorRef);
+  private activatedRoute = inject(ActivatedRoute);
 
   locationsForm = new FormGroup({
-    fromLocation: new FormControl(null, [Validators.required]),
-    toLocation: new FormControl(null, [Validators.required]),
+    fromLocation: new FormControl<null | CountryRegionLng[]>(null, [
+      Validators.required,
+    ]),
+    toLocation: new FormControl<null | CountryRegionLng[]>(null, [
+      Validators.required,
+    ]),
   });
 
   datesForm = new FormGroup({
@@ -116,6 +129,7 @@ export class MultiStepComponent implements OnInit {
   });
 
   quantityForm = new FormGroup({
+    youngQuantity: new FormControl(0, [Validators.required]),
     adultQuantity: new FormControl(0, [Validators.required]),
     seniorQuantity: new FormControl(0, [Validators.required]),
   });
@@ -137,13 +151,14 @@ export class MultiStepComponent implements OnInit {
   });
 
   ventaRespForm = new FormGroup({
-    ventRespData: new FormControl<VentaResp | null>(null, [
-      Validators.required,
-    ]),
+    ventRespData: new FormControl<VentaResp[] | null>(
+      [],
+      [Validators.required]
+    ),
   });
 
   beneficiariosRespForm = new FormGroup({
-    polizaRespForm: new FormControl<Poliza | null>(null, [Validators.required]),
+    polizaRespForm: new FormControl<Poliza[] | null>([], [Validators.required]),
   });
 
   extrasForm = new FormGroup({});
@@ -157,6 +172,7 @@ export class MultiStepComponent implements OnInit {
   extras: Extra[] = [];
   precios: Precio[] = [];
   cupones: Cupon[] = [];
+  multiviajes: Catalogo[] = [];
 
   serviciosToUi: ServicioUi[] | null = null;
 
@@ -181,12 +197,136 @@ export class MultiStepComponent implements OnInit {
   actualStep: number = 1;
 
   destinyList: string = '';
-  origen?: CountryRegion;
+  origen?: CountryRegionLng;
 
   ngOnInit() {
     this.route.queryParamMap.subscribe((params) => {
       this.userWeb = params.get('id');
     });
+
+    const process = new Subject();
+
+    const observer = process.asObservable();
+
+    this.onLoading(observer);
+
+
+    console.log(this.activatedRoute.snapshot.queryParams);
+
+
+    const { cantidad, origen , destino, fecha_fin, fecha_ini, edades, tipo, country  } =
+      this.activatedRoute.snapshot.queryParams;
+
+
+
+
+    if (
+      !(cantidad === undefined) &&
+      !(destino === undefined) &&
+      !(fecha_fin === undefined) &&
+      !(fecha_ini === undefined) &&
+      !(edades === undefined) &&
+      !(tipo === undefined) &&
+      !(tipo === undefined)
+    ) {
+      const initDate = new Date(fecha_ini);
+      const finDate = new Date(fecha_fin);
+      const diffInMs: number = finDate.getTime() - initDate.getTime();
+
+      // Convierte la diferencia en milisegundos a días
+      const diffInDays: number = diffInMs / (1000 * 60 * 60 * 24);
+
+      let destinies : CountryRegionLng[] = [];
+      if(destino.length === 4) {
+
+        switch(destino){
+          case "AMEN" :
+            destinies = [countrys[2]]
+
+
+          break;
+
+          case "AMEC":
+            destinies = [countrys[2]]
+
+
+          break;
+
+          case "AMES":
+            destinies = [countrys[2]]
+
+
+          break;
+
+          case "EURO":
+            destinies = [countrys[5]]
+
+
+          break;
+
+          case "ASIA":
+            destinies = [countrys[1]]
+
+
+          break;
+
+          case "AFRI":
+            destinies = [countrys[4]]
+
+
+          break;
+
+          case "OCEA":
+            destinies = [countrys[3]]
+
+
+          break;
+
+          case "REST":
+            destinies = [countrys[0]]
+
+
+          break;
+          case "LOCL":
+            destinies = countrys.filter((country) => country.iso2 === "PE");
+
+
+
+          break;
+
+
+        }
+
+
+      }else{
+        destinies = countrys.filter((country) => country.iso2 === (destino as string).toUpperCase());
+
+      }
+
+      const origins = countrys.filter((countryItem)=> countryItem.iso2 === (( (origen === undefined && country === undefined)? "PE" : origen === undefined ? country : origen) as string).toUpperCase());
+
+      this.locationsForm.get('fromLocation')?.setValue(origins);
+      this.locationsForm.get('toLocation')?.setValue(destinies);
+      this.datesForm.get('initialDate')?.setValue(fecha_ini);
+      this.datesForm.get('finalDate')?.setValue(fecha_fin);
+      this.datesForm.get('quantityDays')?.setValue(diffInDays);
+
+      const edadArr = edades.split(',') as string[];
+
+      this.quantityForm
+        .get('youngQuantity')
+        ?.setValue(edadArr.filter((edad) =>  parseInt(edad) <= 13).length);
+      this.quantityForm
+        .get('adultQuantity')
+        ?.setValue(edadArr.filter((edad) => parseInt(edad) <= 70 && parseInt(edad) >13).length);
+      this.quantityForm
+        .get('seniorQuantity')
+        ?.setValue(
+          edadArr.filter((edad) => parseInt(edad) > 70 && parseInt(edad) <= 85)
+            .length
+        );
+    }
+    // console.log({fecha_ini, fecha_fin});
 
     this.listForms.push(
       this.locationsForm,
@@ -227,6 +367,10 @@ export class MultiStepComponent implements OnInit {
         }),
         switchMap((data) => {
           this.catalogos = data;
+          return this.catalogosService.getAllExtras();
+        }),
+        switchMap((data) => {
+          this.multiviajes = data;
           return this.serviciosService.getAll();
         }),
         switchMap((servicios: Servicio[]) => {
@@ -263,23 +407,39 @@ export class MultiStepComponent implements OnInit {
               this.extras,
               item,
               this.precios,
-              this.cupones
+              this.cupones,
+              this.multiviajes,
+              origen === undefined ? "PE" : origen
             )
           );
 
-          console.log(this.serviciosToUi);
+          process.complete();
         },
         error: (err) => {
           this.notificationService.show(
-            'Error en el servidor, por favor volver mas despues',
+            err,
             {
               size: Size.big,
               imageUrl: TypeMessage.error,
               positions: [PositionMessage.center],
+              closeOnTouch : true
             }
           );
+
+          process.complete();
         },
-        complete: () => {},
+        complete: () => {
+          if (
+            this.locationsForm.valid &&
+            this.quantityForm.valid &&
+            this.datesForm.valid
+          ) {
+            this.onChangeStep(4);
+          }
+          this.cdr.detectChanges();
+          process.complete();
+
+        },
       });
 
     this.descuentosService.getAll().subscribe((data) => {});
@@ -311,15 +471,15 @@ export class MultiStepComponent implements OnInit {
 
     if (this.locationsForm.get('fromLocation')?.value) {
       this.origen = this.locationsForm.get('fromLocation')!
-        .value as unknown as CountryRegion;
+        .value as unknown as CountryRegionLng;
     }
 
     if (this.locationsForm.get('toLocation')?.value) {
       this.destinyList = (
         this.locationsForm.get('toLocation')!
-          .value as unknown as CountryRegion[]
+          .value as unknown as CountryRegionLng[]
       )
-        .map((dest) => dest.country)
+        .map((dest) => dest.iso2)
         .join(',');
     }
 
@@ -396,11 +556,13 @@ export class MultiStepComponent implements OnInit {
             apellido: titularBeneficiario.primer_apellido,
             tipo_cliente: 1,
             nro_identificacion: titularBeneficiario.nro_identificacion,
-            origen: titularBeneficiario.origen.country,
+            origen: titularBeneficiario.origen.iso2,
             email: titularBeneficiario.email,
             nro_contacto: titularBeneficiario.telefono,
             status: 1,
             office_id: 2,
+            contacto: 2,
+            persona_contacto: 'ADMIN',
           };
 
           this.clientesService.create(nuevoCliente).subscribe({
@@ -426,112 +588,165 @@ export class MultiStepComponent implements OnInit {
   createVenta(cliente: Cliente, forms: FormGroup[]) {
     // console.log(this.listForms);
 
-    const nuevaVenta: VentaToPost = {
-      username: 'WEBREDCARD',
-      office_id: 2,
-      cliente_id: cliente.id ?? cliente.cliente_id!,
-      tipo_venta: 1,
-      forma_pago: 1,
-      cantidad: `${this.listForms[6].value.beneficiariosData.length}`,
-      servicio_id: `${this.listForms[3].value.planSelected.servicio_id}`,
-      extras_id: `${(
-        this.listForms[5].value.ventaData.selectedExtras as Extra[]
-      )
-        .map((selectedExtra: Extra) => selectedExtra.beneficio_id)
-        .join(',')}`,
-      fecha_salida: this.listForms[1].value.initialDate as string,
-      fecha_retorno: this.listForms[1].value.finalDate,
-      status: 1,
-      plus: 0,
-      descuento: `${this.listForms[5].value.ventaData.total_cupones}`,
-      tipo_descuento: `${this.listForms[5].value.ventaData.tipo_cupones}`,
-    };
+    const multiviajes = (
+      this.listForms[3].value.planSelected as ServicioUi
+    ).multiviajes.filter((m) => m.isSelected === true);
 
-    this.ventasService
-      .create(nuevaVenta)
-      .pipe(
+    const beneficiarios: BeneficiarioUi[] = this.listForms[6].value
+      .beneficiariosData as BeneficiarioUi[];
+
+      const { utm_campaign, country } = this.activatedRoute.snapshot.queryParams;
+
+      console.log(utm_campaign);
+
+      let tipoVenta = 2;
+
+      if(utm_campaign === undefined){
+        tipoVenta = 2;
+      }else{
+        if(utm_campaign === "comparaBien"){
+          switch (country) {
+            case "mx" :
+              tipoVenta = 4;
+              break;
+
+
+            case "pe" :
+              tipoVenta = 3;
+              break;
+
+
+            case "br" :
+              tipoVenta = 5;
+              break;
+
+
+            case "co" :
+              tipoVenta = 6;
+              break;
+
+
+            case "es" :
+              tipoVenta = 7;
+              break;
+          }
+        }
+
+      }
+
+
+
+
+    const requests: any[] = beneficiarios.map((ben, index) => {
+      //FLUJO ACTUAL DE 1 VENTA 1 POLIZA, SE ANOTA EL DETALLE DE LA FACTURA EN LA VENTA COMO RELACIONAMIENTO EXTERNO AL SISTEMA
+
+      const nuevaVenta: VentaToPost = {
+        username: 'WEBREDCARD',
+        office_id:  2,
+        cliente_id: cliente.id ?? cliente.cliente_id!,
+        tipo_venta: tipoVenta,
+        forma_pago: tipoVenta,
+        cantidad: `1`,
+        servicio_id: `${this.listForms[3].value.planSelected.servicio_id}`,
+        extras_id: `${(
+          this.listForms[5].value.ventaData.selectedExtras as Extra[]
+        )
+          .map((selectedExtra: Extra) => selectedExtra.beneficio_id)
+          .join(',')}`,
+        fecha_salida: this.listForms[1].value.initialDate as string,
+        fecha_retorno: this.listForms[1].value.finalDate,
+        status: 1,
+        plus: 0,
+        descuento: `${(this.listForms[5].value.ventaData.total_cupones[index]) + this.listForms[5].value.ventaData.codigoDescuento / beneficiarios.length}`,
+        tipo_descuento: `${this.listForms[5].value.ventaData.tipo_cupones}`,
+          multiviajes : mapMultiviaje(this.listForms[3].value.planSelected, this.listForms[1].value.finalDate),
+          comision : 0,
+      };
+
+      return this.ventasService.create(nuevaVenta).pipe(
         mergeMap((respFromVentas: VentaResp) => {
-          this.ventaRespForm.setValue({ ventRespData: respFromVentas });
+          const ventaRespActualState = this.ventaRespForm.value;
+
+          ventaRespActualState.ventRespData?.push(respFromVentas);
+          console.log({ ventaRespActualState });
+          this.ventaRespForm.setValue({
+            ventRespData: ventaRespActualState.ventRespData!,
+          });
+
           return this.createExtras(respFromVentas, this.listForms).pipe(
             catchError((err) => throwError(err)),
             map(() => respFromVentas)
           );
         }),
         mergeMap((respFromVentas: VentaResp) => {
-          const beneficiarios: BeneficiarioUi[] = this.listForms[6].value
-            .beneficiariosData as BeneficiarioUi[];
+          const nuevaPoliza: PolizaToPost = {
+            venta_id: respFromVentas.id ?? respFromVentas.venta_id!,
+            servicio_id: (this.listForms[3].value.planSelected as ServicioUi)
+              .servicio_id,
+            destino: (this.listForms[0].value.toLocation as CountryRegionLng[])
+              .map((dest) => dest.iso2)
+              .join(','),
+            fecha_salida: this.listForms[1].value.initialDate,
+            fecha_retorno: this.listForms[1].value.finalDate,
+            extra: (forms[5].value.ventaData.selectedExtras as Extra[]).length,
+            status: 1,
+            multiviaje: multiviajes.length > 0 ? 2 : 1,
+            fecha_caducidad: getExpirationDate(
+              this.listForms[1].value.initialDate
+            ),
+            username: 'WEBREDCARD',
+          };
 
-          const requests: any[] = beneficiarios.map((beneficiario) => {
-            const nuevaPoliza: PolizaToPost = {
-              venta_id: respFromVentas.id ?? respFromVentas.venta_id!,
-              servicio_id: (this.listForms[3].value.planSelected as ServicioUi)
-                .servicio_id,
-              destino: (this.listForms[0].value.toLocation as  CountryRegion[]).map(dest => dest.country).join(','),
-              fecha_salida: this.listForms[1].value.initialDate,
-              fecha_retorno: this.listForms[1].value.finalDate,
-              extra: (forms[5].value.ventaData.selectedExtras as Extra[])
-                .length,
-              status: 4,
-            };
-
-            return this.polizasService.create(nuevaPoliza);
+          return this.polizasService.create(nuevaPoliza);
+        }),
+        switchMap((poliza: Poliza) => {
+          const polizasActualState = this.beneficiariosRespForm.value;
+          polizasActualState.polizaRespForm?.push(poliza);
+          this.beneficiariosRespForm.setValue({
+            polizaRespForm: polizasActualState.polizaRespForm!,
           });
 
-          return forkJoin(requests);
-        }),
-        switchMap((polizas: any[]) => {
-          console.log(polizas);
-          this.listForms[8].get('polizaRespForm')?.setValue(polizas);
+          const beneficiarioToPost: BeneficiarioToPost = {
+            poliza_id: poliza.poliza_id ?? poliza.id!,
+            primer_apellido: ben.primer_apellido,
+            primer_nombre: ben.primer_nombre,
+            segundo_apellido: ben.segundo_apellido,
+            segundo_nombre: ben.segundo_nombre,
+            fecha_nacimiento: ben.fecha_nacimiento,
+            sexo: parseInt(ben.sexo),
+            origen: ben.origen.iso2,
+            email: ben.email,
+            telefono: ben.telefono,
+            nro_identificacion: ben.nro_identificacion,
+          };
 
-          const beneficiarios: BeneficiarioUi[] = this.listForms[6].value
-            .beneficiariosData as BeneficiarioUi[];
-
-          const beneficiariosToIt: BeneficiarioToPost[] = polizas.map(
-            (poliza, index) => {
-              return {
-                poliza_id: poliza.poliza_id ?? poliza.id!,
-                primer_apellido: beneficiarios[index].primer_apellido,
-                primer_nombre: beneficiarios[index].primer_nombre,
-                segundo_apellido: beneficiarios[index].segundo_apellido,
-                segundo_nombre: beneficiarios[index].segundo_nombre,
-                fecha_nacimiento: DatesAction.invert_date(
-                  beneficiarios[index].fecha_nacimiento
-                ),
-                sexo: parseInt(beneficiarios[index].sexo),
-                origen: beneficiarios[index].origen.country,
-                email: beneficiarios[index].email,
-                telefono: beneficiarios[index].telefono,
-                nro_identificacion: beneficiarios[index].nro_identificacion,
-              };
-            }
-          );
-
-          const requests: any[] = beneficiariosToIt.map((beneficiario) =>
-            this.beneficiariosService.create(beneficiario)
-          );
-
-          return forkJoin(requests);
+          return this.beneficiariosService.create(beneficiarioToPost);
         }),
         catchError((error) => {
           console.error('Error occurred:', error.message);
           return throwError(error);
         })
-      )
-      .subscribe({
-        next: (resp: BeneficiarioToResp[]) => {
-          this.onIntentPayment?.complete();
-        },
-        error: (err) => {
-          this.onLoadProcess?.complete();
-          this.onError('Ocurrio un error');
-        },
-        complete: () => {
-          this.onLoadProcess?.complete();
-          this.onSuccess(
-            'Cotizacion registrada, se procedera al pago de la venta.'
-          );
-        },
-      });
+      );
+    });
+
+    forkJoin(requests).subscribe({
+      next: (resp) => {
+        this.onIntentPayment?.complete();
+        console.log(this.listForms, 'DETALLES A REVISAR');
+      },
+      error: (err) => {
+        this.onLoadProcess?.complete();
+        this.onError('Ocurrio un error');
+      },
+      complete: () => {
+        this.onLoadProcess?.complete();
+        this.onSuccess(
+          'Cotizacion registrada, se procedera al pago de la venta.'
+        );
+      },
+    });
+
+
   }
 
   createExtras = (venta: VentaResp, forms: FormGroup[]): Observable<any> => {

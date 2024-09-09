@@ -55,8 +55,11 @@ export class ListComponent implements OnInit, AfterViewInit {
         },
         error: (err) => {
           this.onError(err);
+          process.complete();
         },
-        complete: () => {},
+        complete: () => {
+          process.complete();
+        },
       });
 
     // this.onError("No implementado correctamente");

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Beneficiario, Poliza, Servicio } from 'src/app/Modules/Core/models';
+import { Poliza, Servicio, Beneficiario } from 'src/app/Modules/Core/models';
 
 @Component({
   selector: 'card-poliza',
@@ -16,5 +16,24 @@ export class CardPolizaComponent {
   @Input() beneficiario! : Beneficiario;
 
   @Input() isClient : boolean =true;
+
+  getStatusPoliza(state: number) {
+    switch (state) {
+      case 1:
+        return "Proceso"
+      case 2:
+        return "Espera"
+      case 3:
+        return "Activa"
+      case 4:
+        return "Congelada"
+      case 5:
+        return "Reembolso"
+      case 6:
+        return "Anulada"
+      default :
+        return "Vencida"
+    }
+  }
 
 }

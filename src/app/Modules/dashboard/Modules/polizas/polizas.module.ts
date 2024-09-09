@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ListComponent } from './pages/list/list.component';
 import { PolizasComponent } from './pages/polizas/polizas.component';
 import { UserService } from 'src/app/Modules/Auth/Services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UserService } from 'src/app/Modules/Auth/Services/user.service';
     SharedModule,
     PolizasRoutingModule,
     RouterModule,
+    HttpClientModule,
 
 
   ],

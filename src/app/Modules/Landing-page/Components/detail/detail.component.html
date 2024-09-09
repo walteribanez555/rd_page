@@ -1,10 +1,10 @@
 <div class="container" *ngIf="ventaUi">
   <h1>
     <span style="color: gainsboro;">Paso 6: </span>
-    <span class="title">Detalles</span>
+    <span class="title">DETALLES</span>
   </h1>
 
-  <h2>Confirma los Detalles de tu Cotizacion...</h2>
+  <h2>Completa tus datos</h2>
 
   <hr>
 
@@ -110,23 +110,43 @@
                 <span>Plus</span>
               </div>
               <div class="right">
-                {{ventaUi.total_plus | currency}}
+                {{ventaUi.total_plus[0] | currency}}
               </div>
             </div>
-            <div class="item discount" *ngIf="ventaUi.total_descuento > 0">
+            <div class="item discount" *ngIf="ventaUi.totalDescuentoGrupal > 0">
               <div class="left">
                 <span>Descuento</span>
               </div>
               <div class="right">
-                {{ventaUi.total_descuento | currency}}
+                {{ventaUi.totalDescuentoGrupal | currency}}
               </div>
             </div>
-            <div class="item discount"  *ngIf="ventaUi.total_cupones > 0">
+
+            <div class="item discount" *ngIf="ventaUi!.codigoDescuento">
               <div class="left">
-                <span>Cupones</span>
+                <span>Código</span>
               </div>
               <div class="right">
-                {{ ventaUi.total_cupones | currency }}
+                {{(ventaUi!.codigoDescuento ) | currency}}
+              </div>
+            </div>
+            <div class="item discount"  *ngIf="ventaUi.totalCuponesGrupal > 0">
+              <div class="left">
+                <span>Descuento base</span>
+              </div>
+              <div class="right">
+                {{ ventaUi.totalCuponesGrupal | currency }}
+              </div>
+            </div>
+            <div class="field">
+              <span>Aplicar Cupon </span>
+              <div class="item">
+                <div class="left">
+                  <input type="text" [(ngModel)]="discountCode" >
+                </div>
+                <div class="right" >
+                  <button (click)="findDiscount()" >Aplicar</button>
+                </div>
               </div>
             </div>
 
@@ -136,7 +156,7 @@
                 <span class="total" style="font-weight: bold;">Total</span>
               </div>
               <div class="right">
-                <span style="font-weight: bold;" >{{ventaUi.totalPago | currency}}</span>
+                <span style="font-weight: bold;" >{{ventaUi.totalPagoGrupal | currency}}</span>
               </div>
             </div>
           </div>
@@ -144,7 +164,7 @@
 
       </div>
       <button (click)="onChangeStep()">
-        <span>Rellenar Polizas</span>
+        <span>Rellenar Vouchers</span>
       </button>
 
     </div>

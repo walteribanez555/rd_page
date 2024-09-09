@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { CRUDService } from '../interfaces/CRUD_service.interface';
-import { Cupon, CuponToPost } from '../models/Cupon.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Cupon, CuponToPost } from '../models/Cupone.model';
 
 @Injectable({
   providedIn: 'root',

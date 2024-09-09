@@ -17,6 +17,7 @@ export class PlanesService implements CRUDService<Plan> {
     return this.http.get<Plan[]>(this.apiUrl);
   }
 
+
   //Get with the id_service
   getOne(id: string | number): Observable<Plan[]> {
     return this.http.get<Plan[]>(this.apiUrl + `?id=${id}`);

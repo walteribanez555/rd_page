@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { GeneratePdfService } from '../../pdf/poliza-pdf/services/generate-pdf.service';
+import { ServicioUi } from '../../../models/Servicio.ui';
 import { Beneficiario, Poliza, Venta } from 'src/app/Modules/Core/models';
-import { ServicioUi } from 'src/app/Modules/shared/models';
 
 
 
@@ -25,6 +25,8 @@ export class ModalBeneficiarioComponent {
 
   }
 
+
+  private cdr = inject(ChangeDetectorRef);
 
 
   @Input() size? ='md';
@@ -62,12 +64,15 @@ export class ModalBeneficiarioComponent {
 
   getCanva( beneficiario_id : number){
 
-    console.log("Poliza obtenida");
+
+
 
     const options = {
       background: 'white',
       scale: 3
     };
+
+    this.cdr.detectChanges();
 
     const poliza = document.getElementById(beneficiario_id.toString());
 
@@ -78,6 +83,7 @@ export class ModalBeneficiarioComponent {
       return;
     }
 
+    this.cdr.detectChanges();
 
 
 
@@ -96,7 +102,11 @@ export class ModalBeneficiarioComponent {
           id_beneficiario : id,
           canva : canvas
         }
+      this.cdr.detectChanges();
+
         this.canvasDataMap = [...this.canvasDataMap , newCanva]; // Save canvas and beneficiary ID in the map
+    this.cdr.detectChanges();
+
         // this.canvaContainer.nativeElement.appendChild(canvas);
       }
     )
@@ -106,9 +116,16 @@ export class ModalBeneficiarioComponent {
 
   downloadAllCanvas(){
 
+    console.log(this.canvasDataMap);
+
+    this.cdr.detectChanges();
+
     const allCanvases = this.canvasDataMap.map(
       canva => canva.canva
-    ) as HTMLCanvasElement[]
+    ) as HTMLCanvasElement[];
+    this.cdr.detectChanges();
+    this.cdr.detectChanges();
+
 
     this.pdfService.generatePdfAsync(...allCanvases).subscribe({
       next: (resp)  => {
@@ -129,7 +146,7 @@ export class ModalBeneficiarioComponent {
 
   downloadBeneficiario( beneficiario_id : number){
 
-      const canva = this.canvasDataMap.filter( canva => canva.id_beneficiario === beneficiario_id).map(canvas => canvas.canva);
+      const canva = this.canvasDataMap.map(canvas => canvas.canva);
       if(!canva){
         return;
       }

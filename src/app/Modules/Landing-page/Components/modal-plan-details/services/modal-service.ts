@@ -8,7 +8,7 @@ import {
 import { ModalPlanDetailsComponent } from '../modal-plan-details.component';
 import { DOCUMENT } from '@angular/common';
 import { Subject } from 'rxjs';
-import { ServicioUi } from 'src/app/Modules/shared/models';
+import { ServicioUi } from 'src/app/Modules/shared/models/Servicio.ui';
 
 @Injectable()
 export class ModalService {

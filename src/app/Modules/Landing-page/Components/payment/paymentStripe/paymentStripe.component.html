@@ -1,0 +1,50 @@
+
+<div class="modal">
+  <div class="top">
+    <div class="top-info">
+      <span>Ingrese los datos para la finalizar la compra</span>
+    </div>
+    <hr >
+  </div>
+  <div  class="data" >
+    <div class="checkout">
+      <div class="checkout-in">
+        <div class="checkout-card" >
+
+          <form id="payment-form" [formGroup]="form" (submit)="initPay()">
+            <div class="logo">
+              <h1>RED CARD Assist</h1>
+            </div>
+
+            <div class="amount" style="padding: 20px 0px;">
+              <label class="label">Monto a pagar</label>
+              <div class="data" style="padding: 0px 20px;">
+                <input type="text" style="font-size: 20px; border: none; width: 80px; color: var(--text-color);"  readonly formControlName="amount" placeholder="0.00">
+                <span class="currency">USD</span>
+              </div>
+
+            </div>
+
+
+            <div id="link-authentication-element">
+              <!--Stripe.js injects the Link Authentication Element-->
+            </div>
+            <div id="payment-element">
+              <!--Stripe.js injects the Payment Element-->
+            </div>
+            <button id="submit" class="paymentbtn">
+              <span id="button-text">Pay now</span>
+            </button>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+</div>

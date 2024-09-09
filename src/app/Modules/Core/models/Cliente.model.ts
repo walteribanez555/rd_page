@@ -12,12 +12,13 @@ export interface Cliente {
   email:              string;
   nro_contacto:       string;
   status:             number;
-  office_id : number;
 }
 
 
 export interface ClienteToPost extends Omit<Cliente,'fecha_registro' | 'cliente_id' | 'id' > {
-
+  office_id : number;
+  contacto: number;
+  persona_contacto : string | number;
 }
 
 

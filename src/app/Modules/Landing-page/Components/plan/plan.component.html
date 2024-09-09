@@ -3,7 +3,8 @@
     <span>Plan</span>
     <span class="plan-name">{{servicioUi.servicio}}</span>
     <span>Precio por Persona</span>
-    <span style="font-size: 20px; font-weight: bold;">{{ servicioUi.precioSelected | currency }}</span>
+    <span style="font-size: 20px; font-weight: bold;"   >{{ servicioUi.precioSelected | currency }}</span>
+    <!-- <span *ngIf="priceWithDiscount>0 && servicioUi.precioSelected != priceWithDiscount"  style="font-size: 20px; font-weight: bold;"  >{{priceWithDiscount | currency}}</span> -->
   </div>
   <div class="info">
     <div class="field">
@@ -24,7 +25,7 @@
       <div class="price">
         <span>{{servicioUi.edad_base}}</span>
         <span>-</span>
-        <span>{{servicioUi.edad_limite -1}}</span>
+        <span>{{servicioUi.edad_limite}}</span>
       </div>
     </div>
 
@@ -32,6 +33,10 @@
     <div class="field">
       <span  class="see-more" (click)="openModal(modalTemplate)"   >
         Ver Mas Detalles
+
+      </span>
+      <span  class="see-more" (click)="downloadPdf()"   >
+        Descargar
 
       </span>
       <span class="see-more"  *ngIf="!servicioUi.isSelected; else selected" (click)="changeState()" >

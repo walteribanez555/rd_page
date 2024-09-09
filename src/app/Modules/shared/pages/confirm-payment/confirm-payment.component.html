@@ -1,5 +1,4 @@
 <div class="payment" style="display: flex; align-items: center; justify-content: center;">
-  <menu-hamburguer></menu-hamburguer>
   <div class="modal"  *ngIf="servicioUi">
 
     <div class="left">
@@ -17,15 +16,14 @@
       <ul style="margin-top: 20px;">
         <li>
           <p>Para ver los detalles del  <span style="font-weight: bold; color: var(--main-color);">condicionado </span> esta el siguiente enlace:</p>
-          <a routerLink="../condicionado">
-            Condicionado
-          </a>
+          <button  (click)="downloadPdf()" style="padding: 10px 20px; border: none; cursor: pointer ; background-color: var(--main-color); color: white;font-size: 15px; border-radius: 8px;"  >Descargar Condicionado</button>
+
         </li>
         <li >
           <p>Puedes descargar ahora mismo tus <span style="font-weight: bold; color: var(--main-color);">polizas</span></p>
-          <div *ngFor="let beneficiario of listBeneficiarios; let i = index" style="padding: 10px 0px;">
-            <card-beneficiario  [beneficiario]="beneficiario!"
-            style="margin: 10px 0px;" [servicioUi]="servicioUi!" [poliza]="polizas[0]" [venta]="venta!"></card-beneficiario>
+          <div *ngFor="let poliza of polizas; let i = index" style="padding: 10px 0px;">
+            <card-beneficiario  [beneficiario]="listBeneficiarios[i]"
+            style="margin: 10px 0px;" [servicioUi]="servicioUi!" [poliza]="polizas[i]" [venta]="venta!"></card-beneficiario>
           </div>
         </li>
         <li>
@@ -52,4 +50,3 @@
 
 
 </div>
-

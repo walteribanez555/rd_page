@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter,  Input, OnInit, Output, inject } from '@angular/core';
 import { Form, FormControl, FormGroup } from '@angular/forms';
-import { PositionMessage, Size, TypeMessage } from 'src/app/Modules/shared/Components/notification/enums';
+import { Size, TypeMessage } from 'src/app/Modules/shared/Components/notification/enums';
+import { PositionMessage } from 'src/app/Modules/shared/Components/notification/enums/PositionMessage.enum';
 import { NotificationService } from 'src/app/Modules/shared/Components/notification/notification.service';
 import { DatesAction } from 'src/app/Modules/shared/utils/dates/dates-action';
 
@@ -21,6 +22,18 @@ export class DestinyComponent  implements OnInit {
     this.initialDate= this.datesForm.get('initialDate') as FormControl;
     this.finalDate = this.datesForm.get('finalDate') as FormControl;
     this.quantityDays = this.datesForm.get('quantityDays') as FormControl;
+
+
+    if(this.initialDate.value.length > 0) {
+      this.setInitialDate(this.initialDate.value);
+    }
+
+    if(this.finalDate.value.length > 0) {
+      this.setFinalDate(this.finalDate.value);
+    }
+
+
+
 
 
   }

@@ -1,14 +1,16 @@
 import { CommonModule, Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject, catchError, forkJoin, map, switchMap, tap, throwError } from 'rxjs';
-import { Venta, Servicio, Cupon, Catalogo, Extra, Beneficiario, Beneficio, Poliza, Precio } from 'src/app/Modules/Core/models';
+import { Venta, Servicio, Cupon, Catalogo,  Beneficiario, Beneficio, Poliza, Precio } from 'src/app/Modules/Core/models';
 import { Descuento } from 'src/app/Modules/Core/models/Descuento.model';
+import { Extra } from 'src/app/Modules/Core/models/Extra.model';
 import { VentasService, PolizasService, ServiciosService, ExtrasService, PlanesService, BeneficiariosService, CuponesService, PreciosService, CatalogosService, BeneficiosService } from 'src/app/Modules/Core/services';
 import { ServByPlan } from 'src/app/Modules/Landing-page/Components/multi-step/multi-step.component';
 import { Size, PositionMessage } from 'src/app/Modules/shared/Components/notification/enums';
 import { NotificationService } from 'src/app/Modules/shared/Components/notification/notification.service';
-import { ServicioUi } from 'src/app/Modules/shared/models';
+import { ServicioUi } from 'src/app/Modules/shared/models/Servicio.ui';
 import { MapToServicioUi } from 'src/app/Modules/shared/utils/mappers/servicio.mappers';
 
 @Component({
@@ -54,6 +56,7 @@ export class PolizasComponent implements OnInit {
   extras: Extra[] = [];
   beneficios: Beneficio[] = [];
   servicioUi: ServicioUi | null = null;
+  multiviajes : Catalogo[] = [];
 
 
   onLoadProcess?: Subject<any>;
@@ -111,8 +114,12 @@ export class PolizasComponent implements OnInit {
         this.cupones = resp;
         return this.catalogosService.getAll();
       }),
-      switchMap((resp: Catalogo[]) => {
+      switchMap((resp : Catalogo[])=> {
         this.catalogos = resp;
+        return this.catalogosService.getAllExtras();
+      }),
+      switchMap((resp: Catalogo[]) => {
+        this.multiviajes = resp;
         return this.extrasService.getAll();
       }),
       switchMap((resp: Extra[]) => {
@@ -133,9 +140,9 @@ export class PolizasComponent implements OnInit {
           this.extras,
           this.planes!,
           this.precios,
-          this.cupones
+          this.cupones,
+          this.multiviajes
         );
-        console.log("Hola");
 
         console.log({servicio : this.servicioUi});
 
@@ -186,5 +193,29 @@ export class PolizasComponent implements OnInit {
     });
   }
 
+  private http = inject(HttpClient);
+
+
+  downloadPdf() {
+    const pdfUrl = `/assets/pdf/CONDICIONADOREDCARD.pdf`;
+
+    window.open(`https://cotizaredcard.online/assets/pdf/CONDICIONADOREDCARD.pdf`)
+
+    // Use HttpClient to fetch the PDF file as a Blob
+    // this.http.get(pdfUrl, { responseType: 'blob' }).subscribe((blob: Blob) => {
+    //   const url = window.URL.createObjectURL(blob);
+
+    //   // Create a link element and trigger the download
+    //   const a = document.createElement('a');
+    //   a.href = url;
+    //   a.download = `CONDICIONADOREDCARD.pdf`;
+    //   document.body.appendChild(a);
+    //   a.click();
+
+    //   // Clean up resources
+    //   document.body.removeChild(a);
+    //   window.URL.revokeObjectURL(url);
+    // });
+  }
 
 }

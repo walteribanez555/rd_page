@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { locationTravel } from './locationTravel';
 import { FormGroup } from '@angular/forms';
 import { CountryRegion } from 'src/app/Modules/shared/utils/data/countries-region.ts/countries-region';
+import { CountryRegionLng } from 'src/app/Modules/shared/utils/data/countries-region.ts/country-region-lng';
+import { states_city } from 'src/app/Modules/shared/utils/data/states';
+import { countrys } from 'src/app/Modules/shared/utils/data/countries-lng';
 
 @Component({
   selector: 'dates-to-travel',
@@ -10,7 +13,23 @@ import { CountryRegion } from 'src/app/Modules/shared/utils/data/countries-regio
   templateUrl : 'datesToTravel.component.html',
   styleUrls: ['./datesToTravel.component.css'],
 })
-export class DatesToTravelComponent {
+export class DatesToTravelComponent implements OnInit {
+
+
+
+  ngOnInit(): void {
+
+    const value = this.places.get('toLocation')?.value;
+    const origin = this.places.get('fromLocation')?.value;
+
+    if(value && origin){
+      this.onSelectedDestiny(value[0]);
+      this.onSelectedOrigen(origin[0]);
+
+    }
+
+
+  }
 
   @Output() onChangePage = new EventEmitter();
 
@@ -38,7 +57,7 @@ export class DatesToTravelComponent {
     this.onChangePage.emit();
   }
 
-  onSelectedDestiny( destiny : CountryRegion) {
+  onSelectedDestiny( destiny : CountryRegionLng) {
 
 
     this.locations.push({
@@ -50,7 +69,7 @@ export class DatesToTravelComponent {
 
   }
 
-  onSelectedOrigen( place : CountryRegion) {
+  onSelectedOrigen( place : CountryRegionLng) {
     this.places.get('fromLocation')?.setValue(place);
   }
 

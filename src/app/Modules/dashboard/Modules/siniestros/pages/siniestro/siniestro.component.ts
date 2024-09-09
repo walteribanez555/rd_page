@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject, switchMap } from 'rxjs';
-import { Beneficiario, Catalogo, Plan, Poliza, Servicio, Siniestro } from 'src/app/Modules/Core/models';
+import { Beneficiario, Catalogo,  Poliza, Servicio, Siniestro } from 'src/app/Modules/Core/models';
 import { BeneficiariosService, CatalogosService, PlanesService, PolizasService, ServiciosService, SiniestrosService } from 'src/app/Modules/Core/services';
 import { Size, PositionMessage } from 'src/app/Modules/shared/Components/notification/enums';
 import { NotificationService } from 'src/app/Modules/shared/Components/notification/notification.service';
 import { mapCatPlan, mapTyeSiniestro } from '../../utils/mappers/typeSiniestro.mappers';
 import { TipoSiniestro } from '../../models/TipoSiniestro.ui.model';
 import { trasnformStringtoSignals } from '../../utils/mappers/Messages.Mappers';
+import { Plan } from 'src/app/Modules/Core/models/Plan.model';
 
 @Component({
   templateUrl  : './siniestro.component.html',

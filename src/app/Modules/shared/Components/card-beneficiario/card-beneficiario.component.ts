@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, TemplateRef, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, inject } from '@angular/core';
+import { ServicioUi } from '../../models/Servicio.ui';
 import { ModalBenService } from '../modals/modal-beneficiario/service/modal.service';
 import { Beneficiario, Poliza, Venta } from 'src/app/Modules/Core/models';
-import { ServicioUi } from 'src/app/Modules/shared/models';
 
 @Component({
   selector: 'card-beneficiario',
@@ -17,8 +16,6 @@ export class CardBeneficiarioComponent implements OnInit {
   }
   ngOnInit(): void {
     this.cdr.detectChanges();
-
-    // console.log(this.beneficiario, this.servicioUi, this.poliza, this.venta);
 
   }
 

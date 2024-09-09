@@ -3,10 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './Modules/shared/shared.module';
 import { SessionInterceptor } from './Modules/Core/Interceptors/session.interceptor';
 import { ErrorInterceptor } from './Modules/Core/Interceptors/error.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CoreModule } from './Modules/Core/core.module';
+import { SharedModule } from './Modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,10 +17,13 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     SharedModule,
+    CoreModule,
+
 
 
   ],
   providers: [
+
 
     {
       provide : HTTP_INTERCEPTORS,

@@ -5,7 +5,6 @@ import {
   Beneficiario,
   Beneficio,
   Catalogo,
-  Plan,
   Poliza,
   Servicio,
 } from 'src/app/Modules/Core/models';
@@ -31,6 +30,7 @@ import { RespBucketS3 } from '../../models/RespBucketS3.model';
 import { SiniestroPost } from 'src/app/Modules/Core/models/Siniestro.model';
 import { DatesAction } from 'src/app/Modules/shared/utils/dates/dates-action';
 import { transformSignalstoString, trasnformStringtoSignals } from '../../utils/mappers/Messages.Mappers';
+import { Plan } from 'src/app/Modules/Core/models/Plan.model';
 
 
 @Component({
@@ -177,7 +177,7 @@ export class CreateComponent implements OnInit {
         .trimEnd()
         .toLocaleUpperCase(),
       url_archivo: filePath,
-      beneficiario_id: this.beneficiario!.beneficiario_id,
+      beneficiario_id: this.beneficiario!.beneficiario_id!,
       tipo_siniestro: this.selectedTipoSiniestro!.catalogo.valor,
     };
 

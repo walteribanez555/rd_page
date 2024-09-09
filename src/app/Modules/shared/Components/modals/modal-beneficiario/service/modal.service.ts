@@ -9,8 +9,7 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { Subject } from 'rxjs';
 import { ModalBeneficiarioComponent } from '../modal-beneficiario.component';
-import { ServicioUi } from 'src/app/Modules/shared/models';
-import { BeneficiarioUi } from 'src/app/Modules/shared/models/Beneficiario.Ui';
+import { ServicioUi } from 'src/app/Modules/shared/models/Servicio.ui';
 import { Beneficiario, Poliza, Venta } from 'src/app/Modules/Core/models';
 
 @Injectable()

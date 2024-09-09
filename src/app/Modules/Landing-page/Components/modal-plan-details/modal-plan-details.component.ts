@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { CatalogoUi, ServicioUi } from 'src/app/Modules/shared/models';
+import { ServicioUi } from 'src/app/Modules/shared/models/Servicio.ui';
 
 @Component({
   selector: 'modal-plan-details',

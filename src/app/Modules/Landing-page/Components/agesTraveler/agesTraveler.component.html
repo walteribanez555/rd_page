@@ -1,11 +1,11 @@
 <div class="container">
   <h1>
     <span style="color: gainsboro;">Paso 3: </span>
-    <span class="title">Pasajeros...</span>
+    <span class="title">PASAJEROS</span>
   </h1>
 
 
-  <h2>¿Cúantos Son los Pasajeros?</h2>
+  <h2>Cantidad de Pasajeros</h2>
 
   <div class="message">
     <i class="fa-solid fa-circle-exclamation"></i>
@@ -15,7 +15,23 @@
   <div class="row">
     <div class="card">
       <i class="fa-solid fa-circle-user fa-2xl"></i>
-      <span>Entre 0 y 70 años</span>
+      <span>Entre 0 y 13 años</span>
+      <div class="cant-section">
+        <span class="btn" (click)="onChangeYoungDate(-1)" >
+          -
+        </span>
+        <span>
+          {{youngDate}}
+        </span>
+        <span class="btn" (click)="onChangeYoungDate(+1)" >
+          +
+        </span>
+
+      </div>
+    </div>
+    <div class="card">
+      <i class="fa-solid fa-circle-user fa-2xl"></i>
+      <span>Entre 14 y 70 años</span>
       <div class="cant-section">
         <span class="btn" (click)="onChangeAdultDate(-1)" >
           -
@@ -47,6 +63,7 @@
 
     </div>
   </div>
+
 
   <div class="button-group">
 

@@ -4,14 +4,16 @@
 
       <div class="items">
         <div class="saludo">
-          <img style="width: 30px; height: 40px; object-fit: fill;"
-            src="assets/images/isologo-blanco.png">
+          <img style="width: 30px; height: 40px; object-fit: fill;" src="assets/images/isologo-blanco.png">
 
-          <h1>Voucher de Asistencia</h1>
+          <div class="title">
+            <h1>{{'RED CARD Assist'}}</h1>
+            <h1>{{'Voucher de Asistencia' }}</h1>
+          </div>
         </div>
         <div class="qr_space">
           <div class="qr">
-            <qrcode [qrdata]="qrCode" [width]="100" (qrCodeURL)="onLoadedQr($event)" ></qrcode>
+            <qrcode [qrdata]="qrCode" [width]="100" (qrCodeURL)="onLoadedQr($event)"></qrcode>
           </div>
           <div class="message">
             Verifica los datos de tu Voucher
@@ -25,7 +27,8 @@
     </div>
     <div class="datos-beneficiario">
       <i style="color: var(--main-color); " class="fa-solid fa-circle-info fa-lg"></i>
-      <span style="color: var(--main-color); font-weight: 600; margin-left: 20px; font-size: 10px">Detalles de la Póliza</span>
+      <span style="color: var(--main-color); font-weight: 600; margin-left: 20px; font-size: 10px">Detalles deL
+        Voucher</span>
       <div class="data">
         <div class="left">
           <div class="descriptions">
@@ -68,7 +71,7 @@
               <span>{{beneficiario?.telefono}}</span>
             </div>
             <div class="nombre-beneficiario">
-              <span>{{servicioUi?.precioSelected | currency }}</span>
+              <span>{{venta?.total_pago | currency }}</span>
             </div>
 
 
@@ -102,7 +105,8 @@
               <span>{{poliza?.fecha_salida!.split('T')[0]}}</span>
             </div>
             <div class="nombre-beneficiario">
-              <span>{{poliza?.fecha_retorno!.split('T')[0]}}</span>
+              <span>{{poliza?.multiviaje == 1 ? poliza?.fecha_retorno!.split('T')[0] :
+                poliza?.fecha_caducidad!.split('T')[0]}}</span>
             </div>
 
             <div class="nombre-beneficiario">
@@ -112,7 +116,7 @@
               <span>{{poliza?.nro_dias}}</span>
             </div>
             <div class="nombre-beneficiario">
-              <span>{{poliza?.destino}}</span>
+              <span>{{getDestinyByIso2(poliza?.destino!)}}</span>
             </div>
             <div class="nombre-beneficiario">
               <span>{{venta?.username}}</span>
@@ -133,39 +137,59 @@
 
       <div class="catalogo">
         <div class="description">
-          <span style="color: var(--main-color); margin-top: 10px; font-size: 12px;">PLAN {{servicioUi?.servicio}}</span>
+          <p style="color: var(--main-color); margin-top: 10px; font-size: 12px;">PLAN {{servicioUi?.servicio}} <span
+              style="color: var(--main-color); margin-top: 10px; font-size: 12px; font-weight: lighter;"
+              *ngIf="poliza?.multiviaje==2">- MULTIVIAJE</span> <span style="color: var(--main-color); margin-top: 10px; font-size: 12px; font-weight: lighter;">{{"- "}} COBERTURA : {{servicioUi?.cobertura_global | currency}}</span> </p>
           <hr style="width: calc(100% - 50px); border: 1px solid gainsboro;">
         </div>
         <div class="beneficios">
-          <div class="beneficio" *ngFor="let catalogo of servicioUi?.catalogos" >
+          <div class="beneficio" *ngFor="let catalogo of servicioUi?.catalogos">
             <div class="title" *ngIf="catalogo.valor!=4">
               <span>{{catalogo.etiqueta}}</span>
             </div>
-            <div class="list-cats" *ngFor="let beneficio of catalogo.beneficios">
-              <div class="cats" style="border-right:1px solid var(--main-color);" *ngIf="beneficio.plan">
-                  <span>{{beneficio.descripcion}}</span>
+            <div *ngFor="let beneficio of catalogo.beneficios">
+              <div class="list-cats" *ngIf="!(beneficio.plan[0].complemento   == '2' || (poliza?.multiviaje == 2 && beneficio.beneficio_id == 11))" >
+                <div class="cats" style="border-right:1px solid var(--main-color);" *ngIf="beneficio.plan">
+                  <span>{{beneficio.descripcion }}</span>
+
+                </div>
+                <div class="cats">
+                  <ng-container  *ngIf="(beneficio.plan[0].cobertura != null && !(poliza?.multiviaje == 2 && beneficio.beneficio_id == 11) ); else incluye  ">
+                    <span  *ngIf="isWithEuros(poliza?.destino!)"
+                    >
+                      {{beneficio.plan[0].cobertura | currency:'EUR'|uppercase}}
+                    </span>
+
+                  <span
+                    *ngIf=" !isWithEuros(poliza?.destino!)">
+                      {{beneficio.plan[0].cobertura | currency |uppercase}}
+                  </span>
+
+                  </ng-container>
 
 
+                  <ng-template #incluye>
+                    <span
+                      *ngIf="(beneficio.plan[0].complemento =='1' && !(poliza?.multiviaje == 2 && beneficio.beneficio_id == 11)); else noIncluye">
+                      {{'Incluye' }}
+                    </span>
 
+                    <ng-template #noIncluye>
+                      <span *ngIf="beneficio.plan[0].complemento=='3'"> TKT </span>
 
-              </div>
-              <div class="cats" >
-
-                  <span *ngIf="beneficio.plan[0].cobertura != null; else incluye  " >{{  beneficio.plan[0].cobertura | currency:'USD':'$':'1.2-2' |uppercase}}</span>
-
-                  <ng-template  #incluye >
-                    <span  *ngIf="beneficio.plan[0].complemento =='1'; else noIncluye" >Incluye</span>
-
-                    <ng-template  #noIncluye >
-                      <span  *ngIf="beneficio.plan[0].complemento=='3'" > TKT </span>
-
-                      <span  *ngIf="beneficio.plan[0].complemento=='2'"  >No incluye</span>
+                      <!-- <span
+                        *ngIf="beneficio.plan[0].complemento=='2' || (poliza?.multiviaje == 2 && beneficio.beneficio_id == 11) ">{{
+                        'No incluye' | TranslatePipe }}</span> -->
                     </ng-template>
 
                   </ng-template>
 
+                </div>
+
               </div>
+
             </div>
+
 
 
           </div>
@@ -179,15 +203,20 @@
         <i style="color: var(--main-color); position: absolute; top: -5px; right: 0;"
           class="fa-solid fa-circle-exclamation fa-xl"></i>
         <span>En caso de emergencia y de necesitar hacer uso de la asistencia debe comunicarse con
-          al numero de contacto:
+          el numero de contacto:
         </span>
 
         <div class="contacto">
-          <i class="fa-brands fa-whatsapp"></i>
-          <span>+1-305-280-8950</span>
+          <span>Whatsapp +1 (803) 269 2270</span>
         </div>
+        <div class="contacto">
+          <span>Llamadas +1 (305) 307 0765</span>
+        </div>
+
+
         <span>Al descargar este Voucher acepta nuestras politicas que se especifican en el enlace QR que esta
           en la parte superior de este documento</span>
+          <span>Acepto que todos los beneficios generados por este plan son via reembolso</span>
       </div>
 
       <div class="footer">
@@ -206,7 +235,6 @@
         </div>
       </div>
 
-
     </div>
 
   </div>
@@ -214,4 +242,3 @@
 
 
 </div>
-

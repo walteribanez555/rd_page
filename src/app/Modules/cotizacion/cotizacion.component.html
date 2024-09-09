@@ -1,0 +1,65 @@
+<div class="page-cotizacion">
+
+<img class="background" src="assets/images/Cotizador-01.png" alt="">
+
+
+<div class="quoter">
+  <div class="title">
+    <div class="field" style="align-items: center;justify-content: center;">
+      <img class="logo" src="assets/images/logoHorizontalRojo.png" alt="">
+    </div>
+
+    <div class="field">
+      <span class="title">
+        Destino
+      </span>
+      <select-custom (onselectDestiny)="onSelectDestiny($event)" ></select-custom>
+    </div>
+    <div class="field  field--row">
+      <div class="field">
+        <span class="title">
+          Fecha de Salida
+        </span>
+        <custom-calendar  (onSelectDate)="onSelectInitialDate($event)" ></custom-calendar>
+
+      </div>
+      <div class="field">
+        <span class="title">
+          Fecha de retorno
+        </span>
+        <custom-calendar  (onSelectDate)="onSelectFinalDate($event)" ></custom-calendar>
+      </div>
+    </div>
+
+    <div class="field field--row">
+      <div class="field">
+        <span class="title">Entre 0 y 13</span>
+        <card-age  [ageFormControl]="initialAge" ></card-age>
+      </div>
+      <div class="field">
+        <span class="title">Entre 13 y 70</span>
+        <card-age  [ageFormControl]="adultAge" ></card-age>
+      </div>
+      <div class="field">
+        <span class="title">Entre 71 y 85</span>
+        <card-age [ageFormControl]="seniorAge" ></card-age>
+      </div>
+    </div>
+
+    <div class="field">
+      <!-- <button  (click)="onQuote()">
+        Cotizar
+      </button> -->
+      <button   (click)="onQuote()" >
+        Cotizar
+      </button>
+    </div>
+  </div>
+
+
+
+</div>
+
+</div>
+
+

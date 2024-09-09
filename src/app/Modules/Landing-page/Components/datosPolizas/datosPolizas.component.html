@@ -1,16 +1,17 @@
 <div class="container">
   <h1>
     <span style="color: gainsboro;" >Paso 7: </span>
-    <span  class="title">Rellena la Informacion...</span>
+    <span  class="title">COMPLETA LA INFORMACIÓN</span>
   </h1>
 
 
   <h2>Rellena la Informacion de los beneficiarios</h2>
 
+
   <hr>
   <div class="row">
     <div class="list">
-      <poliza *ngFor="let poliza of polizasForm"  [polizaForm]="poliza"  [finalDate]="travelDate!" ></poliza>
+      <poliza *ngFor="let poliza of polizasForm; let i = index" [limitAge]="ageGroupLimit[i]" [polizaForm]="poliza"  [finalDate]="travelDate!"  [servicio]="planSelected!" ></poliza>
 
     </div>
     <div class="details">
