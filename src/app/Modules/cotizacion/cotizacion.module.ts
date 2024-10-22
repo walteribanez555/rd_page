@@ -7,6 +7,7 @@ import { RouterModule } from "@angular/router";
 import { SharedModule } from "../shared/shared.module";
 import { CardAgeComponent } from "./components/card-age/card-age.component";
 import { CotizacionRoutingModule } from "./cotizacion-routing.module";
+import { BackButtonComponent } from "../shared/Components/back-button/back-button.component";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CotizacionRoutingModule } from "./cotizacion-routing.module";
     ReactiveFormsModule,
     SharedModule,
     CotizacionRoutingModule,
-  ],
+    BackButtonComponent
+],
   providers : [
 
   ]

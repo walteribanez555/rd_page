@@ -20,6 +20,10 @@ import { filtrarPaises, obtenerNombreTraducido } from '../../utils/filters/count
 export class SelectCustomComponent implements OnInit {
   ngOnInit(): void {
     this.filteredCountries = this.countries;
+
+    if(this.initialValueItem) {
+      this.updateActualName(this.initialValueItem);
+    }
   }
 
   isToggle: boolean = false;
@@ -27,13 +31,18 @@ export class SelectCustomComponent implements OnInit {
 
   searchText: string = '';
 
+  @Input() initialValueItem : CountryRegionLng | null = null;
+
   updateToggle() {
+    if( this.initialValueItem ) return;
     this.isToggle = !this.isToggle;
   }
 
   filteredCountries: CountryRegionLng[] = [];
 
   updateActualName(selectedCountry: CountryRegionLng) {
+
+
     this.searchInput = this.getCountryByIso2(selectedCountry.iso2)!;
     this.isToggle = false;
     this.onselectDestiny.emit(selectedCountry);

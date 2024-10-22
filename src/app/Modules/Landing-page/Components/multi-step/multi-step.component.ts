@@ -114,7 +114,7 @@ export class MultiStepComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
 
   locationsForm = new FormGroup({
-    fromLocation: new FormControl<null | CountryRegionLng[]>(null, [
+    fromLocation: new FormControl<null | CountryRegionLng>(null, [
       Validators.required,
     ]),
     toLocation: new FormControl<null | CountryRegionLng[]>(null, [
@@ -218,6 +218,16 @@ export class MultiStepComponent implements OnInit {
       this.activatedRoute.snapshot.queryParams;
 
 
+    if(origen) { 
+      console.log("Origen Detected");
+      const origins = countrys.filter((countryItem)=> countryItem.iso2 === (( (origen === undefined && country === undefined)? "PE" : origen === undefined ? country : origen) as string).toUpperCase());
+
+
+      this.locationsForm.get('fromLocation')?.patchValue(origins[0]);
+    }
+
+
+
 
 
     if (
@@ -305,7 +315,7 @@ export class MultiStepComponent implements OnInit {
 
       const origins = countrys.filter((countryItem)=> countryItem.iso2 === (( (origen === undefined && country === undefined)? "PE" : origen === undefined ? country : origen) as string).toUpperCase());
 
-      this.locationsForm.get('fromLocation')?.setValue(origins);
+      this.locationsForm.get('fromLocation')?.setValue(origins[0]);
       this.locationsForm.get('toLocation')?.setValue(destinies);
       this.datesForm.get('initialDate')?.setValue(fecha_ini);
       this.datesForm.get('finalDate')?.setValue(fecha_fin);
@@ -326,6 +336,9 @@ export class MultiStepComponent implements OnInit {
             .length
         );
     }
+
+
+
     // console.log({fecha_ini, fecha_fin});
 
     this.listForms.push(

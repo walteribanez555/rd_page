@@ -8,7 +8,9 @@ export class VentaMappers {
     servicioUi: ServicioUi,
     ageBeneficiary: any,
     descuentoExtra: number,
-    days: number
+    days: number,
+    origin : string,
+    destiny : string
   ): VentaUi {
     const selectedExtras = servicioUi.extras.filter(
       (extra) => extra.isSelected
@@ -73,13 +75,15 @@ export class VentaMappers {
             servicioUi.listcupones,
             listBeneficiariesLimitGroup[index],
             item,
-            days
+            days,
+            origin
           ) +
           this.getDiscountByGroupDetails(
             servicioUi.listcupones,
             listBeneficiariesLimitGroup.length,
             item,
-            days
+            days,
+            origin
           )
     );
     const tipo_descuento: number[] = Array(
@@ -164,41 +168,41 @@ export class VentaMappers {
     cupones: Cupon[],
     age: number,
     totalPago: number,
-    quantityDays: number
+    quantityDays: number,
+    origin : string
   ) {
+
     const total = cupones.reduce((accum, actualItem) => {
-      console.log(
-        actualItem,
-        CuponValidator.isWithPolicie(actualItem, {
-          beneficiarAgeLimit: age,
-          days: quantityDays,
-        })
-      );
+
+
+
 
       if (
         CuponValidator.isWithPolicie(actualItem, {
           beneficiarAgeLimit: age,
           days: quantityDays,
+          origin
         }) > 0
       ) {
-        console.log('Aqui es verdadero por persona');
-        console.log({
-          totalPago,
-          monto:
+
+
+        // withOrigin = ;
+        if(accum == 0){
+          console.log("Por aqui pasando el acumulador")
+          return (
             accum +
             (actualItem.tipo_valor === 1
               ? actualItem.valor * (totalPago / 100)
-              : actualItem.valor),
-        });
-        return (
-          accum +
-          (actualItem.tipo_valor === 1
-            ? actualItem.valor * (totalPago / 100)
-            : actualItem.valor)
-        );
+              : actualItem.valor)
+          );
+        }{
+          return accum;
+        }
+
+
+
       } else {
-        console.log('Aqui es falso por persona');
-        console.log({ accum });
+
 
         return accum;
       }
@@ -211,44 +215,44 @@ export class VentaMappers {
     cupones: Cupon[],
     quantityPersons: number,
     totalPago: number,
-    quantityDays: number
+    quantityDays: number,
+    origin : string,
   ) {
     // const total = cupones.reduce( (accum, actualItem) => CuponValidator.isWithPolicie(actualItem, { quantity : quantityPersons , days : quantityDays} ) ?
     //                                                                                                                                       accum + (actualItem.tipo_valor === 1 ?  (actualItem.valor * (totalPago /100)) : (actualItem.valor))
     //                                                                                                                                   : accum,0 );
     const total = cupones.reduce((accum, actualItem) => {
-      console.log(
-        CuponValidator.isWithPolicie(actualItem, {
-          quantity: quantityPersons,
-          days: quantityDays,
-        }),
-        actualItem
-      );
+
 
       if (
         CuponValidator.isWithPolicie(actualItem, {
           quantity: quantityPersons,
           days: quantityDays,
+          origin
         }) === 3
       ) {
-        console.log('Aqui es verdadero por grupo');
-        console.log({ accum });
+        console.log("Por aqui pasando el acumulador");
 
-        return (
-          accum +
-          (actualItem.tipo_valor === 1
-            ? actualItem.valor * (totalPago / 100)
-            : actualItem.valor)
-        );
+
+
+        if(accum == 0){
+
+          return (
+            accum +
+            (actualItem.tipo_valor === 1
+              ? actualItem.valor * (totalPago / 100)
+              : actualItem.valor)
+          );
+        }{
+          return accum;
+        }
       } else {
-        console.log('Aqui es falso por grupo');
-        console.log({ accum });
+
 
         return accum;
       }
     }, 0);
 
-    console.log('Total por grupo', total);
 
     return total;
   }

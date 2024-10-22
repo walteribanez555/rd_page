@@ -1,12 +1,21 @@
 <div class="page-cotizacion">
 
 <img class="background" src="assets/images/Cotizador-01.png" alt="">
+<div style="position: relative;">
+  <app-back-button></app-back-button>
+</div>
 
 
 <div class="quoter">
   <div class="title">
     <div class="field" style="align-items: center;justify-content: center;">
       <img class="logo" src="assets/images/logoHorizontalRojo.png" alt="">
+    </div>
+    <div class="field">
+      <span class="title">
+        Origen
+      </span>
+      <select-custom (onselectDestiny)="onSelectOrigin($event)" ></select-custom>
     </div>
 
     <div class="field">

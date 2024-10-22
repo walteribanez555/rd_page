@@ -15,6 +15,7 @@ import { countrys } from 'src/app/Modules/shared/utils/data/countries-lng';
 })
 export class DatesToTravelComponent implements OnInit {
 
+  initialValueItem  : CountryRegionLng | null = null;
 
 
   ngOnInit(): void {
@@ -22,12 +23,16 @@ export class DatesToTravelComponent implements OnInit {
     const value = this.places.get('toLocation')?.value;
     const origin = this.places.get('fromLocation')?.value;
 
+
+
     if(value && origin){
       this.onSelectedDestiny(value[0]);
       this.onSelectedOrigen(origin[0]);
-
     }
 
+    if( origin ){
+      this.initialValueItem = origin;
+    }
 
   }
 

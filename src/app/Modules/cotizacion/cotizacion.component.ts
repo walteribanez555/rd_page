@@ -13,6 +13,7 @@ export class CotizacionComponent {
   initialDate = new FormControl(null, Validators.required);
   finalDate = new FormControl(null, Validators.required);
   locationInput = new FormControl(null, Validators.required);
+  originInput = new FormControl(null, Validators.required);
 
   initialAge = new FormControl(0);
   adultAge = new FormControl(0);
@@ -30,6 +31,11 @@ export class CotizacionComponent {
     this.locationInput.setValue(event.iso2);
   }
 
+
+  onSelectOrigin(event : any){
+    this.originInput.setValue(event.iso2);
+  }
+
   private router = inject(Router);
 
   onQuote() {
@@ -44,6 +50,7 @@ export class CotizacionComponent {
 
     const initialDate = this.initialDate.value;
     const finalDate = this.finalDate.value;
+    const origin = this.originInput.value;
     const destiny = this.locationInput.value;
     const adultAge = this.adultAge.value;
     const initialAge = this.initialAge.value;
@@ -61,6 +68,11 @@ export class CotizacionComponent {
 
     if (!finalDate) {
       window.alert('La fecha final es requerida');
+      return;
+    }
+
+    if(!origin){
+      window.alert('El Origen es requerido');
       return;
     }
 
@@ -91,7 +103,7 @@ export class CotizacionComponent {
       '&edades=' +
       repeatedArray.join(',') +
       '&origen=' +
-      'BO' +
+      origin +
       '&destino=' +
       destiny;
     url += '&tipo=FULL&fecha_ini=' + initialDate + '&fecha_fin=' + finalDate;
@@ -100,7 +112,7 @@ export class CotizacionComponent {
       queryParams: {
         cantidad: passengerCount,
         edades: repeatedArray.join(','),
-        origen: 'BO',
+        origen: origin,
         destino: destiny,
         tipo: 'FULL',
         fecha_ini: initialDate,

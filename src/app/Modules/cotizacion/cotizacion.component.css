@@ -110,6 +110,9 @@ select {
 }
 
 @media (max-width: 768px) {
+  .quoter{
+    padding-top: 60px;
+  }
 
 
   .page-cotizacion{

@@ -28,6 +28,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ListCoberturaComponent } from './Components/list-cobertura/list-cobertura.component';
 import { CoberturaComponent } from './Components/cobertura/cobertura.component';
 import { PaymentStripeComponent } from './Components/payment/paymentStripe/paymentStripe.component';
+import { BackButtonComponent } from "../shared/Components/back-button/back-button.component";
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { PaymentStripeComponent } from './Components/payment/paymentStripe/payme
     CoreModule,
     ReactiveFormsModule,
     FormsModule,
-  ],
+    BackButtonComponent
+],
   providers: [ModalService,ExtraDetailService],
   exports: [],
 })

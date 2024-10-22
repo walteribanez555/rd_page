@@ -1,0 +1,15 @@
+a{
+  padding: 10px 20px;
+  border:  1px solid var(--main-color);
+  color: white;
+  background-color: var(--main-color);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  z-index: 100;
+}

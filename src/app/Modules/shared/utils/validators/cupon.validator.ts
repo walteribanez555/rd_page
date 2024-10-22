@@ -59,7 +59,12 @@ export class CuponValidator{
       policie.quantity != undefined &&
       policie.quantity == 1 &&
       policie.daysMin != undefined &&
-      policie.daysMin >= data.days
+      policie.daysMin >= data.days &&
+      ((policie.origin == undefined && data.origin == undefined ) ||
+      (policie.origin == undefined && data.origin ) ||
+      ( policie.origin != undefined  && data.origin != undefined
+        &&( policie.origin as string[]).some( country => country == data.origin ))
+      )
 
     ) {
       console.log('Si es valido como unico y verdadero');
@@ -79,7 +84,12 @@ export class CuponValidator{
       policie.daysMin != undefined &&
       data.days != undefined &&
       (data.quantity % policie.quantity == 0 && policie.quantity != 1  ) &&
-      policie.daysMin >= data.days
+      policie.daysMin >= data.days &&
+      ((policie.origin == undefined && data.origin == undefined ) ||
+      (policie.origin == undefined && data.origin ) ||
+      ( policie.origin !=undefined  && data.origin !=undefined
+        &&( policie.origin as string[]).some( country => country == data.origin ))
+      )
     ) {
       console.log('Si es valido como grupo y verdadero');
       return 3;
