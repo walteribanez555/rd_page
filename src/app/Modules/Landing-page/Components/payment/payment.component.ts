@@ -130,13 +130,13 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnChanges {
 
         const countryUbi = localStorage.getItem('country');
 
-        if (countryUbi === 'BO') {
-          this.TypePayment = 1;
-          this.htmlContent = this.createInjectPaymentForm();
-          this.cdr.detectChanges();
+        // if (countryUbi === 'BO') {
+        //   this.TypePayment = 1;
+        //   this.htmlContent = this.createInjectPaymentForm();
+        //   this.cdr.detectChanges();
 
-          return;
-        }
+        //   return;
+        // }
 
 
 

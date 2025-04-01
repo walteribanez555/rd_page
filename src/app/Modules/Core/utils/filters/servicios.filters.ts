@@ -10,7 +10,7 @@ export class ServiciosFilter {
     position: number,
     servicios: ServicioUi[]
   ): ServicioUi[] {
-    let serviciosFiltered: ServicioUi[] = servicios;
+    let serviciosFiltered: ServicioUi[] = servicios.filter( serv =>  serv.status === 1);;
 
     if (position >= 1) {
       const formDestiny = forms[0];
@@ -41,7 +41,7 @@ export class ServiciosFilter {
         serviciosFiltered,
         quantityAdults,
         quantitySeniors
-      );
+      )
     }
 
     return serviciosFiltered;

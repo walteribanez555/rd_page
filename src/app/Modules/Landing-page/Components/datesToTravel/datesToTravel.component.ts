@@ -24,7 +24,6 @@ export class DatesToTravelComponent implements OnInit {
     const origin = this.places.get('fromLocation')?.value;
 
 
-
     if(value && origin){
       this.onSelectedDestiny(value[0]);
       this.onSelectedOrigen(origin[0]);

@@ -218,7 +218,7 @@ export class MultiStepComponent implements OnInit {
       this.activatedRoute.snapshot.queryParams;
 
 
-    if(origen) { 
+    if(origen) {
       console.log("Origen Detected");
       const origins = countrys.filter((countryItem)=> countryItem.iso2 === (( (origen === undefined && country === undefined)? "PE" : origen === undefined ? country : origen) as string).toUpperCase());
 
@@ -481,6 +481,16 @@ export class MultiStepComponent implements OnInit {
 
       return;
     }
+
+    const fromLocation = this.locationsForm.get('fromLocation')?.value;
+    const toLocation = this.locationsForm.get('toLocation')?.value;
+
+
+    if( fromLocation && toLocation && fromLocation?.iso2  == toLocation[0].iso2){
+      this.onError('El destino no puede ser el mismo que el origen');
+      return;
+    }
+
 
     if (this.locationsForm.get('fromLocation')?.value) {
       this.origen = this.locationsForm.get('fromLocation')!
